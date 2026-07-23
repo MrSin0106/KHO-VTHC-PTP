@@ -1116,7 +1116,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       </div>
 
       <!-- Xuất trực tiếp -->
-      <div class="card" style="max-width: 800px; margin: 2rem auto 0 auto;">
+      <div class="card" id="direct-export-card" style="max-width: 800px; margin: 2rem auto 0 auto;">
         <div class="card-title"><span class="badge-export-icon" style="margin-right: 0.5rem;">📤</span> Xuất Kho Trực Tiếp</div>
         
         <form id="export-form">
@@ -1461,6 +1461,21 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <button class="btn btn-secondary" onclick="openSettingsModal('units')">📦 Đơn vị tính</button>
           <button class="btn btn-secondary" onclick="openSettingsModal('recipients')">👥 Người nhận sử dụng</button>
           <button class="btn btn-secondary" onclick="openSettingsModal('purposes')">🎯 Mục đích xuất</button>
+        </div>
+      </div>
+
+      <div class="card" style="max-width: 800px; margin: 1.5rem auto 0 auto; border: 1px solid var(--primary-pale);">
+        <div class="card-title" style="color: var(--primary);">💾 Sao lưu & Phục hồi dữ liệu kho</div>
+        <div style="padding: 0.5rem 0;">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4;">
+            Tải toàn bộ cơ sở dữ liệu hiện tại về máy tính dưới dạng file Excel để lưu trữ, hoặc nạp file Excel sao lưu trước đó để khôi phục lại dữ liệu kho.
+            <br><strong style="color: var(--danger);">* Lưu ý: Khôi phục dữ liệu sẽ ghi đè và thay thế toàn bộ dữ liệu hiện tại. Hệ thống sẽ tự động tải xuống một bản sao lưu dự phòng trước khi khôi phục.</strong>
+          </p>
+          <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary" onclick="downloadFullBackupExcel()">📥 Tải file Excel sao lưu</button>
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('backup-file-input').click()">📤 Nạp file Excel khôi phục</button>
+            <input type="file" id="backup-file-input" accept=".xlsx" style="display: none;" onchange="restoreFullBackupExcel(event)">
+          </div>
         </div>
       </div>
 
@@ -2920,6 +2935,11 @@ function updateNavigationByRole() {
   toggleNav('nav-notifications', isStaff || isAdmin);
   toggleNav('nav-settings', isAdmin);
   
+  const directExportCard = document.getElementById('direct-export-card');
+  if (directExportCard) {
+    directExportCard.style.display = isAdmin ? 'block' : 'none';
+  }
+  
   document.getElementById('excel-import-btn').style.display = (isAdmin || isImporter) ? 'inline-block' : 'none';
 
   const roleBadge = document.getElementById('current-role-badge');
@@ -4086,6 +4106,19 @@ function renderAdminRequests() {
       `;
     });
 
+    // Tạo dropdown chọn mục đích xuất từ appConfig.purposes
+    const purposes = appConfig.purposes || [];
+    let isCurrentInList = purposes.includes(group.purpose);
+    let selectHtml = `<select id="group-purpose-${group.items[0].ID_Yeu_Cau}" class="form-control" style="font-size: 0.85rem; padding: 0.25rem 0.5rem; width: 170px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); color: var(--text); cursor: pointer;">`;
+    if (!isCurrentInList && group.purpose) {
+      selectHtml += `<option value="${group.purpose}" selected>${group.purpose}</option>`;
+    }
+    purposes.forEach(p => {
+      const isSelected = p === group.purpose ? 'selected' : '';
+      selectHtml += `<option value="${p}" ${isSelected}>${p}</option>`;
+    });
+    selectHtml += `</select>`;
+
     tr.innerHTML = `
       <td style="text-align: center; vertical-align: middle;">
         <input type="checkbox" class="group-select-checkbox" data-ids="${itemIds}" style="width: 16px; height: 16px; cursor: pointer;" onchange="updateBatchActionsVisibility()">
@@ -4097,7 +4130,7 @@ function renderAdminRequests() {
       </td>
       <td><span class="badge badge-primary" style="font-size: 0.85rem; padding: 0.35rem 0.65rem;">${group.user}</span></td>
       <td>
-        <input type="text" id="group-purpose-${group.items[0].ID_Yeu_Cau}" class="form-control" style="font-size: 0.85rem; padding: 0.25rem 0.5rem; width: 140px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); color: var(--text);" value="${group.purpose}" placeholder="Mục đích xuất">
+        ${selectHtml}
       </td>
       <td>
         <div style="display: flex; flex-direction: column; gap: 0.25rem; max-width: 500px;">
@@ -4254,9 +4287,9 @@ function renderEditLogs() {
       <td><span style="font-family: monospace; font-size: 0.85rem;">${log.ID_Log}</span></td>
       <td><span style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted);">${log.ID_Vat_Tu}</span></td>
       <td><strong>${log.Ten_Vat_Tu}</strong></td>
-      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${log.Noi_Dung_Thay_Doi}</span></td>
+      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${log.Chi_Tiet}</span></td>
       <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
-      <td><span class="badge badge-primary">${log.Nguoi_Chinh_Sua}</span></td>
+      <td><span class="badge badge-primary">${log.Nguoi_Sua || 'Admin'}</span></td>
     `;
     tbody.appendChild(tr);
   });
@@ -5088,6 +5121,130 @@ function executeClearAllLocally() {
   switchTab('inventory');
 }
 
+// === SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN BỘ KHO QUA EXCEL (CHỈ ADMIN) ===
+window.downloadFullBackupExcel = async function() {
+  showLoading(true);
+  initSupabase();
+  if (!supabaseClient) {
+    alert('Không có kết nối Supabase!');
+    showLoading(false);
+    return;
+  }
+  
+  try {
+    const [inv, imp, exp, req, spec, logs, cfg] = await Promise.all([
+      supabaseClient.from('kho_vat_tu').select('*'),
+      supabaseClient.from('lich_su_nhap').select('*'),
+      supabaseClient.from('lich_su_xuat').select('*'),
+      supabaseClient.from('yeu_cau_xuat').select('*'),
+      supabaseClient.from('yeu_cau_dac_tinh').select('*').then(res => res.error ? { data: [] } : res),
+      supabaseClient.from('nhat_ky_sua').select('*'),
+      supabaseClient.from('cau_hinh').select('*')
+    ]);
+    
+    // Tạo workbook mới
+    const wb = XLSX.utils.book_new();
+    
+    // Thêm các sheet
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(inv.data || []), "kho_vat_tu");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(imp.data || []), "lich_su_nhap");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exp.data || []), "lich_su_xuat");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(req.data || []), "yeu_cau_xuat");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(spec.data || []), "yeu_cau_dac_tinh");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(logs.data || []), "nhat_ky_sua");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cfg.data || []), "cau_hinh");
+    
+    // Xuất file
+    const dateStr = new Date().toISOString().slice(0, 10);
+    XLSX.writeFile(wb, `lab_inventory_backup_${dateStr}.xlsx`);
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi sao lưu dữ liệu: ' + err.message);
+  }
+  showLoading(false);
+};
+
+window.restoreFullBackupExcel = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  if (!confirm('⚠️ CẢNH BÁO CỰC KỲ QUAN TRỌNG:\n\nHành động này sẽ XÓA TOÀN BỘ dữ liệu hiện tại trên hệ thống và ghi đè bằng dữ liệu từ file Excel này.\n\nHệ thống sẽ tự động tải xuống một bản sao lưu dữ liệu hiện tại trước khi khôi phục.\n\nBạn có chắc chắn muốn khôi phục không?')) {
+    event.target.value = '';
+    return;
+  }
+  
+  showLoading(true);
+  initSupabase();
+  if (!supabaseClient) {
+    alert('Không có kết nối Supabase!');
+    showLoading(false);
+    event.target.value = '';
+    return;
+  }
+  
+  try {
+    // 1. Tự động sao lưu dự phòng trước khi khôi phục
+    await downloadFullBackupExcel();
+    
+    // 2. Đọc file excel tải lên
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetNames = workbook.SheetNames;
+        
+        const tables = ['kho_vat_tu', 'lich_su_nhap', 'lich_su_xuat', 'yeu_cau_xuat', 'yeu_cau_dac_tinh', 'nhat_ky_sua', 'cau_hinh'];
+        
+        // 3. Khôi phục từng bảng
+        for (const tableName of tables) {
+          if (!sheetNames.includes(tableName)) continue;
+          
+          const sheet = workbook.Sheets[tableName];
+          const rows = XLSX.utils.sheet_to_json(sheet);
+          
+          // Định nghĩa trường để xóa
+          let filterCol = 'id';
+          if (tableName === 'cau_hinh') filterCol = 'key';
+          if (tableName === 'lich_su_nhap' || tableName === 'lich_su_xuat') filterCol = 'id_giao_dich';
+          if (tableName === 'yeu_cau_xuat') filterCol = 'id_yeu_cau';
+          if (tableName === 'yeu_cau_dac_tinh') filterCol = 'id_de_xuat';
+          if (tableName === 'nhat_ky_sua') filterCol = 'id_log';
+          
+          // Xóa toàn bộ dòng
+          const { error: delErr } = await supabaseClient.from(tableName).delete().neq(filterCol, 'X_X_X_NO_MATCH_X_X_X');
+          if (delErr) {
+            console.warn(`Lỗi khi xóa bảng ${tableName}:`, delErr);
+          }
+          
+          // Chèn các dòng mới
+          if (rows.length > 0) {
+            const { error: insErr } = await supabaseClient.from(tableName).insert(rows);
+            if (insErr) {
+              throw new Error(`Lỗi chèn dữ liệu vào bảng ${tableName}: ${insErr.message}`);
+            }
+          }
+        }
+        
+        alert('Khôi phục dữ liệu từ file Excel thành công!');
+        await loadData();
+      } catch (err) {
+        console.error(err);
+        alert('Lỗi phân tích hoặc nạp dữ liệu: ' + err.message);
+      } finally {
+        showLoading(false);
+        event.target.value = '';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi chuẩn bị khôi phục dữ liệu: ' + err.message);
+    showLoading(false);
+    event.target.value = '';
+  }
+};
+
 // --- IMPORT EXCEL BẰNG SHEETJS ---
 async function handleExcelImport(e) {
   const file = e.target.files[0];
@@ -5481,9 +5638,9 @@ function renderTimeline() {
       type: 'edit',
       dateStr: item.Ngay_Chinh_Sua,
       date: new Date(item.Ngay_Chinh_Sua || Date.now()),
-      user: item.Nguoi_Chinh_Sua || 'Admin',
+      user: item.Nguoi_Sua || 'Admin',
       itemName: item.Ten_Vat_Tu,
-      details: item.Noi_Dung_Thay_Doi
+      details: item.Chi_Tiet
     });
   });
   
