@@ -857,7 +857,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 
       <!-- Danh sách yêu cầu đã gửi (Chờ duyệt / Lịch sử rút) của nhân viên -->
       <div class="card" style="margin-top: 1.5rem;">
-        <div class="card-title">📋 Trạng Thái Các Yêu Cầu Rút Kho Của Bạn</div>
+        <div class="card-title">📋 Trạng Thái Các Yêu Cầu Xuất Kho Của Bạn</div>
         <div class="table-wrapper">
           <table class="table">
             <thead>
@@ -868,6 +868,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                 <th>Thời Gian Gửi</th>
                 <th>Trạng Thái</th>
                 <th>Ghi Chú Phản Hồi</th>
+                <th>Hủy</th>
               </tr>
             </thead>
             <tbody id="my-requests-table-body">
@@ -2323,7 +2324,7 @@ async function sendRequest(payload) {
         don_vi: unit,
         ngay_xuat: new Date().toISOString(),
         nguoi_nhan: req.nguoi_yeu_cau,
-        muc_dich: req.muc_dich,
+        muc_dich: payload.purpose || req.muc_dich,
         nguoi_xuat: userRole,
         ghi_chu: `Duyệt từ yêu cầu ${payload.requestId}. ${note}`
       });
@@ -2336,10 +2337,31 @@ async function sendRequest(payload) {
         quy_cach: spec,
         don_vi: unit,
         so_luong_yeu_cau: approvedQty,
+        muc_dich: payload.purpose || req.muc_dich,
         trang_thai: 'Da_Duyet',
         ghi_chu: note
       }).eq('id_yeu_cau', payload.requestId);
       if (reqUpdErr) throw reqUpdErr;
+      
+      return { success: true };
+    }
+    
+    // 4.1.2. Cancel Export Request (Staff cancels their own request within 20 mins)
+    if (payload.action === 'cancel_export_request') {
+      const { data: req, error: fetchErr } = await supabaseClient.from('yeu_cau_xuat').select('*').eq('id_yeu_cau', payload.requestId).single();
+      if (fetchErr) throw fetchErr;
+      
+      if (req.trang_thai !== 'Cho_Duyet') {
+        throw new Error('Yêu cầu đã được xử lý, không thể hủy!');
+      }
+      
+      const timeDiffMinutes = (Date.now() - new Date(req.ngay_yeu_cau).getTime()) / (60 * 1000);
+      if (timeDiffMinutes > 20) {
+        throw new Error('Đã quá 20 phút kể từ lúc gửi yêu cầu, không thể hủy!');
+      }
+      
+      const { error: delErr } = await supabaseClient.from('yeu_cau_xuat').delete().eq('id_yeu_cau', payload.requestId);
+      if (delErr) throw delErr;
       
       return { success: true };
     }
@@ -3914,7 +3936,7 @@ function renderMyRequests() {
 
   tbody.innerHTML = '';
   if (!appData.requests || appData.requests.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Chưa gửi yêu cầu xuất nào.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Chưa gửi yêu cầu xuất nào.</td></tr>`;
     return;
   }
 
@@ -3926,6 +3948,13 @@ function renderMyRequests() {
 
     const dateStr = req.Ngay_Yeu_Cau ? new Date(req.Ngay_Yeu_Cau).toLocaleString('vi-VN') : '-';
 
+    // Điều kiện hủy: đang chờ duyệt và gửi chưa quá 20 phút
+    const requestTime = req.Ngay_Yeu_Cau ? new Date(req.Ngay_Yeu_Cau).getTime() : 0;
+    const isCancellable = req.Trang_Thai === 'Cho_Duyet' && (Date.now() - requestTime) < 20 * 60 * 1000;
+    const cancelBtnHtml = isCancellable ? 
+      `<button class="btn btn-danger btn-sm" onclick="cancelMyRequest('${req.ID_Yeu_Cau}')" style="padding: 0.15rem 0.35rem; font-size: 0.7rem; border-radius: 4px; border: none;" title="Hủy yêu cầu">❌ Hủy</button>` : 
+      `<span style="color: var(--text-muted); font-size: 0.8rem;">-</span>`;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${req.Ten}</strong></td>
@@ -3934,10 +3963,46 @@ function renderMyRequests() {
       <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
       <td>${statusBadge}</td>
       <td><span style="font-size: 0.85rem; color: var(--text-muted);">${req.Ghi_Chu || '-'}</span></td>
+      <td style="text-align: center; vertical-align: middle;">${cancelBtnHtml}</td>
     `;
     tbody.appendChild(tr);
   });
 }
+
+window.cancelMyRequest = async function(reqId) {
+  if (!confirm('Bạn có chắc chắn muốn hủy yêu cầu xuất kho này?')) {
+    return;
+  }
+  showLoading(true);
+  
+  // Cập nhật giao diện cục bộ trước
+  const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
+  if (req) {
+    appData.requests = appData.requests.filter(r => r.ID_Yeu_Cau !== reqId);
+    saveMockData();
+    renderMyRequests();
+  }
+  
+  const pinSecret = appConfig.staffPin || '';
+  const payload = {
+    action: 'cancel_export_request',
+    requestId: reqId,
+    pin: pinSecret
+  };
+  
+  try {
+    const json = await sendRequest(payload);
+    if (json.success) {
+      await loadData();
+    } else {
+      throw new Error(json.message);
+    }
+  } catch(err) {
+    console.error("Lỗi khi hủy yêu cầu:", err);
+    showToast('Lỗi khi hủy yêu cầu: ' + err.message, 'danger');
+  }
+  showLoading(false);
+};
 
 function renderAdminRequests() {
   const tbody = document.getElementById('admin-requests-table-body');
@@ -4031,7 +4096,9 @@ function renderAdminRequests() {
         <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;">⏱️ ${timeFormatted}</span>
       </td>
       <td><span class="badge badge-primary" style="font-size: 0.85rem; padding: 0.35rem 0.65rem;">${group.user}</span></td>
-      <td><span style="font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);">${group.purpose}</span></td>
+      <td>
+        <input type="text" id="group-purpose-${group.items[0].ID_Yeu_Cau}" class="form-control" style="font-size: 0.85rem; padding: 0.25rem 0.5rem; width: 140px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); color: var(--text);" value="${group.purpose}" placeholder="Mục đích xuất">
+      </td>
       <td>
         <div style="display: flex; flex-direction: column; gap: 0.25rem; max-width: 500px;">
           ${itemsHtml}
@@ -4321,9 +4388,13 @@ window.approveRequest = async function(reqId) {
   showLoading(false);
 };
 
-function executeApproveLocally(reqId, qty, note, item) {
+function executeApproveLocally(reqId, qty, note, item, customPurpose) {
   const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
   if (!req) return;
+
+  if (customPurpose) {
+    req.Muc_Dich = customPurpose;
+  }
 
   item.So_Luong -= qty;
   req.Trang_Thai = 'Da_Duyet';
@@ -5171,10 +5242,24 @@ window.openSettingsModal = function(category) {
   if (modal) modal.classList.add('active');
 };
 
-window.closeSettingsModal = function() {
+window.closeSettingsModal = async function() {
   const modal = document.getElementById('settings-modal-overlay');
   if (modal) modal.classList.remove('active');
   populateDropdowns();
+  
+  // Tự động lưu cấu hình tùy chọn mới lên Supabase để không bị mất
+  initSupabase();
+  if (supabaseClient) {
+    try {
+      await sendRequest({
+        action: 'save_config',
+        config: appConfig
+      });
+      console.log('Đã tự động đồng bộ cấu hình mới lên Supabase.');
+    } catch (err) {
+      console.error('Lỗi đồng bộ cấu hình lên Supabase:', err);
+    }
+  }
 };
 
 function renderSettingsList() {
@@ -5269,6 +5354,9 @@ function renderSettings() {
 }
 
 function showToast(message, type = 'primary') {
+  if (type === 'success' || type === 'primary') {
+    return; // Bỏ qua các thông báo thành công hoặc thông tin không cần thiết
+  }
   let container = document.querySelector('.toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -5856,6 +5944,11 @@ window.approveGroup = async function(itemIdsStr) {
   const ids = itemIdsStr.split(',');
   showLoading(true);
   
+  // Đọc mục đích xuất kho đã thay đổi từ dòng đầu tiên trong nhóm
+  const firstId = ids[0];
+  const purposeInput = document.getElementById(`group-purpose-${firstId}`);
+  const updatedPurpose = purposeInput ? purposeInput.value.trim() : '';
+  
   let successCount = 0;
   for (const id of ids) {
     const qtyInput = document.getElementById(`approve-qty-${id}`);
@@ -5867,6 +5960,7 @@ window.approveGroup = async function(itemIdsStr) {
       action: 'approve_export',
       requestId: id,
       qty: qty,
+      purpose: updatedPurpose,
       note: req && req.replacementItemId ? 'Duyệt thay thế hóa chất' : 'Duyệt theo nhóm đề xuất',
       pin: pinSecret
     };
@@ -5884,14 +5978,13 @@ window.approveGroup = async function(itemIdsStr) {
       const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
       const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
       if (req && item) {
-        executeApproveLocally(id, qty, 'Duyệt theo nhóm đề xuất', item);
+        executeApproveLocally(id, qty, 'Duyệt theo nhóm đề xuất', item, updatedPurpose);
         successCount++;
       }
     }
   }
   
   showLoading(false);
-  showToast(`Đã duyệt phê duyệt thành công ${successCount}/${ids.length} yêu cầu!`, 'success');
   await loadData();
 };
 
@@ -6301,6 +6394,16 @@ window.renderNotifications = function() {
 
 window.clearNotification = async function(reqId) {
   showLoading(true);
+  
+  // Cập nhật giao diện cục bộ ngay lập tức để ẩn thông báo ngay
+  const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
+  if (req) {
+    req.Trang_Thai = 'Da_Doc_Tu_Choi';
+    saveMockData();
+    renderNotifications();
+    updateNotificationDots();
+  }
+
   const pinSecret = appConfig.staffPin || '';
   const payload = {
     action: 'clear_notification',
@@ -6311,21 +6414,12 @@ window.clearNotification = async function(reqId) {
   try {
     const json = await sendRequest(payload);
     if (json.success) {
-      showToast('Đã đánh dấu đã đọc thông báo.', 'primary');
       await loadData();
     } else {
       throw new Error(json.message);
     }
   } catch(err) {
-    console.error(err);
-    const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
-    if (req) {
-      req.Trang_Thai = 'Da_Doc_Tu_Choi';
-      saveMockData();
-      showToast('Đã đánh dấu đã đọc cục bộ.', 'primary');
-      renderNotifications();
-      updateNotificationDots();
-    }
+    console.error("Lỗi đồng bộ xóa thông báo lên Supabase:", err);
   }
   showLoading(false);
 };
