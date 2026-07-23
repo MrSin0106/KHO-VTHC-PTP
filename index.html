@@ -24,7 +24,7 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kho VTHC Phòng CNSH Thực phẩm - Quản Lý Kho Hóa Chất & Vật Tư Thí Nghiệm</title>
-  <meta name="description" content="Phần mềm quản lý xuất nhập tồn kho hóa chất, vật tư thiết bị Phòng Công nghệ sinh học Thực phẩm - kết nối Google Sheets.">
+  <meta name="description" content="Phần mềm quản lý xuất nhập tồn kho hóa chất, vật tư thiết bị Phòng Công nghệ sinh học Thực phẩm - kết nối Supabase.">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
@@ -1405,7 +1405,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           </div>
 
           <div class="form-group" style="margin-top: 1.5rem;">
-            <label class="form-label" style="font-weight: 600; color: var(--primary);">📝 Tùy biến Tiêu đề & Nhãn của Tab (Đồng bộ Google Sheets)</label>
+            <label class="form-label" style="font-weight: 600; color: var(--primary);">📝 Tùy biến Tiêu đề & Nhãn của Tab (Đồng bộ Supabase)</label>
             <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem; background: var(--bg-app); border: 1px solid var(--border); padding: 1rem; border-radius: 8px;">
               <div class="form-group">
                 <label class="form-label" for="config-app-title">Tên Phần Mềm</label>
@@ -1467,7 +1467,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <div class="card-title" style="color: var(--warning);">🧹 Dọn dẹp dữ liệu lịch sử cũ</div>
         <div style="padding: 0.5rem 0;">
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4;">
-            Hành động này giúp dọn dẹp bớt các giao dịch/nhật ký cũ (nhập, xuất, chỉnh sửa) trên Google Sheets để tăng tốc độ tải ứng dụng nếu dữ liệu lưu trữ sau vài năm quá lớn.
+            Hành động này giúp dọn dẹp bớt các giao dịch/nhật ký cũ (nhập, xuất, chỉnh sửa) trên Supabase để tăng tốc độ tải ứng dụng nếu dữ liệu lưu trữ sau vài năm quá lớn.
           </p>
           <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
             <select id="clean-history-range" class="form-control" style="max-width: 250px; font-size: 0.85rem; padding: 0.5rem;">
@@ -1966,8 +1966,8 @@ const DEFAULT_CONFIGS = {
   purposes: ['Nhiệm vụ nghiên cứu đề tài', 'Dịch vụ phân tích mẫu', 'Hao hụt định kỳ', 'Kiểm tra chất lượng (QC)'],
   units: ['Cái', 'Hộp', 'Kg', 'Cuộn', 'Lốc', 'Đôi', 'Chai', 'Lọ'],
   apiUrl: '', 
-  supabaseUrl: '',
-  supabaseKey: '',
+  supabaseUrl: 'https://mbjyybqguvlnjtqyvmni.supabase.co',
+  supabaseKey: 'sb_publishable_mVxdko-USJ_BF_M2sYfrFQ_0lgfxAnA',
   adminPin: '1234',
   importerPin: '2222',
   exporterPin: '3333',
@@ -2122,6 +2122,8 @@ function initSupabase() {
 function init() {
   const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
   appConfig = savedConfig ? JSON.parse(savedConfig) : { ...DEFAULT_CONFIGS };
+  if (!appConfig.supabaseUrl) appConfig.supabaseUrl = DEFAULT_CONFIGS.supabaseUrl;
+  if (!appConfig.supabaseKey) appConfig.supabaseKey = DEFAULT_CONFIGS.supabaseKey;
   initSupabase();
   
   if (!appConfig.staffPin) {
@@ -3013,13 +3015,13 @@ function setupEventListeners() {
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        showToast('Lưu cấu hình và đồng bộ lên Google Sheets thành công!', 'success');
+        showToast('Lưu cấu hình và đồng bộ lên Supabase thành công!', 'success');
       } else {
         throw new Error(json.message);
       }
     } catch (err) {
       console.error(err);
-      showToast('Lưu cấu hình cục bộ thành công! (Không đồng bộ lên Sheets: ' + err.message + ')', 'warning');
+      showToast('Lưu cấu hình cục bộ thành công! (Không đồng bộ lên Supabase: ' + err.message + ')', 'warning');
     }
     
     // Cập nhật lại session pin của chính admin để tránh bị đăng xuất
@@ -3690,7 +3692,7 @@ async function handleCartCheckoutSubmit(e) {
       }
     } catch (err) {
       console.error(err);
-      showToast('Sheets lỗi. Ghi nhận yêu cầu cục bộ.', 'warning');
+      showToast('Supabase lỗi. Ghi nhận yêu cầu cục bộ.', 'warning');
       executeBulkRequestLocally(selectedItems, recipient, purpose, note);
     }
   } else {
@@ -4191,7 +4193,7 @@ window.approveRequest = async function(reqId) {
     }
   } catch (error) {
     console.error(error);
-    showToast('Sheets lỗi. Phê duyệt cục bộ.', 'warning');
+    showToast('Supabase lỗi. Phê duyệt cục bộ.', 'warning');
     executeApproveLocally(reqId, qty, note, item);
   }
 
@@ -4253,7 +4255,7 @@ window.rejectRequest = async function(reqId) {
     }
   } catch (error) {
     console.error(error);
-    showToast('Lỗi Sheets. Xử lý cục bộ.', 'warning');
+    showToast('Lỗi Supabase. Xử lý cục bộ.', 'warning');
     executeRejectLocally(reqId, note);
   }
 
@@ -4440,7 +4442,7 @@ async function handleExportSubmit(e) {
     }
   } catch (error) {
     console.error(error);
-    showToast('Gặp lỗi kết nối Sheets. Xử lý cục bộ.', 'warning');
+    showToast('Gặp lỗi kết nối Supabase. Xử lý cục bộ.', 'warning');
     saveExportLocally(payload, item);
   }
 
@@ -4572,7 +4574,7 @@ async function handleEditSubmit(e) {
   try {
     const json = await sendRequest(payload);
     if (json.success) {
-      showToast('Cập nhật thông tin lên Google Sheets thành công!', 'success');
+      showToast('Cập nhật thông tin lên Supabase thành công!', 'success');
       closeEditModal();
       await loadData();
     } else {
@@ -4580,7 +4582,7 @@ async function handleEditSubmit(e) {
     }
   } catch (error) {
     console.error(error);
-    showToast('Gặp lỗi kết nối Sheets. Cập nhật cục bộ.', 'warning');
+    showToast('Gặp lỗi kết nối Supabase. Cập nhật cục bộ.', 'warning');
     executeEditLocally(payload);
   }
 
@@ -4688,7 +4690,7 @@ window.deleteChemicalFromEdit = async function() {
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        showToast(`Đã xóa hoàn toàn "${itemName}" thành công trên Google Sheets!`, 'success');
+        showToast(`Đã xóa hoàn toàn "${itemName}" thành công trên Supabase!`, 'success');
         closeEditModal();
         await loadData();
       } else {
@@ -4696,7 +4698,7 @@ window.deleteChemicalFromEdit = async function() {
       }
     } catch (err) {
       console.error(err);
-      showToast('Lỗi kết nối Sheets hoặc sai PIN. Thực hiện xóa cục bộ.', 'warning');
+      showToast('Lỗi kết nối Supabase hoặc sai PIN. Thực hiện xóa cục bộ.', 'warning');
       executeDeleteChemicalLocally(itemId, itemName);
     }
   } else {
@@ -4865,14 +4867,14 @@ window.clearAllInventoryWithBackup = async function() {
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        showToast('Đã xóa sạch toàn bộ kho trên Google Sheets thành công!', 'success');
+        showToast('Đã xóa sạch toàn bộ kho trên Supabase thành công!', 'success');
         await loadData();
       } else {
         throw new Error(json.message);
       }
     } catch (err) {
       console.error(err);
-      showToast('Lỗi kết nối Sheets. Tiến hành xóa dữ liệu cục bộ.', 'warning');
+      showToast('Lỗi kết nối Supabase. Tiến hành xóa dữ liệu cục bộ.', 'warning');
       executeClearAllLocally();
     }
   } else {
@@ -5648,7 +5650,7 @@ window.submitImportCart = async function() {
   try {
     const json = await sendRequest(payload);
     if (json.success) {
-      showToast(`Đã duyệt nhập kho thành công ${importCart.length} vật tư lên Google Sheets!`, 'success');
+      showToast(`Đã duyệt nhập kho thành công ${importCart.length} vật tư lên Supabase!`, 'success');
       importCart = [];
       localStorage.removeItem('LAB_IMPORT_CART_V5');
       renderImportCart();
@@ -6249,7 +6251,7 @@ window.undoExport = async function(transactionId) {
       });
       
       saveMockData();
-      showToast('Sheets chưa cấu hình. Đã thực hiện hoàn tác cục bộ thành công!', 'warning');
+      showToast('Supabase chưa cấu hình. Đã thực hiện hoàn tác cục bộ thành công!', 'warning');
       renderHistory();
       renderInventory();
       renderEditLogs();
@@ -6311,7 +6313,7 @@ window.cleanUpOldHistory = async function() {
     });
     
     saveMockData();
-    showToast(`Sheets chưa cấu hình. Đã dọn dẹp lịch sử cũ hơn ${months} tháng cục bộ!`, 'warning');
+    showToast(`Supabase chưa cấu hình. Đã dọn dẹp lịch sử cũ hơn ${months} tháng cục bộ!`, 'warning');
     renderHistory();
     renderEditLogs();
   }
