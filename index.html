@@ -764,6 +764,24 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 
     <!-- 1. TAB: TỒN KHO -->
     <section class="tab-content active" id="inventory-tab">
+      <!-- Bảng Ghi chú / Thông báo -->
+      <div class="card" id="announcement-card" style="display: none; border: 1px dashed var(--primary); background: var(--bg-card); border-radius: 12px; margin-bottom: 1.5rem; padding: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <span style="font-weight: 700; color: var(--primary); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+            📢 Ghi chú / Thông báo
+          </span>
+          <button id="announcement-edit-btn" class="btn btn-secondary btn-sm" style="display: none; font-size: 0.8rem; padding: 0.25rem 0.65rem; border-color: var(--primary-pale); color: var(--primary);" onclick="openAnnouncementModal()">✏️ Chỉnh sửa</button>
+        </div>
+        <div style="background: var(--bg-app); border-radius: 8px; padding: 1rem; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem;">
+          <div id="announcement-content" style="font-size: 0.92rem; color: var(--text); line-height: 1.5; white-space: pre-wrap; font-weight: 500;">
+            📌 Chưa có thông báo mới nào.
+          </div>
+          <div id="announcement-meta" style="font-size: 0.78rem; color: var(--text-muted); text-align: right; border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.25rem;">
+            Cập nhật lần cuối: -
+          </div>
+        </div>
+      </div>
+
       <div class="search-container">
         <span class="search-icon-btn">🔍</span>
         <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm nhanh (gõ từ khóa: mã số, tên vật tư, vị trí, vd: 'TPVT-B1', 'cốc', 'kho B')...">
@@ -1564,6 +1582,24 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
   </main>
 
   <footer class="app-footer">Created by Mr SIn</footer>
+
+  <!-- MODAL CHỈNH SỬA THÔNG BÁO (Admin/Importer/Exporter Edit) -->
+  <div class="modal-overlay" id="announcement-modal-overlay">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 style="font-weight: 600; display: flex; align-items: center; gap: 0.5rem;">📢 Chỉnh sửa Ghi chú / Thông báo</h3>
+        <button class="modal-close" onclick="closeAnnouncementModal()">×</button>
+      </div>
+      <div class="form-group" style="margin-top: 1rem;">
+        <label class="form-label" for="announcement-text-input" style="font-weight: 600;">Nội dung thông báo hiển thị cho nhân viên:</label>
+        <textarea id="announcement-text-input" class="form-control" rows="6" style="resize: vertical; font-size: 0.9rem;" placeholder="Nhập nội dung ghi chú hoặc thông báo cho nhân viên tại đây..."></textarea>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="closeAnnouncementModal()">Hủy</button>
+        <button class="btn btn-primary" onclick="saveAnnouncement()">💾 Lưu thông báo</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL CHỈNH SỬA CHI TIẾT (Admin Edit) -->
   <div class="modal-overlay" id="edit-modal-overlay">
@@ -2647,6 +2683,7 @@ function updateUI() {
   renderEditLogs();
   populateDropdowns();
   updateCartBadge();
+  renderAnnouncement();
 }
 
 async function loadData() {
@@ -2960,9 +2997,101 @@ function updateNavigationByRole() {
 
   updateNotificationDots();
 
+  // Phân quyền cho nút chỉnh sửa Ghi chú / Thông báo
+  const announcementEditBtn = document.getElementById('announcement-edit-btn');
+  if (announcementEditBtn) {
+    const canEditAnnouncement = isAdmin || isExporter || isImporter;
+    announcementEditBtn.style.display = canEditAnnouncement ? 'inline-block' : 'none';
+  }
+
   // Tự động chuyển về tab phù hợp
   switchTab('inventory');
 }
+
+// --- HỆ THỐNG GHI CHÚ / THÔNG BÁO TỒN KHO ---
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML.replace(/\n/g, '<br>');
+}
+
+window.renderAnnouncement = function() {
+  const card = document.getElementById('announcement-card');
+  const contentEl = document.getElementById('announcement-content');
+  const metaEl = document.getElementById('announcement-meta');
+  
+  if (!card || !contentEl || !metaEl) return;
+  
+  const announcement = appConfig.announcement;
+  if (announcement && announcement.text && announcement.text.trim()) {
+    contentEl.innerHTML = '📌 ' + escapeHtml(announcement.text);
+    metaEl.textContent = `Cập nhật bởi ${announcement.updatedBy || 'Hệ thống'} • ${announcement.updatedAt || '-'}`;
+    card.style.display = 'block';
+  } else {
+    // Nếu chưa có thông báo nào, hiển thị mặc định cho admin/exporter/importer biết để thiết lập
+    const canEditAnnouncement = (currentRole === 'admin' || currentRole === 'exporter' || currentRole === 'importer');
+    if (canEditAnnouncement) {
+      contentEl.innerHTML = '📌 <em>Chưa có thông báo hoặc ghi chú nào cho nhân viên. Hãy bấm "Chỉnh sửa" ở trên để tạo mới.</em>';
+      metaEl.textContent = 'Cập nhật lần cuối: -';
+      card.style.display = 'block';
+    } else {
+      // Ẩn bảng đối với nhân viên thường nếu không có thông báo
+      card.style.display = 'none';
+    }
+  }
+};
+
+window.openAnnouncementModal = function() {
+  const modal = document.getElementById('announcement-modal-overlay');
+  const textInput = document.getElementById('announcement-text-input');
+  if (modal && textInput) {
+    textInput.value = (appConfig.announcement && appConfig.announcement.text) ? appConfig.announcement.text : '';
+    modal.classList.add('active');
+  }
+};
+
+window.closeAnnouncementModal = function() {
+  const modal = document.getElementById('announcement-modal-overlay');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+};
+
+window.saveAnnouncement = async function() {
+  const textInput = document.getElementById('announcement-text-input');
+  if (!textInput) return;
+  
+  const newText = textInput.value.trim();
+  const userRoleLabel = currentRole === 'admin' ? 'Admin' : (currentRole === 'exporter' ? 'Người xuất kho' : 'Người nhập kho');
+  const timeStr = new Date().toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+  
+  appConfig.announcement = {
+    text: newText,
+    updatedBy: userRoleLabel,
+    updatedAt: timeStr
+  };
+  
+  localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
+  renderAnnouncement();
+  closeAnnouncementModal();
+  
+  // Tự động lưu và đồng bộ lên Supabase
+  showLoading(true);
+  initSupabase();
+  if (supabaseClient) {
+    try {
+      await sendRequest({
+        action: 'save_config',
+        config: appConfig
+      });
+      console.log('Đã đồng bộ thông báo mới lên Supabase.');
+    } catch (err) {
+      console.error('Lỗi đồng bộ thông báo lên Supabase:', err);
+    }
+  }
+  showLoading(false);
+};
 
 // --- THIẾT LẬP LẮNG NGHE SỰ KIỆN GIAO DIỆN ---
 function setupEventListeners() {
@@ -3624,9 +3753,9 @@ window.openItemHistoryModal = function(itemId) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td><span style="font-family: monospace; font-size: 0.8rem;">${log.ID_Log}</span></td>
-          <td><span style="font-size: 0.8rem; color: var(--text-muted);">${log.Noi_Dung_Thay_Doi}</span></td>
+          <td><span style="font-size: 0.8rem; color: var(--text-muted);">${log.Chi_Tiet}</span></td>
           <td><span style="font-size: 0.8rem;">${dateStr}</span></td>
-          <td><span class="badge badge-primary">${log.Nguoi_Chinh_Sua || 'Admin'}</span></td>
+          <td><span class="badge badge-primary">${log.Nguoi_Sua || 'Admin'}</span></td>
         `;
         editTbody.appendChild(tr);
       });
