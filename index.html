@@ -765,15 +765,15 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
     <!-- 1. TAB: TỒN KHO -->
     <section class="tab-content active" id="inventory-tab">
       <!-- Bảng Ghi chú / Thông báo -->
-      <div class="card" id="announcement-card" style="display: none; border: 1px dashed var(--primary); background: var(--bg-card); border-radius: 12px; margin-bottom: 1.5rem; padding: 1.25rem;">
+      <div class="card" id="announcement-card" style="display: none; border: 1.5px dashed var(--danger); background: var(--bg-card); border-radius: 12px; margin-bottom: 1.5rem; padding: 1.25rem; box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-          <span style="font-weight: 700; color: var(--primary); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
-            📢 Ghi chú / Thông báo
+          <span style="font-weight: 700; color: var(--danger); font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem;">
+            📢 Ghi chú / Thông báo khẩn
           </span>
-          <button id="announcement-edit-btn" class="btn btn-secondary btn-sm" style="display: none; font-size: 0.8rem; padding: 0.25rem 0.65rem; border-color: var(--primary-pale); color: var(--primary);" onclick="openAnnouncementModal()">✏️ Chỉnh sửa</button>
+          <button id="announcement-edit-btn" class="btn btn-secondary btn-sm" style="display: none; font-size: 0.8rem; padding: 0.25rem 0.65rem; border-color: rgba(239, 68, 68, 0.3); color: var(--danger);" onclick="openAnnouncementModal()">✏️ Chỉnh sửa</button>
         </div>
-        <div style="background: var(--bg-app); border-radius: 8px; padding: 1rem; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem;">
-          <div id="announcement-content" style="font-size: 0.92rem; color: var(--text); line-height: 1.5; white-space: pre-wrap; font-weight: 500;">
+        <div style="background: rgba(239, 68, 68, 0.04); border-radius: 8px; padding: 1rem; border: 1px solid rgba(239, 68, 68, 0.2); display: flex; flex-direction: column; gap: 0.5rem;">
+          <div id="announcement-content" style="font-size: 0.92rem; color: #d32f2f; line-height: 1.5; white-space: pre-wrap; font-weight: 600;">
             📌 Chưa có thông báo mới nào.
           </div>
           <div id="announcement-meta" style="font-size: 0.78rem; color: var(--text-muted); text-align: right; border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.25rem;">
@@ -800,7 +800,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <div class="table-wrapper">
           <table class="table">
             <thead>
-              <tr>
+              <tr id="inventory-table-header-row">
                 <th>Mã Số</th>
                 <th>Tên Vật Tư / Hóa Chất</th>
                 <th>Xuất Xứ / Hãng</th>
@@ -876,12 +876,11 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       <!-- Danh sách yêu cầu đã gửi (Chờ duyệt / Lịch sử rút) của nhân viên -->
       <div class="card" style="margin-top: 1.5rem;">
         <div class="card-title">📋 Trạng Thái Các Yêu Cầu Xuất Kho Của Bạn</div>
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
           <table class="table">
             <thead>
               <tr>
-                <th>Tên Hóa Chất / Vật Tư</th>
-                <th>Số Lượng</th>
+                <th style="min-width: 250px;">Chi Tiết Vật Tư Yêu Cầu (Tên | Số Lượng)</th>
                 <th>Người Yêu Cầu</th>
                 <th>Thời Gian Gửi</th>
                 <th>Trạng Thái</th>
@@ -891,6 +890,29 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
             </thead>
             <tbody id="my-requests-table-body">
               <!-- Rendered dynamically by renderMyRequests() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Danh sách yêu cầu đã hủy để hoàn tác -->
+      <div class="card" style="margin-top: 1.5rem;" id="my-cancelled-requests-card">
+        <div class="card-title">🗑️ Danh Sách Yêu Cầu Đã Hủy (Có Thể Hoàn Tác)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Dưới đây là các yêu cầu bạn đã hủy trong phiên làm việc hiện tại. Bạn có thể nhấn <strong>Hoàn tác</strong> để đưa vật tư trở lại giỏ hàng và chỉnh sửa lại.
+        </p>
+        <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="min-width: 250px;">Chi Tiết Vật Tư Yêu Cầu (Tên | Số Lượng)</th>
+                <th>Người Yêu Cầu</th>
+                <th>Thời Gian Hủy</th>
+                <th style="text-align: right;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="my-cancelled-requests-table-body">
+              <!-- Rendered dynamically by renderCancelledRequests() -->
             </tbody>
           </table>
         </div>
@@ -977,6 +999,9 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
             <label class="form-label" for="import-note">Ghi chú nhập kho</label>
             <textarea id="import-note" class="form-control" placeholder="Để trống hoặc ghi chú thêm nếu cần..."></textarea>
           </div>
+
+          <!-- Container chứa các trường custom field động khi nhập kho -->
+          <div id="import-custom-fields-container" class="grid-2" style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;"></div>
 
           <div style="text-align: right; margin-top: 1.5rem;">
             <button type="reset" class="btn btn-secondary">Đặt lại</button>
@@ -1214,7 +1239,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       </div>
 
       <!-- CONTAINER DÒNG THỜI GIAN HOẠT ĐỘNG (TIMELINE VIEW) -->
-      <div id="history-timeline-container" class="timeline-container" style="margin-bottom: 2rem;">
+      <div id="history-timeline-container" class="timeline-container" style="max-height: 400px; overflow-y: auto; margin-bottom: 2rem;">
         <!-- JS auto render -->
       </div>
 
@@ -1224,11 +1249,10 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <!-- Lịch sử Nhập -->
         <div class="card">
           <div class="card-title"><span class="badge-import-icon" style="margin-right: 0.5rem;">📥</span> Lịch Sử Nhập Kho Gần Đây</div>
-          <div class="table-wrapper">
+          <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
             <table class="table">
               <thead>
                 <tr>
-                  <th>Mã GD</th>
                   <th>Vật Tư</th>
                   <th>Hãng</th>
                   <th>Quy Cách</th>
@@ -1247,13 +1271,11 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <!-- Lịch sử Xuất -->
         <div class="card">
           <div class="card-title"><span class="badge-export-icon" style="margin-right: 0.5rem;">📤</span> Lịch Sử Xuất Kho Gần Đây</div>
-          <div class="table-wrapper">
+          <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
             <table class="table">
               <thead>
                 <tr>
-                  <th>Mã GD</th>
-                  <th>Vật Tư</th>
-                  <th>SL Xuất</th>
+                  <th style="min-width: 250px;">Vật Tư & SL Xuất</th>
                   <th>Người Nhận</th>
                   <th>Mục Đích</th>
                   <th>Ngày Xuất</th>
@@ -1272,7 +1294,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       <!-- Bảng Nhật ký chỉnh sửa thông tin (Chỉ Admin xem được) -->
       <div class="card admin-only-cell" style="margin-top: 2rem;">
         <div class="card-title">🛠️ Nhật Ký Sửa Đổi Thông Tin Vật Tư (Admin)</div>
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
           <table class="table">
             <thead>
               <tr>
@@ -1282,6 +1304,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                 <th>Nội Dung Thay Đổi</th>
                 <th>Thời Gian Sửa</th>
                 <th>Người Thực Hiện</th>
+                <th style="text-align: right;" class="admin-only-cell">Hành Động</th>
               </tr>
             </thead>
             <tbody id="edit-logs-table-body">
@@ -1294,7 +1317,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       <!-- Bảng Yêu cầu Xuất Kho Bị Từ Chối (Admin theo dõi) -->
       <div class="card admin-only-cell" style="margin-top: 2rem;">
         <div class="card-title">❌ Danh Sách Yêu Cầu Xuất Kho Bị Từ Chối</div>
-        <div class="table-wrapper">
+        <div class="table-wrapper" style="max-height: 300px; overflow-y: auto;">
           <table class="table">
             <thead>
               <tr>
@@ -1339,6 +1362,10 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
               <label class="form-label" for="staff-pin-input">PIN Nhân Viên</label>
               <input type="password" id="staff-pin-input" class="form-control" placeholder="Để trống nếu không bảo mật">
             </div>
+            <div class="form-group">
+              <label class="form-label" for="student-pin-input">PIN Sinh Viên</label>
+              <input type="password" id="student-pin-input" class="form-control" placeholder="Mặc định: 0">
+            </div>
           </div>
           
           <div class="form-group" style="margin-top: 1rem;">
@@ -1373,6 +1400,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                     <th style="text-align: center;">Hạn Dùng</th>
                     <th style="text-align: center;">Năm Nhập</th>
                     <th style="text-align: center;">Ghi Chú</th>
+                    <th style="text-align: center; color: var(--danger);">Xóa</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -1389,6 +1417,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                     <td style="text-align: center;"><input type="checkbox" id="p-staff-expiry" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-staff-year" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-staff-note" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-staff-delete" style="width:16px; height:16px; cursor: pointer;"></td>
                   </tr>
                   <!-- Importer / Người Nhập Kho -->
                   <tr>
@@ -1403,6 +1432,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                     <td style="text-align: center;"><input type="checkbox" id="p-importer-expiry" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-importer-year" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-importer-note" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-importer-delete" style="width:16px; height:16px; cursor: pointer;"></td>
                   </tr>
                   <!-- Exporter / Người Xuất Kho -->
                   <tr>
@@ -1417,6 +1447,22 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                     <td style="text-align: center;"><input type="checkbox" id="p-exporter-expiry" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-exporter-year" style="width:16px; height:16px; cursor: pointer;"></td>
                     <td style="text-align: center;"><input type="checkbox" id="p-exporter-note" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-exporter-delete" style="width:16px; height:16px; cursor: pointer;"></td>
+                  </tr>
+                  <!-- Student / Sinh Viên -->
+                  <tr>
+                    <td><strong>Sinh Viên (Student)</strong></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-code" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-name" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-brand" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-spec" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-unit" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-location" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-qty" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-expiry" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-year" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-note" style="width:16px; height:16px; cursor: pointer;"></td>
+                    <td style="text-align: center;"><input type="checkbox" id="p-student-delete" style="width:16px; height:16px; cursor: pointer;"></td>
                   </tr>
                 </tbody>
               </table>
@@ -1482,6 +1528,43 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         </div>
       </div>
 
+      <div class="card" style="max-width: 800px; margin: 1.5rem auto 0 auto;">
+        <div class="card-title">⚙️ Quản Lý Trường Dữ Liệu Tùy Chọn (Custom Fields)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4;">
+          Thêm hoặc xóa các trường thông tin bổ sung cho hóa chất/vật tư (ví dụ: Số CAS, Nhiệt độ bảo quản, MSDS...). Bảng tồn kho và form nhập/sửa sẽ tự động cập nhật tương ứng.
+        </p>
+        
+        <table class="table" style="font-size: 0.85rem; margin-bottom: 1rem;">
+          <thead>
+            <tr>
+              <th>Tên trường (Nhãn hiển thị)</th>
+              <th>Mã trường (Không dấu/Không cách)</th>
+              <th>Giá trị mặc định</th>
+              <th style="width: 100px; text-align: center;">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="custom-fields-settings-tbody">
+            <!-- Sẽ render bằng JS -->
+          </tbody>
+        </table>
+        
+        <div style="display: grid; grid-template-columns: 2fr 2fr 2fr 1fr; gap: 0.75rem; align-items: flex-end;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.8rem;">Tên trường (Ví dụ: Số CAS)</label>
+            <input type="text" id="new-cf-label" class="form-control" placeholder="Số CAS" style="font-size: 0.85rem; padding: 0.4rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.8rem;">Mã trường (Ví dụ: custom_so_cas)</label>
+            <input type="text" id="new-cf-key" class="form-control" placeholder="custom_so_cas" style="font-size: 0.85rem; padding: 0.4rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.8rem;">Giá trị mặc định (Ví dụ: -)</label>
+            <input type="text" id="new-cf-default" class="form-control" placeholder="-" style="font-size: 0.85rem; padding: 0.4rem;">
+          </div>
+          <button type="button" class="btn btn-primary" onclick="addCustomFieldConfig()" style="font-size: 0.85rem; padding: 0.5rem; height: 38px; display: flex; align-items: center; justify-content: center; width: 100%;">➕ Thêm</button>
+        </div>
+      </div>
+
       <div class="card" style="max-width: 800px; margin: 1.5rem auto 0 auto; border: 1px solid var(--primary-pale);">
         <div class="card-title" style="color: var(--primary);">💾 Sao lưu & Phục hồi dữ liệu kho</div>
         <div style="padding: 0.5rem 0;">
@@ -1508,6 +1591,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
               <option value="3">Xóa dữ liệu cũ hơn 3 tháng</option>
               <option value="6">Xóa dữ liệu cũ hơn 6 tháng</option>
               <option value="12">Xóa dữ liệu cũ hơn 1 năm</option>
+              <option value="all_processed">Xóa sạch tất cả yêu cầu đã duyệt/từ chối/hủy</option>
             </select>
             <button type="button" class="btn btn-warning" style="font-weight: 600;" onclick="cleanUpOldHistory()">🧹 Dọn dẹp ngay</button>
           </div>
@@ -1668,6 +1752,9 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <label class="form-label" for="edit-note">Ghi chú</label>
           <textarea id="edit-note" class="form-control"></textarea>
         </div>
+
+        <!-- Container chứa các trường custom field động khi chỉnh sửa -->
+        <div id="edit-custom-fields-container" class="grid-2" style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;"></div>
 
         <div style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
           <button type="button" class="btn btn-danger" id="edit-delete-btn" style="background-color: var(--danger);" onclick="deleteChemicalFromEdit()">🗑️ Xóa hóa chất</button>
@@ -1931,6 +2018,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
             <div style="position: relative;">
               <select id="login-role" class="form-control" style="padding-left: 2.25rem; font-size: 0.9rem; height: 42px;">
                 <option value="staff">Nhân viên</option>
+                <option value="student">Sinh viên</option>
                 <option value="importer">Người nhập kho</option>
                 <option value="exporter">Người xuất kho</option>
                 <option value="admin">Quản trị viên (Admin)</option>
@@ -2007,6 +2095,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
   <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+
 // --- QUẢN LÝ DỮ LIỆU & CẤU HÌNH ---
 const MOCK_STORAGE_KEY = 'LAB_INVENTORY_MOCK_V5';
 const CONFIG_STORAGE_KEY = 'LAB_INVENTORY_CONFIG_V5';
@@ -2033,7 +2122,8 @@ const DEFAULT_CONFIGS = {
   TAB_NAME_EXPORT: "Duyệt & Xuất",
   TAB_NAME_IMPORT: "Nhập Kho",
   TAB_NAME_HISTORY: "Nhật Ký",
-  TAB_NAME_DASHBOARD: "Biểu Đồ"
+  TAB_NAME_DASHBOARD: "Biểu Đồ",
+  customFields: []
 };
 
 // Dữ liệu ban đầu mô phỏng file Excel có sẵn lịch sử giả lập để trực quan hơn
@@ -2064,9 +2154,74 @@ const INITIAL_MOCK_DATA = {
 let appData = null;
 let appConfig = null;
 let currentRole = 'staff'; 
-let cart = []; 
+let cart = JSON.parse(localStorage.getItem('LAB_EXPORT_CART') || '[]');
 let importCart = JSON.parse(localStorage.getItem('LAB_IMPORT_CART_V5') || '[]');
 let searchQuery = ''; // Lưu từ khóa tìm kiếm toàn cục để lọc trước khi render
+
+function saveCart() {
+  localStorage.setItem('LAB_EXPORT_CART', JSON.stringify(cart));
+}
+
+function groupRequests(reqs) {
+  const sorted = [...(reqs || [])].sort((a, b) => new Date(a.Ngay_Yeu_Cau).getTime() - new Date(b.Ngay_Yeu_Cau).getTime());
+  const groups = [];
+  
+  sorted.forEach(req => {
+    const reqTime = new Date(req.Ngay_Yeu_Cau).getTime();
+    // Gộp các yêu cầu xuất kho của cùng 1 người gửi cách nhau dưới 15 giây
+    const match = groups.find(g => 
+      g.Nguoi_Yeu_Cau === req.Nguoi_Yeu_Cau &&
+      g.Muc_Dich === req.Muc_Dich &&
+      g.Trang_Thai === req.Trang_Thai &&
+      Math.abs(new Date(g.Ngay_Yeu_Cau).getTime() - reqTime) <= 15000
+    );
+    
+    if (match) {
+      match.items.push(req);
+    } else {
+      groups.push({
+        Ngay_Yeu_Cau: req.Ngay_Yeu_Cau,
+        Nguoi_Yeu_Cau: req.Nguoi_Yeu_Cau,
+        Muc_Dich: req.Muc_Dich,
+        Ghi_Chu: req.Ghi_Chu,
+        Trang_Thai: req.Trang_Thai,
+        Ly_Do_Tu_Choi: req.Ly_Do_Tu_Choi || '',
+        items: [req]
+      });
+    }
+  });
+  return groups;
+}
+
+function groupExports(exports) {
+  const sorted = [...(exports || [])].sort((a, b) => new Date(a.Ngay_Xuat).getTime() - new Date(b.Ngay_Xuat).getTime());
+  const groups = [];
+  
+  sorted.forEach(exp => {
+    const expTime = new Date(exp.Ngay_Xuat).getTime();
+    // Gộp các giao dịch xuất kho của cùng 1 người nhận cách nhau dưới 15 giây
+    const match = groups.find(g => 
+      g.Nguoi_Nhan === exp.Nguoi_Nhan &&
+      g.Muc_Dich === exp.Muc_Dich &&
+      g.Nguoi_Xuat === exp.Nguoi_Xuat &&
+      Math.abs(new Date(g.Ngay_Xuat).getTime() - expTime) <= 15000
+    );
+    
+    if (match) {
+      match.items.push(exp);
+    } else {
+      groups.push({
+        Ngay_Xuat: exp.Ngay_Xuat,
+        Nguoi_Nhan: exp.Nguoi_Nhan,
+        Muc_Dich: exp.Muc_Dich,
+        Nguoi_Xuat: exp.Nguoi_Xuat,
+        Ghi_Chu: exp.Ghi_Chu,
+        items: [exp]
+      });
+    }
+  });
+  return groups;
+}
 
 function removeVietnameseTones(str) {
   if (!str) return '';
@@ -2094,6 +2249,7 @@ function getPinForRole(role) {
   if (role === 'importer') return appConfig.importerPin || '2222';
   if (role === 'exporter') return appConfig.exporterPin || '3333';
   if (role === 'staff') return appConfig.staffPin || '1111';
+  if (role === 'student') return appConfig.studentPin || '0';
   return '';
 }
 
@@ -2106,8 +2262,10 @@ function checkUserSession() {
   if (remember && role && savedPin && loginTime) {
     const oneMonthMs = 30 * 24 * 60 * 60 * 1000;
     if (Date.now() - loginTime < oneMonthMs) {
-      const currentPin = getPinForRole(role);
-      if (savedPin === currentPin) {
+      const currentPin = getPinForRole(role).toString().trim();
+      const adminPin = (appConfig.adminPin || '1234').toString().trim();
+      const savedPinStr = savedPin.toString().trim();
+      if (savedPinStr === currentPin || savedPinStr === adminPin) {
         currentRole = role;
         return true;
       }
@@ -2117,8 +2275,10 @@ function checkUserSession() {
   const sRole = sessionStorage.getItem('LAB_SESSION_ROLE');
   const sSavedPin = sessionStorage.getItem('LAB_SESSION_PIN');
   if (sRole && sSavedPin) {
-    const currentPin = getPinForRole(sRole);
-    if (sSavedPin === currentPin) {
+    const currentPin = getPinForRole(sRole).toString().trim();
+    const adminPin = (appConfig.adminPin || '1234').toString().trim();
+    const sSavedPinStr = sSavedPin.toString().trim();
+    if (sSavedPinStr === currentPin || sSavedPinStr === adminPin) {
       currentRole = sRole;
       return true;
     }
@@ -2174,6 +2334,7 @@ function initSupabase() {
 function init() {
   const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
   appConfig = savedConfig ? JSON.parse(savedConfig) : { ...DEFAULT_CONFIGS };
+  if (!appConfig.customFields) appConfig.customFields = [];
   if (!appConfig.supabaseUrl) appConfig.supabaseUrl = DEFAULT_CONFIGS.supabaseUrl;
   if (!appConfig.supabaseKey) appConfig.supabaseKey = DEFAULT_CONFIGS.supabaseKey;
   initSupabase();
@@ -2181,12 +2342,25 @@ function init() {
   if (!appConfig.staffPin) {
     appConfig.staffPin = '1111';
   }
+  if (!appConfig.studentPin) {
+    appConfig.studentPin = '0';
+  }
   if (!appConfig.permissions) {
     appConfig.permissions = {
-      staff: { code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false },
-      importer: { code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true },
-      exporter: { code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true }
+      staff: { code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false, delete: false },
+      student: { code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false, delete: false },
+      importer: { code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true, delete: false },
+      exporter: { code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true, delete: false }
     };
+  } else {
+    if (!appConfig.permissions.student) {
+      appConfig.permissions.student = { code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false, delete: false };
+    }
+    ['staff', 'student', 'importer', 'exporter'].forEach(role => {
+      if (appConfig.permissions[role] && appConfig.permissions[role].delete === undefined) {
+        appConfig.permissions[role].delete = false;
+      }
+    });
   }
 
   if (window.location.href.includes('script.google.com') && (!appConfig.apiUrl || !appConfig.apiUrl.includes('script.google.com'))) {
@@ -2208,6 +2382,7 @@ function init() {
 
   applyAppConfigUI();
   setupEventListeners();
+  renderDynamicCustomFieldInputs();
 
   if (hasSession) {
     showLoginScreen(false);
@@ -2250,7 +2425,8 @@ async function sendRequest(payload) {
             don_vi: rawItem.unit || existing.don_vi,
             han_su_dung: rawItem.expiry || existing.han_su_dung,
             nam_nhap: rawItem.importYear || existing.nam_nhap,
-            ghi_chu: rawItem.note || existing.ghi_chu
+            ghi_chu: rawItem.note || existing.ghi_chu,
+            dac_tinh_ky_thuat: rawItem.techSpecs || existing.dac_tinh_ky_thuat
           }).eq('id', itemId);
           if (error) throw error;
         } else {
@@ -2268,7 +2444,8 @@ async function sendRequest(payload) {
             don_vi: rawItem.unit || 'Cái',
             han_su_dung: rawItem.expiry,
             nam_nhap: rawItem.importYear,
-            ghi_chu: rawItem.note
+            ghi_chu: rawItem.note,
+            dac_tinh_ky_thuat: rawItem.techSpecs || ''
           });
           if (error) throw error;
         }
@@ -2411,8 +2588,8 @@ async function sendRequest(payload) {
         throw new Error('Đã quá 20 phút kể từ lúc gửi yêu cầu, không thể hủy!');
       }
       
-      const { error: delErr } = await supabaseClient.from('yeu_cau_xuat').delete().eq('id_yeu_cau', payload.requestId);
-      if (delErr) throw delErr;
+      const { error: updErr } = await supabaseClient.from('yeu_cau_xuat').update({ trang_thai: 'Da_Huy' }).eq('id_yeu_cau', payload.requestId);
+      if (updErr) throw updErr;
       
       return { success: true };
     }
@@ -2498,6 +2675,7 @@ async function sendRequest(payload) {
       };
       
       const changes = [];
+      const oldValsMap = {};
       const newVals = {
         ma_so: (payload.code || '').trim(),
         ten: payload.name.trim(),
@@ -2509,25 +2687,39 @@ async function sendRequest(payload) {
         han_su_dung: (payload.expiry || '').trim(),
         nam_nhap: (payload.importYear || '').trim(),
         ghi_chu: (payload.note || '').trim(),
-        dac_tinh_ky_thuat: (payload.techSpecs !== undefined ? payload.techSpecs : (oldItem.dac_tinh_ky_thuat || '')).trim()
+        dac_tinh_ky_thuat: (typeof (payload.techSpecs !== undefined ? payload.techSpecs : (oldItem.dac_tinh_ky_thuat || '')) === 'object' ? JSON.stringify(payload.techSpecs !== undefined ? payload.techSpecs : (oldItem.dac_tinh_ky_thuat || '')) : (payload.techSpecs !== undefined ? payload.techSpecs : (oldItem.dac_tinh_ky_thuat || '')).toString()).trim()
       };
       
       Object.keys(fieldNames).forEach(k => {
-        const oldStr = (oldItem[k] || '').toString().trim();
-        const newStr = (newVals[k] || '').toString().trim();
+        let oldStr = '';
+        let newStr = '';
+        if (k === 'dac_tinh_ky_thuat') {
+          const oldVal = oldItem[k];
+          const newVal = newVals[k];
+          oldStr = (typeof oldVal === 'object' ? JSON.stringify(oldVal || {}) : (oldVal || '').toString()).trim();
+          newStr = (typeof newVal === 'object' ? JSON.stringify(newVal || {}) : (newVal || '').toString()).trim();
+        } else {
+          oldStr = (oldItem[k] || '').toString().trim();
+          newStr = (newVals[k] || '').toString().trim();
+        }
         if (oldStr !== newStr) {
           changes.push(`${fieldNames[k]}: [${oldStr}] -> [${newStr}]`);
+          oldValsMap[k] = oldItem[k] !== null ? oldItem[k] : '';
         }
       });
       
       if (changes.length > 0) {
         const logId = "EDIT" + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
         const editor = payload.user || "Admin";
+        const detailObj = {
+          formatted: changes.join("; "),
+          oldValues: oldValsMap
+        };
         const { error: logErr } = await supabaseClient.from('lich_su_sua_thong_tin').insert({
           id_log: logId,
           id_vat_tu: payload.itemId,
           ten_vat_tu: oldItem.ten,
-          chi_tiet: changes.join("; "),
+          chi_tiet: JSON.stringify(detailObj),
           ngay_chinh_sua: new Date().toISOString(),
           nguoi_sua: editor
         });
@@ -2538,8 +2730,94 @@ async function sendRequest(payload) {
     
     // 7. Delete Chemical
     if (payload.action === 'delete_chemical') {
-      const { error } = await supabaseClient.from('kho_vat_tu').delete().eq('id', payload.itemId);
-      if (error) throw error;
+      // Lấy thông tin vật tư trước khi xóa để làm nhật ký
+      const { data: item, error: fetchErr } = await supabaseClient.from('kho_vat_tu').select('ten').eq('id', payload.itemId).single();
+      if (fetchErr) throw fetchErr;
+      
+      const { error: delErr } = await supabaseClient.from('kho_vat_tu').delete().eq('id', payload.itemId);
+      if (delErr) throw delErr;
+      
+      // Ghi nhận nhật ký xóa hóa chất
+      const logId = "DEL" + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+      const editor = payload.user || "Admin";
+      const { error: logErr } = await supabaseClient.from('lich_su_sua_thong_tin').insert({
+        id_log: logId,
+        id_vat_tu: payload.itemId,
+        ten_vat_tu: item.ten,
+        chi_tiet: `Đã xóa hoàn toàn hóa chất/vật tư. Lý do: ${payload.reason || 'Không có lý do'}`,
+        ngay_chinh_sua: new Date().toISOString(),
+        nguoi_sua: editor
+      });
+      if (logErr) throw logErr;
+      
+      return { success: true };
+    }
+
+    // 7.5. Rollback Edit (Khôi phục thông tin)
+    if (payload.action === 'rollback_edit') {
+      const { data: log, error: logErr } = await supabaseClient.from('lich_su_sua_thong_tin').select('*').eq('id_log', payload.logId).single();
+      if (logErr) throw logErr;
+      
+      let oldValues = null;
+      try {
+        let parsed = log.chi_tiet;
+        if (typeof parsed === 'string') {
+          parsed = JSON.parse(parsed);
+        }
+        if (parsed && typeof parsed === 'object') {
+          oldValues = parsed.oldValues;
+        } else {
+          throw new Error('Not an object');
+        }
+      } catch (e) {
+        // Parse log dạng legacy cũ
+        oldValues = {};
+        const fieldMapping = {
+          "Mã số": "ma_so",
+          "Tên vật tư": "ten",
+          "Xuất xứ": "hang",
+          "Quy cách": "quy_cach",
+          "Nơi bảo quản": "noi_bao_quan",
+          "Số lượng tồn": "so_luong",
+          "Đơn vị tính": "don_vi",
+          "Hạn sử dụng": "han_su_dung",
+          "Năm nhập": "nam_nhap",
+          "Ghi chú": "ghi_chu",
+          "Đặc tính kỹ thuật": "dac_tinh_ky_thuat"
+        };
+        const parts = (log.chi_tiet || '').split("; ");
+        parts.forEach(part => {
+          const match = part.match(/^([^:]+):\s*\[(.*?)\]\s*->\s*\[(.*?)\]$/);
+          if (match) {
+            const label = match[1].trim();
+            const oldValue = match[2];
+            const dbCol = fieldMapping[label];
+            if (dbCol) {
+              oldValues[dbCol] = dbCol === 'so_luong' ? parseFloat(oldValue) || 0 : oldValue;
+            }
+          }
+        });
+      }
+      
+      if (!oldValues || Object.keys(oldValues).length === 0) {
+        throw new Error('Không thể phân tích dữ liệu cũ để khôi phục!');
+      }
+      
+      const { error: updErr } = await supabaseClient.from('kho_vat_tu').update(oldValues).eq('id', log.id_vat_tu);
+      if (updErr) throw updErr;
+      
+      const rollbackLogId = "EDIT" + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+      const editor = payload.user || "Admin";
+      const { error: newLogErr } = await supabaseClient.from('lich_su_sua_thong_tin').insert({
+        id_log: rollbackLogId,
+        id_vat_tu: log.id_vat_tu,
+        ten_vat_tu: log.ten_vat_tu,
+        chi_tiet: `Khôi phục thông tin về phiên bản ngày ${new Date(log.ngay_chinh_sua).toLocaleString('vi-VN')} (ID Log gốc: ${payload.logId})`,
+        ngay_chinh_sua: new Date().toISOString(),
+        nguoi_sua: editor
+      });
+      if (newLogErr) throw newLogErr;
+      
       return { success: true };
     }
     
@@ -2555,30 +2833,48 @@ async function sendRequest(payload) {
     
     // 9. Undo Export
     if (payload.action === 'undo_export') {
-      const { data: exp, error: expErr } = await supabaseClient.from('lich_su_xuat').select('*').eq('id_giao_dich', payload.transactionId).single();
-      if (expErr) throw expErr;
-      
-      const { data: inv, error: invErr } = await supabaseClient.from('kho_vat_tu').select('so_luong').eq('id', exp.id_vat_tu).single();
-      if (invErr) throw invErr;
-      
-      const newQty = (parseFloat(inv.so_luong) || 0) + (parseFloat(exp.so_luong) || 0);
-      const { error: updErr } = await supabaseClient.from('kho_vat_tu').update({ so_luong: newQty }).eq('id', exp.id_vat_tu);
-      if (updErr) throw updErr;
-      
-      const { error: delErr } = await supabaseClient.from('lich_su_xuat').delete().eq('id_giao_dich', payload.transactionId);
-      if (delErr) throw delErr;
+      const txIds = Array.isArray(payload.transactionIds)
+        ? payload.transactionIds
+        : (payload.transactionIds ? payload.transactionIds.split(',') : [payload.transactionId].filter(Boolean));
+
+      for (const txId of txIds) {
+        const { data: exp, error: expErr } = await supabaseClient.from('lich_su_xuat').select('*').eq('id_giao_dich', txId).maybeSingle();
+        if (expErr) throw expErr;
+        if (!exp) continue;
+        
+        const { data: inv, error: invErr } = await supabaseClient.from('kho_vat_tu').select('so_luong').eq('id', exp.id_vat_tu).maybeSingle();
+        if (invErr) throw invErr;
+        if (inv) {
+          const newQty = (parseFloat(inv.so_luong) || 0) + (parseFloat(exp.so_luong) || 0);
+          const { error: updErr } = await supabaseClient.from('kho_vat_tu').update({ so_luong: newQty }).eq('id', exp.id_vat_tu);
+          if (updErr) throw updErr;
+        }
+        
+        const { error: delErr } = await supabaseClient.from('lich_su_xuat').delete().eq('id_giao_dich', txId);
+        if (delErr) throw delErr;
+      }
       
       return { success: true };
     }
     
     // 10. Clean History
     if (payload.action === 'clean_history') {
-      const days = parseInt(payload.days) || 30;
-      const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
-      await supabaseClient.from('lich_su_nhap').delete().lt('ngay_nhap', cutoffDate);
-      await supabaseClient.from('lich_su_xuat').delete().lt('ngay_xuat', cutoffDate);
-      await supabaseClient.from('lich_su_sua_thong_tin').delete().lt('ngay_chinh_sua', cutoffDate);
-      await supabaseClient.from('yeu_cau_xuat').delete().lt('ngay_yeu_cau', cutoffDate).neq('trang_thai', 'Cho_Duyet');
+      if (payload.months === 'all_processed') {
+        // Xóa sạch tất cả các yêu cầu đã duyệt/từ chối/hủy, không giới hạn thời gian
+        await supabaseClient.from('yeu_cau_xuat').delete().neq('trang_thai', 'Cho_Duyet');
+      } else {
+        let days = 30;
+        if (payload.months) {
+          days = parseInt(payload.months) * 30;
+        } else if (payload.days) {
+          days = parseInt(payload.days);
+        }
+        const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+        await supabaseClient.from('lich_su_nhap').delete().lt('ngay_nhap', cutoffDate);
+        await supabaseClient.from('lich_su_xuat').delete().lt('ngay_xuat', cutoffDate);
+        await supabaseClient.from('lich_su_sua_thong_tin').delete().lt('ngay_chinh_sua', cutoffDate);
+        await supabaseClient.from('yeu_cau_xuat').delete().lt('ngay_yeu_cau', cutoffDate).neq('trang_thai', 'Cho_Duyet');
+      }
       return { success: true };
     }
     
@@ -2796,7 +3092,10 @@ async function loadData() {
       
       if (cfgRes.data && cfgRes.data.value) {
         try {
-          const parsedConfig = JSON.parse(cfgRes.data.value);
+          let parsedConfig = cfgRes.data.value;
+          if (typeof parsedConfig === 'string') {
+            parsedConfig = JSON.parse(parsedConfig);
+          }
           appConfig = { ...appConfig, ...parsedConfig };
           localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
           renderSettings();
@@ -2952,6 +3251,7 @@ function showLoading(show) {
 // --- HỆ THỐNG PHÂN QUYỀN 4 VAI TRÒ ---
 function updateNavigationByRole() {
   const isStaff = currentRole === 'staff';
+  const isStudent = currentRole === 'student';
   const isImporter = currentRole === 'importer';
   const isExporter = currentRole === 'exporter';
   const isAdmin = currentRole === 'admin';
@@ -2964,10 +3264,10 @@ function updateNavigationByRole() {
   };
   
   toggleNav('nav-inventory', true);
-  toggleNav('nav-cart', isStaff || isExporter || (isAdmin && appConfig.showAdminCartTab));
+  toggleNav('nav-cart', isStaff || isStudent || isExporter || (isAdmin && appConfig.showAdminCartTab));
   toggleNav('nav-import', isImporter || (isAdmin && appConfig.showAdminImportTab));
   toggleNav('nav-export', isExporter || (isAdmin && appConfig.showAdminExportTab));
-  toggleNav('nav-history', isImporter || isExporter || isAdmin);
+  toggleNav('nav-history', isStaff || isImporter || isExporter || isAdmin);
   toggleNav('nav-dashboard', isImporter || isExporter || isAdmin);
   toggleNav('nav-notifications', isStaff || isAdmin);
   toggleNav('nav-settings', isAdmin);
@@ -2985,7 +3285,8 @@ function updateNavigationByRole() {
       'admin': 'Quản trị viên (Admin)',
       'exporter': 'Người xuất kho',
       'importer': 'Người nhập kho',
-      'staff': 'Nhân viên'
+      'staff': 'Nhân viên',
+      'student': 'Sinh viên'
     };
     roleBadge.innerText = roleNames[currentRole] || 'Nhân viên';
   }
@@ -3234,6 +3535,7 @@ function setupEventListeners() {
     const pinImporter = document.getElementById('importer-pin-input').value.trim();
     const pinExporter = document.getElementById('exporter-pin-input').value.trim();
     const pinStaff = document.getElementById('staff-pin-input').value.trim();
+    const pinStudent = document.getElementById('student-pin-input') ? document.getElementById('student-pin-input').value.trim() : '';
     const urlInput = document.getElementById('supabase-url-input') ? document.getElementById('supabase-url-input').value.trim() : '';
     const keyInput = document.getElementById('supabase-key-input') ? document.getElementById('supabase-key-input').value.trim() : '';
     
@@ -3241,6 +3543,7 @@ function setupEventListeners() {
     if (pinImporter) appConfig.importerPin = pinImporter;
     if (pinExporter) appConfig.exporterPin = pinExporter;
     appConfig.staffPin = pinStaff;
+    if (pinStudent !== '') appConfig.studentPin = pinStudent;
     appConfig.supabaseUrl = urlInput;
     appConfig.supabaseKey = keyInput;
     
@@ -3259,7 +3562,21 @@ function setupEventListeners() {
         qty: document.getElementById('p-staff-qty').checked,
         expiry: document.getElementById('p-staff-expiry').checked,
         year: document.getElementById('p-staff-year').checked,
-        note: document.getElementById('p-staff-note').checked
+        note: document.getElementById('p-staff-note').checked,
+        delete: document.getElementById('p-staff-delete').checked
+      },
+      student: {
+        code: document.getElementById('p-student-code').checked,
+        name: document.getElementById('p-student-name').checked,
+        brand: document.getElementById('p-student-brand').checked,
+        spec: document.getElementById('p-student-spec').checked,
+        unit: document.getElementById('p-student-unit').checked,
+        location: document.getElementById('p-student-location').checked,
+        qty: document.getElementById('p-student-qty').checked,
+        expiry: document.getElementById('p-student-expiry').checked,
+        year: document.getElementById('p-student-year').checked,
+        note: document.getElementById('p-student-note').checked,
+        delete: document.getElementById('p-student-delete').checked
       },
       importer: {
         code: document.getElementById('p-importer-code').checked,
@@ -3271,7 +3588,8 @@ function setupEventListeners() {
         qty: document.getElementById('p-importer-qty').checked,
         expiry: document.getElementById('p-importer-expiry').checked,
         year: document.getElementById('p-importer-year').checked,
-        note: document.getElementById('p-importer-note').checked
+        note: document.getElementById('p-importer-note').checked,
+        delete: document.getElementById('p-importer-delete').checked
       },
       exporter: {
         code: document.getElementById('p-exporter-code').checked,
@@ -3283,7 +3601,8 @@ function setupEventListeners() {
         qty: document.getElementById('p-exporter-qty').checked,
         expiry: document.getElementById('p-exporter-expiry').checked,
         year: document.getElementById('p-exporter-year').checked,
-        note: document.getElementById('p-exporter-note').checked
+        note: document.getElementById('p-exporter-note').checked,
+        delete: document.getElementById('p-exporter-delete').checked
       }
     };
     
@@ -3369,6 +3688,7 @@ function switchTab(tabId) {
     renderInventory();
   } else if (tabId === 'cart') {
     renderCart();
+    renderCancelledRequests();
   } else if (tabId === 'export') {
     renderAdminRequests();
   } else if (tabId === 'history') {
@@ -3545,11 +3865,49 @@ function fillSelect(elemId, dataArray) {
   }
 }
 
+// --- RENDER HÀNG TIÊU ĐỀ BẢNG TỒN KHO THỰC TẾ ---
+function renderInventoryHeaders() {
+  const headerRow = document.getElementById('inventory-table-header-row');
+  if (!headerRow) return;
+  
+  const customFields = appConfig.customFields || [];
+  const isStudent = currentRole === 'student';
+  
+  let html = `
+    <th>Mã Số</th>
+    <th>Tên Vật Tư / Hóa Chất</th>
+    <th>Xuất Xứ / Hãng</th>
+    <th>Quy Cách</th>
+  `;
+  
+  if (!isStudent) {
+    html += `<th>Vị Trí Bảo Quản</th>`;
+  }
+  
+  html += `<th>Đơn Vị</th>`;
+  
+  customFields.forEach(cf => {
+    html += `<th>${escapeHtml(cf.label)}</th>`;
+  });
+  
+  if (!isStudent) {
+    html += `<th>Số Lượng Tồn</th>`;
+  }
+  
+  html += `
+    <th style="width: 140px;">Cần xuất</th>
+    <th style="text-align: right;" class="admin-only-cell">Hành Động</th>
+  `;
+  
+  headerRow.innerHTML = html;
+}
+
 // --- RENDER BẢNG TỒN KHO THỰC TẾ ---
 function renderInventory() {
   const tbody = document.getElementById('inventory-table-body');
   if (!tbody || !appData) return;
 
+  renderInventoryHeaders();
   tbody.innerHTML = '';
   
   // Áp dụng bộ lọc tìm kiếm
@@ -3557,6 +3915,9 @@ function renderInventory() {
   const keywordParts = cleanKeyword.split(/\s+/).filter(part => part.length > 0);
   
   const filteredInventory = appData.inventory.filter(item => {
+    if (currentRole === 'student' && (parseFloat(item.So_Luong) || 0) <= 0) {
+      return false;
+    }
     if (keywordParts.length === 0) return true;
     const itemText = removeVietnameseTones(
       `${item.Ma_So || ''} ${item.Ten || ''} ${item.Hang || ''} ${item.Quy_Cach || ''} ${item.Noi_Bao_Quan || ''} ${item.Ghi_Chu || ''}`
@@ -3564,8 +3925,10 @@ function renderInventory() {
     return keywordParts.every(part => itemText.includes(part));
   });
 
+  const isStudent = currentRole === 'student';
+  const totalCols = (isStudent ? 7 : 9) + (appConfig.customFields || []).length;
   if (filteredInventory.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1rem;">Không tìm thấy vật tư nào phù hợp.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${totalCols}" style="text-align: center; color: var(--text-muted); padding: 1rem;">Không tìm thấy vật tư nào phù hợp.</td></tr>`;
     return;
   }
 
@@ -3580,15 +3943,16 @@ function renderInventory() {
     }
 
     const isAdmin = currentRole === 'admin';
-    const canRequest = currentRole === 'staff' || currentRole === 'exporter' || currentRole === 'admin';
+    const canRequest = currentRole === 'staff' || currentRole === 'student' || currentRole === 'exporter' || currentRole === 'admin';
 
     // Cột Cần xuất chọn nhanh số lượng
     let qtySelectHtml = '';
     if (item.So_Luong > 0 && canRequest) {
+      const maxVal = isStudent ? 9999 : item.So_Luong;
       qtySelectHtml = `
         <div class="qty-control-sm">
           <button type="button" class="qty-btn-sm" onclick="adjustRowQty('${item.ID}', -1)">-</button>
-          <input type="number" id="row-qty-${item.ID}" class="qty-input-sm" value="1" min="1" max="${item.So_Luong}">
+          <input type="number" id="row-qty-${item.ID}" class="qty-input-sm" value="1" min="1" max="${maxVal}">
           <button type="button" class="qty-btn-sm" onclick="adjustRowQty('${item.ID}', 1)">+</button>
         </div>
       `;
@@ -3626,13 +3990,35 @@ function renderInventory() {
     const cleanHang = (item.Hang && item.Hang !== 'K/P') ? item.Hang : '';
     const cleanQuyCach = (item.Quy_Cach && item.Quy_Cach !== 'K/P') ? item.Quy_Cach : '';
 
+    // Vẽ các cột custom fields động
+    let customCellsHtml = '';
+    const customFields = appConfig.customFields || [];
+    customFields.forEach(cf => {
+      const val = getCustomFieldValue(item, cf.key);
+      customCellsHtml += `<td>${escapeHtml(val || cf.defaultValue || '-')}</td>`;
+    });
+
+    const nameCellHtml = isStudent 
+      ? `<strong>${item.Ten}</strong>` 
+      : `<span class="clickable-item-name" style="cursor: pointer; color: var(--primary); text-decoration: none;" onclick="openItemHistoryModal('${item.ID}')"><strong>${item.Ten}</strong></span>`;
+      
+    const qtyBadgeHtml = isStudent 
+      ? ''
+      : `<td><span class="badge ${qtyBadgeClass}">${item.So_Luong} ${item.Don_Vi || 'cái'}</span></td>`;
+
+    const locationCellHtml = isStudent
+      ? ''
+      : `<td><span style="color: var(--success); font-weight: 500;">${item.Noi_Bao_Quan || '-'}</span></td>`;
+
     tr.innerHTML = `
       <td><span style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted);">${item.Ma_So || '-'}</span></td>
-      <td><span class="clickable-item-name" style="cursor: pointer; color: var(--primary); text-decoration: none;" onclick="openItemHistoryModal('${item.ID}')"><strong>${item.Ten}</strong></span></td>
+      <td>${nameCellHtml}</td>
       <td>${cleanHang ? `<span class="badge badge-primary">${cleanHang}</span>` : '-'}</td>
       <td>${cleanQuyCach || '-'}</td>
-      <td><span style="color: var(--success); font-weight: 500;">${item.Noi_Bao_Quan || '-'}</span></td>
-      <td><span class="badge ${qtyBadgeClass}">${item.So_Luong} ${item.Don_Vi || 'cái'}</span></td>
+      ${locationCellHtml}
+      <td>${item.Don_Vi || 'Cái'}</td>
+      ${customCellsHtml}
+      ${qtyBadgeHtml}
       <td>${qtySelectHtml}</td>
       ${actionBtnHtml}
     `;
@@ -3644,6 +4030,10 @@ function renderInventory() {
 let currentViewingItemId = null;
 
 window.openItemHistoryModal = function(itemId) {
+  if (currentRole === 'student') {
+    alert("Bạn không có quyền xem lịch sử chi tiết của hóa chất / vật tư!");
+    return;
+  }
   if (!appData) return;
   const item = appData.inventory.find(i => i.ID === itemId);
   if (!item) return;
@@ -3670,7 +4060,7 @@ window.openItemHistoryModal = function(itemId) {
   
   const techSpecsArea = document.getElementById('item-detail-tech-specs');
   if (techSpecsArea) {
-    techSpecsArea.value = item.Dac_Tinh_Ky_Thuat || '';
+    techSpecsArea.value = getTechSpecsText(item) || '';
   }
 
   // Phân quyền nhãn nút lưu
@@ -3803,14 +4193,27 @@ window.addToCart = function(itemId) {
     return;
   }
 
-  if (qtyToAdd > item.So_Luong) {
+  if (currentRole === 'student') {
+    const pendingReqs = (!appData.requests ? [] : appData.requests).filter(req => 
+      req.Trang_Thai === 'Cho_Duyet' && 
+      req.Nguoi_Yeu_Cau && 
+      req.Nguoi_Yeu_Cau.toString().includes("Sinh viên")
+    );
+    const pendingGroupsCount = groupRequests(pendingReqs).length;
+    if (pendingGroupsCount >= 8) {
+      showToast('Bạn đã đạt tối đa 8 lượt yêu cầu đang chờ duyệt. Vui lòng đợi phê duyệt hoặc hủy bớt lô cũ!', 'danger');
+      return;
+    }
+  }
+
+  if (currentRole !== 'student' && qtyToAdd > item.So_Luong) {
     showToast('Số lượng thêm vượt quá tồn kho thực tế!', 'danger');
     return;
   }
 
   const existingCartItem = cart.find(c => c.itemId === itemId);
   if (existingCartItem) {
-    existingCartItem.qty = Math.min(qtyToAdd, item.So_Luong);
+    existingCartItem.qty = currentRole === 'student' ? qtyToAdd : Math.min(qtyToAdd, item.So_Luong);
   } else {
     cart.push({
       itemId: item.ID,
@@ -3820,11 +4223,12 @@ window.addToCart = function(itemId) {
       spec: item.Quy_Cach || '',
       qty: qtyToAdd,
       unit: item.Don_Vi || 'Cái',
-      maxQty: item.So_Luong,
+      maxQty: currentRole === 'student' ? 9999 : item.So_Luong,
       selected: true
     });
   }
 
+  saveCart();
   updateCartBadge();
   showToast(`Đã thêm ${qtyToAdd} ${item.Don_Vi} "${item.Ten}" vào giỏ hàng thành công!`, 'success');
 };
@@ -3858,7 +4262,7 @@ function renderCart() {
     
     const btn = document.getElementById('cart-submit-btn');
     if (btn) {
-      if (currentRole === 'staff') {
+      if (currentRole === 'staff' || currentRole === 'student') {
         btn.innerText = '📋 Gửi yêu cầu xuất kho';
         btn.className = 'btn btn-primary';
       } else {
@@ -3898,6 +4302,7 @@ function renderCart() {
     selectAll.onclick = () => {
       const isChecked = selectAll.checked;
       cart.forEach(c => c.selected = isChecked);
+      saveCart();
       renderCart();
     };
   }
@@ -3909,6 +4314,7 @@ window.toggleCartItemSelection = function(index) {
   }
   const selectAll = document.getElementById('cart-select-all');
   if (selectAll) selectAll.checked = cart.every(c => c.selected);
+  saveCart();
 };
 
 window.adjustCartQty = function(index, change) {
@@ -3916,6 +4322,7 @@ window.adjustCartQty = function(index, change) {
   let newVal = cart[index].qty + change;
   if (newVal >= 1 && newVal <= cart[index].maxQty) {
     cart[index].qty = newVal;
+    saveCart();
     renderCart();
   }
 };
@@ -3924,11 +4331,13 @@ window.changeCartQty = function(index, value) {
   if (!cart[index]) return;
   let val = parseInt(value) || 1;
   cart[index].qty = Math.min(Math.max(val, 1), cart[index].maxQty);
+  saveCart();
   renderCart();
 };
 
 window.removeFromCart = function(index) {
   cart.splice(index, 1);
+  saveCart();
   updateCartBadge();
   renderCart();
   showToast('Đã xóa vật tư khỏi giỏ hàng.', 'primary');
@@ -3957,17 +4366,31 @@ async function handleCartCheckoutSubmit(e) {
 
   showLoading(true);
 
-  const isStaff = currentRole === 'staff';
+  const isRequestMode = currentRole === 'staff' || currentRole === 'student';
 
-  if (isStaff) {
+  if (isRequestMode) {
+    if (currentRole === 'student') {
+      const pendingReqs = (!appData.requests ? [] : appData.requests).filter(req => 
+        req.Trang_Thai === 'Cho_Duyet' && 
+        req.Nguoi_Yeu_Cau && 
+        req.Nguoi_Yeu_Cau.toString().includes("Sinh viên")
+      );
+      const pendingGroupsCount = groupRequests(pendingReqs).length;
+      if (pendingGroupsCount >= 8) {
+        showToast('Bạn đã đạt tối đa 8 lượt yêu cầu đang chờ duyệt. Vui lòng đợi phê duyệt hoặc hủy bớt lô cũ!', 'danger');
+        showLoading(false);
+        return;
+      }
+    }
+    const finalRecipient = currentRole === 'student' ? ("Sinh viên của " + recipient) : recipient;
     const payload = {
       action: 'bulk_request_export',
       items: selectedItems,
-      recipient: recipient,
+      recipient: finalRecipient,
       purpose: purpose || 'Yêu cầu sử dụng',
       note: note,
       date: new Date().toISOString(),
-      pin: appConfig.staffPin
+      pin: currentRole === 'staff' ? appConfig.staffPin : appConfig.studentPin
     };
 
     try {
@@ -3975,6 +4398,7 @@ async function handleCartCheckoutSubmit(e) {
       if (json.success) {
         showToast('Đã gửi toàn bộ giỏ hàng lên hệ thống phê duyệt!', 'success');
         cart = cart.filter(c => !c.selected);
+        saveCart();
         updateCartBadge();
         document.getElementById('cart-action-form').reset();
         await loadData();
@@ -3985,7 +4409,7 @@ async function handleCartCheckoutSubmit(e) {
     } catch (err) {
       console.error(err);
       showToast('Supabase lỗi. Ghi nhận yêu cầu cục bộ.', 'warning');
-      executeBulkRequestLocally(selectedItems, recipient, purpose, note);
+      executeBulkRequestLocally(selectedItems, finalRecipient, purpose, note);
     }
   } else {
     let successCount = 0;
@@ -4042,6 +4466,7 @@ async function handleCartCheckoutSubmit(e) {
 
     showToast(`Đã xuất kho thành công ${successCount}/${selectedItems.length} mặt hàng!`, 'success');
     cart = cart.filter(c => !c.selected);
+    saveCart();
     updateCartBadge();
     document.getElementById('cart-action-form').reset();
     await loadData();
@@ -4072,6 +4497,7 @@ function executeBulkRequestLocally(selectedItems, recipient, purpose, note) {
   saveMockData();
   showToast('Đã lưu cục bộ toàn bộ yêu cầu xuất kho!', 'success');
   cart = cart.filter(c => !c.selected);
+  saveCart();
   updateCartBadge();
   document.getElementById('cart-action-form').reset();
   renderCart();
@@ -4084,34 +4510,82 @@ function renderMyRequests() {
   if (!tbody || !appData) return;
 
   tbody.innerHTML = '';
-  if (!appData.requests || appData.requests.length === 0) {
+  const isStudent = currentRole === 'student';
+  const requestsToRender = (!appData.requests ? [] : appData.requests).filter(req => {
+    if (isStudent) {
+      // Chỉ hiển thị yêu cầu của sinh viên
+      return req.Nguoi_Yeu_Cau && req.Nguoi_Yeu_Cau.toString().includes("Sinh viên");
+    }
+    return true;
+  });
+
+  const grouped = groupRequests(requestsToRender);
+  grouped.sort((a, b) => {
+    const aPending = a.Trang_Thai === 'Cho_Duyet';
+    const bPending = b.Trang_Thai === 'Cho_Duyet';
+    if (aPending && !bPending) return -1;
+    if (!aPending && bPending) return 1;
+    return new Date(b.Ngay_Yeu_Cau).getTime() - new Date(a.Ngay_Yeu_Cau).getTime();
+  });
+
+  if (grouped.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Chưa gửi yêu cầu xuất nào.</td></tr>`;
     return;
   }
 
-  [...appData.requests].reverse().forEach(req => {
+  grouped.forEach(group => {
     let statusBadge = '';
-    if (req.Trang_Thai === 'Cho_Duyet') statusBadge = '<span class="badge badge-warning">Đang chờ duyệt</span>';
-    else if (req.Trang_Thai === 'Da_Duyet') statusBadge = `<span class="badge badge-success">Đã duyệt (${req.So_Luong_Yeu_Cau} ${req.Don_Vi})</span>`;
-    else statusBadge = '<span class="badge badge-danger">Từ chối</span>';
+    if (group.Trang_Thai === 'Cho_Duyet') {
+      statusBadge = '<span class="badge badge-warning">Đang chờ duyệt</span>';
+    } else if (group.Trang_Thai === 'Da_Duyet') {
+      statusBadge = '<span class="badge badge-success">Đã duyệt</span>';
+    } else if (group.Trang_Thai === 'Da_Huy') {
+      statusBadge = '<span class="badge badge-secondary">Đã hủy</span>';
+    } else {
+      statusBadge = `<span class="badge badge-danger" title="${escapeHtml(group.Ly_Do_Tu_Choi || 'Từ chối')}">Từ chối</span>`;
+    }
 
-    const dateStr = req.Ngay_Yeu_Cau ? new Date(req.Ngay_Yeu_Cau).toLocaleString('vi-VN') : '-';
+    const dateStr = group.Ngay_Yeu_Cau ? new Date(group.Ngay_Yeu_Cau).toLocaleString('vi-VN') : '-';
 
     // Điều kiện hủy: đang chờ duyệt và gửi chưa quá 20 phút
-    const requestTime = req.Ngay_Yeu_Cau ? new Date(req.Ngay_Yeu_Cau).getTime() : 0;
-    const isCancellable = req.Trang_Thai === 'Cho_Duyet' && (Date.now() - requestTime) < 20 * 60 * 1000;
+    const requestTime = group.Ngay_Yeu_Cau ? new Date(group.Ngay_Yeu_Cau).getTime() : 0;
+    const isCancellable = group.Trang_Thai === 'Cho_Duyet' && (Date.now() - requestTime) < 20 * 60 * 1000;
+    
+    const reqIdsStr = group.items.map(it => it.ID_Yeu_Cau).join(',');
     const cancelBtnHtml = isCancellable ? 
-      `<button class="btn btn-danger btn-sm" onclick="cancelMyRequest('${req.ID_Yeu_Cau}')" style="padding: 0.15rem 0.35rem; font-size: 0.7rem; border-radius: 4px; border: none;" title="Hủy yêu cầu">❌ Hủy</button>` : 
+      `<button class="btn btn-danger btn-sm" onclick="cancelMyRequest('${reqIdsStr}')" style="padding: 0.15rem 0.35rem; font-size: 0.7rem; border-radius: 4px; border: none;" title="Hủy nhóm yêu cầu">❌ Hủy</button>` : 
       `<span style="color: var(--text-muted); font-size: 0.8rem;">-</span>`;
+
+    // Vẽ danh sách vật tư dạng bảng con để căn chỉnh hoàn hảo
+    const subTableHtml = `
+      <td style="padding: 0;">
+        <table style="width: 100%; border-collapse: collapse; background: transparent; margin: 0;">
+          <tbody>
+            ${group.items.map((it, idx) => `
+              <tr style="border-bottom: 1px solid var(--border); background: transparent;">
+                <td style="padding: 0.5rem; border: none; font-size: 0.85rem;">
+                  <strong>${idx + 1}. ${escapeHtml(it.Ten)}</strong>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">
+                    (${escapeHtml(it.Hang || 'K/P')} - ${escapeHtml(it.Quy_Cach || 'K/P')})
+                  </span>
+                </td>
+                <td style="padding: 0.5rem; border: none; width: 90px; text-align: right; font-weight: 600;">
+                  ${it.So_Luong_Yeu_Cau} ${it.Don_Vi || 'Cái'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </td>
+    `;
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><strong>${req.Ten}</strong></td>
-      <td>${req.So_Luong_Yeu_Cau} ${req.Don_Vi}</td>
-      <td>${req.Nguoi_Yeu_Cau}</td>
+      ${subTableHtml}
+      <td>${escapeHtml(group.Nguoi_Yeu_Cau || '-')}</td>
       <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
       <td>${statusBadge}</td>
-      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${req.Ghi_Chu || '-'}</span></td>
+      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(group.Ghi_Chu || '-')}</span></td>
       <td style="text-align: center; vertical-align: middle;">${cancelBtnHtml}</td>
     `;
     tbody.appendChild(tr);
@@ -4119,35 +4593,37 @@ function renderMyRequests() {
 }
 
 window.cancelMyRequest = async function(reqId) {
-  if (!confirm('Bạn có chắc chắn muốn hủy yêu cầu xuất kho này?')) {
+  const ids = reqId.split(',');
+  const confirmMsg = ids.length > 1
+    ? `Bạn có chắc chắn muốn hủy nhóm yêu cầu xuất kho này (${ids.length} mặt hàng)?`
+    : 'Bạn có chắc chắn muốn hủy yêu cầu xuất kho này?';
+  if (!confirm(confirmMsg)) {
     return;
   }
   showLoading(true);
   
   // Cập nhật giao diện cục bộ trước
-  const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
-  if (req) {
-    appData.requests = appData.requests.filter(r => r.ID_Yeu_Cau !== reqId);
-    saveMockData();
-    renderMyRequests();
-  }
-  
-  const pinSecret = appConfig.staffPin || '';
-  const payload = {
-    action: 'cancel_export_request',
-    requestId: reqId,
-    pin: pinSecret
-  };
-  
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      await loadData();
-    } else {
-      throw new Error(json.message);
+  ids.forEach(id => {
+    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+    if (req) {
+      req.Trang_Thai = 'Da_Huy';
     }
+  });
+  saveMockData();
+  renderMyRequests();
+  renderCancelledRequests();
+  
+  // Gửi lệnh lên Supabase
+  const pinSecret = appConfig.staffPin || '';
+  try {
+    initSupabase();
+    if (supabaseClient) {
+      const { error } = await supabaseClient.from('yeu_cau_xuat').update({ trang_thai: 'Da_Huy' }).in('id_yeu_cau', ids);
+      if (error) throw error;
+    }
+    await loadData();
   } catch(err) {
-    console.error("Lỗi khi hủy yêu cầu:", err);
+    console.error("Lỗi khi hủy nhóm yêu cầu:", err);
     showToast('Lỗi khi hủy yêu cầu: ' + err.message, 'danger');
   }
   showLoading(false);
@@ -4216,6 +4692,15 @@ function renderAdminRequests() {
         labelHtml += ` <span class="badge badge-success" style="font-size:0.7rem; padding:0.15rem 0.3rem;" title="Yêu cầu gốc: ${it.originalItemName} (${it.originalItemBrand})">🔄 Đã thay thế</span>`;
       }
       
+      const item = appData.inventory.find(i => i.ID === it.ID_Vat_Tu);
+      const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
+      const isOverStock = it.So_Luong_Yeu_Cau > currentStock;
+      
+      let overStockWarningHtml = '';
+      if (isOverStock) {
+        overStockWarningHtml = `<span style="color: var(--danger); font-weight: 600; font-size: 0.8rem; margin-left: 0.5rem;" title="Vượt quá tồn kho thực tế (Còn tồn: ${currentStock} ${it.Don_Vi || 'Cái'})">⚠️ (Tồn: ${currentStock})</span>`;
+      }
+
       itemsHtml += `
         <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-app); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
           <div style="font-size: 0.85rem;">
@@ -4228,6 +4713,7 @@ function renderAdminRequests() {
               <button type="button" class="qty-btn" style="height:28px; width:28px; font-size:0.75rem; line-height:26px;" onclick="adjustReqQty('${it.ID_Yeu_Cau}', 1)">+</button>
             </div>
             <span style="font-size: 0.85rem; font-weight: 500;">${it.Don_Vi || 'Cái'}</span>
+            ${overStockWarningHtml}
             <button class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.4rem; font-size: 0.7rem; color: var(--primary); border-color: var(--primary-pale);" onclick="openReplacementModal('${it.ID_Yeu_Cau}')">Thay thế 🔄</button>
             <button class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.4rem; font-size: 0.7rem; color: var(--danger);" onclick="rejectSingleRequest('${it.ID_Yeu_Cau}')">Xóa</button>
           </div>
@@ -4310,13 +4796,12 @@ function renderHistory() {
   if (importBody) {
     importBody.innerHTML = '';
     if (appData.imports.length === 0) {
-      importBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Chưa có lịch sử nhập kho.</td></tr>`;
+      importBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Chưa có lịch sử nhập kho.</td></tr>`;
     } else {
       [...appData.imports].reverse().forEach(item => {
         const dateStr = item.Ngay_Nhap ? new Date(item.Ngay_Nhap).toLocaleString('vi-VN') : '-';
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><span style="font-family: monospace; font-size: 0.85rem;">${item.ID_Giao_Dich}</span></td>
           <td><strong>${item.Ten}</strong></td>
           <td>${item.Hang}</td>
           <td>${item.Quy_Cach}</td>
@@ -4332,31 +4817,55 @@ function renderHistory() {
   if (exportBody) {
     exportBody.innerHTML = '';
     if (appData.exports.length === 0) {
-      exportBody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">Chưa có lịch sử xuất kho.</td></tr>`;
+      exportBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Chưa có lịch sử xuất kho.</td></tr>`;
     } else {
-      [...appData.exports].reverse().forEach(item => {
-        const dateStr = item.Ngay_Xuat ? new Date(item.Ngay_Xuat).toLocaleString('vi-VN') : '-';
+      const groupedExps = groupExports(appData.exports);
+      [...groupedExps].reverse().forEach(group => {
+        const dateStr = group.Ngay_Xuat ? new Date(group.Ngay_Xuat).toLocaleString('vi-VN') : '-';
         
         const isExporterOrAdmin = currentRole === 'admin' || currentRole === 'exporter';
-        const dateXuat = new Date(item.Ngay_Xuat || Date.now());
+        const dateXuat = new Date(group.Ngay_Xuat || Date.now());
         const isUnderOneHour = (Date.now() - dateXuat.getTime()) < 3600000;
         
+        const txIdsStr = group.items.map(it => it.ID_Giao_Dich).join(',');
+
         let undoBtnHtml = '';
         if (isExporterOrAdmin && isUnderOneHour) {
-          undoBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--danger); font-weight: 600;" onclick="undoExport('${item.ID_Giao_Dich}')">↩️ Hoàn tác</button>`;
+          undoBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--danger); font-weight: 600;" onclick="undoExport('${txIdsStr}')">↩️ Hoàn tác</button>`;
         } else {
           undoBtnHtml = `<span style="font-size:0.75rem; color:var(--text-muted);">-</span>`;
         }
 
+        // Vẽ bảng con lồng nhau cho Vật Tư và Số lượng xuất để căn chỉnh hoàn hảo từng hàng
+        const subTableHtml = `
+          <td style="padding: 0;">
+            <table style="width: 100%; border-collapse: collapse; background: transparent; margin: 0;">
+              <tbody>
+                ${group.items.map((it, idx) => `
+                  <tr style="border-bottom: 1px solid var(--border); background: transparent;">
+                    <td style="padding: 0.5rem; border: none; font-size: 0.85rem;">
+                      <strong>${idx + 1}. ${escapeHtml(it.Ten)}</strong>
+                      <span style="font-size: 0.8rem; color: var(--text-muted);">
+                        (${escapeHtml(it.Hang || 'K/P')} - ${escapeHtml(it.Quy_Cach || 'K/P')})
+                      </span>
+                    </td>
+                    <td style="padding: 0.5rem; border: none; width: 95px; text-align: right;">
+                      <span class="badge badge-danger">-${it.So_Luong} ${it.Don_Vi || 'Cái'}</span>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </td>
+        `;
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><span style="font-family: monospace; font-size: 0.85rem;">${item.ID_Giao_Dich}</span></td>
-          <td><strong>${item.Ten}</strong></td>
-          <td><span class="badge badge-danger">-${item.So_Luong} ${item.Don_Vi}</span></td>
-          <td><span class="badge badge-primary">${item.Nguoi_Nhan}</span></td>
-          <td><span style="font-size: 0.85rem;">${item.Muc_Dich}</span></td>
+          ${subTableHtml}
+          <td><span class="badge badge-primary">${escapeHtml(group.Nguoi_Nhan)}</span></td>
+          <td><span style="font-size: 0.85rem;">${escapeHtml(group.Muc_Dich)}</span></td>
           <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
-          <td><span style="font-size: 0.85rem; color: var(--text-muted);">${item.Ghi_Chu || '-'}</span></td>
+          <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(group.Ghi_Chu || '-')}</span></td>
           <td style="text-align: right;">${undoBtnHtml}</td>
         `;
         exportBody.appendChild(tr);
@@ -4405,20 +4914,60 @@ function renderEditLogs() {
   const logs = appData.editLogs || [];
 
   if (logs.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1rem;">Không có nhật ký chỉnh sửa thông tin nào.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1rem;">Không có nhật ký chỉnh sửa thông tin nào.</td></tr>`;
     return;
   }
 
   [...logs].reverse().forEach(log => {
     const dateStr = log.Ngay_Chinh_Sua ? new Date(log.Ngay_Chinh_Sua).toLocaleString('vi-VN') : '-';
+    
+    let detailText = '';
+    let isRollbackable = false;
+    
+    try {
+      let parsed = log.Chi_Tiet;
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
+      if (parsed && typeof parsed === 'object') {
+        detailText = parsed.formatted || '';
+        if (parsed.oldValues && Object.keys(parsed.oldValues).length > 0) {
+          isRollbackable = true;
+        }
+      } else {
+        detailText = log.Chi_Tiet || '';
+      }
+    } catch(e) {
+      detailText = log.Chi_Tiet || '';
+      if (typeof log.Chi_Tiet === 'string' && log.Chi_Tiet.includes('->')) {
+        isRollbackable = true;
+      }
+    }
+
+    // Kiểm tra xem ID vật tư có còn tồn tại trong kho không
+    const itemExists = appData.inventory.some(i => i.ID === log.ID_Vat_Tu);
+    
+    let rollbackBtnHtml = '';
+    const isAdmin = currentRole === 'admin';
+    if (isAdmin) {
+      if (isRollbackable && itemExists) {
+        rollbackBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--primary); font-weight: 600;" onclick="rollbackEdit('${log.ID_Log}')">↩️ Khôi phục</button>`;
+      } else if (!itemExists) {
+        rollbackBtnHtml = `<span style="font-size:0.75rem; color:var(--text-muted);">Đã xóa khỏi kho</span>`;
+      } else {
+        rollbackBtnHtml = `<span style="font-size:0.75rem; color:var(--text-muted);">-</span>`;
+      }
+    }
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><span style="font-family: monospace; font-size: 0.85rem;">${log.ID_Log}</span></td>
       <td><span style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted);">${log.ID_Vat_Tu}</span></td>
       <td><strong>${log.Ten_Vat_Tu}</strong></td>
-      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${log.Chi_Tiet}</span></td>
+      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${detailText}</span></td>
       <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
       <td><span class="badge badge-primary">${log.Nguoi_Sua || 'Admin'}</span></td>
+      <td style="text-align: right;" class="admin-only-cell">${rollbackBtnHtml}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -4659,6 +5208,20 @@ async function handleImportSubmit(e) {
     return;
   }
 
+  const customFieldsData = {};
+  const customFields = appConfig.customFields || [];
+  customFields.forEach(cf => {
+    const input = document.getElementById(`import-cf-${cf.key}`);
+    if (input) {
+      customFieldsData[cf.key] = input.value.trim();
+    }
+  });
+
+  const techSpecsObj = {
+    specText: '',
+    customFields: customFieldsData
+  };
+
   const newItem = {
     id: 'IMP' + Date.now() + Math.floor(Math.random() * 100),
     code: code,
@@ -4670,7 +5233,8 @@ async function handleImportSubmit(e) {
     unit: unit || 'Cái',
     expiry: expiry,
     importYear: year,
-    note: note
+    note: note,
+    techSpecs: JSON.stringify(techSpecsObj)
   };
 
   importCart.push(newItem);
@@ -4680,6 +5244,7 @@ async function handleImportSubmit(e) {
   
   // Reset toàn bộ form nhập kho để tiếp tục nhập mới
   document.getElementById('import-form').reset();
+  renderDynamicCustomFieldInputs(); // Reset các trường nhập tùy chọn
   
   renderImportCart();
 }
@@ -4851,10 +5416,15 @@ window.openEditModal = function(itemId) {
   // Phân quyền chi tiết động từ cài đặt Admin
   const isAdmin = currentRole === 'admin';
   const rolePermissions = isAdmin ? {
-    code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true
+    code: true, name: true, brand: true, spec: true, location: true, qty: true, expiry: true, unit: true, year: true, note: true, delete: true
   } : (appConfig.permissions?.[currentRole] || {
-    code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false
+    code: false, name: false, brand: false, spec: false, location: false, qty: false, expiry: false, unit: false, year: false, note: false, delete: false
   });
+  
+  const deleteBtn = document.getElementById('edit-delete-btn');
+  if (deleteBtn) {
+    deleteBtn.style.display = rolePermissions.delete ? 'inline-block' : 'none';
+  }
   
   document.getElementById('edit-code').disabled = !rolePermissions.code;
   document.getElementById('edit-name').disabled = !rolePermissions.name;
@@ -4876,6 +5446,13 @@ window.openEditModal = function(itemId) {
     btn.style.pointerEvents = rolePermissions.qty ? 'auto' : 'none';
     btn.style.opacity = rolePermissions.qty ? '1' : '0.5';
   });
+
+  renderDynamicCustomFieldInputs(item);
+
+  const submitBtn = document.querySelector('#edit-item-form button[type="submit"]');
+  if (submitBtn) {
+    submitBtn.style.display = currentRole === 'student' ? 'none' : 'inline-block';
+  }
 
   const modal = document.getElementById('edit-modal-overlay');
   if (modal) modal.classList.add('active');
@@ -4908,6 +5485,23 @@ async function handleEditSubmit(e) {
 
   showLoading(true);
 
+  // Thu thập các giá trị custom fields động
+  const customFieldsData = {};
+  const customFields = appConfig.customFields || [];
+  customFields.forEach(cf => {
+    const input = document.getElementById(`edit-cf-${cf.key}`);
+    if (input) {
+      customFieldsData[cf.key] = input.value.trim();
+    }
+  });
+
+  const oldItem = appData.inventory.find(i => i.ID === id);
+  const oldSpecsText = oldItem ? getTechSpecsText(oldItem) : '';
+  const techSpecsObj = {
+    specText: oldSpecsText,
+    customFields: customFieldsData
+  };
+
   const payload = {
     action: 'edit_inventory',
     itemId: id,
@@ -4921,6 +5515,7 @@ async function handleEditSubmit(e) {
     expiry: expiry,
     importYear: year,
     note: note,
+    techSpecs: JSON.stringify(techSpecsObj),
     pin: currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin),
     user: currentRole === 'admin' ? 'Admin' : (currentRole === 'importer' ? 'Người nhập kho' : 'Người xuất kho')
   };
@@ -4967,6 +5562,9 @@ function executeEditLocally(payload) {
     item.Han_Su_Dung = payload.expiry;
     item.Nam_Nhap = payload.importYear;
     item.Ghi_Chu = payload.note;
+    if (payload.techSpecs !== undefined) {
+      item.Dac_Tinh_Ky_Thuat = payload.techSpecs;
+    }
 
     var changes = [];
     if (oldCode !== payload.code) changes.push(`Mã số: [${oldCode}] -> [${payload.code}]`);
@@ -4986,9 +5584,9 @@ function executeEditLocally(payload) {
         ID_Log: logId,
         ID_Vat_Tu: item.ID,
         Ten_Vat_Tu: item.Ten,
-        Noi_Dung_Thay_Doi: changes.join("; "),
+        Chi_Tiet: changes.join("; "),
         Ngay_Chinh_Sua: new Date().toISOString(),
-        Nguoi_Chinh_Sua: payload.user || 'Admin'
+        Nguoi_Sua: payload.user || 'Admin'
       });
     }
 
@@ -5003,6 +5601,10 @@ function executeEditLocally(payload) {
 
 // --- TẢI BIỂU MẪU EXCEL MẪU CHO NGƯỜI DÙNG ---
 window.downloadSampleExcel = function() {
+  if (currentRole === 'student') {
+    alert('Sinh viên không có quyền tải biểu mẫu Excel!');
+    return;
+  }
   try {
     const headers = [["Mã số", "Danh mục vật tư", "Hãng", "Quy cách", "Nơi bảo quản", "Còn lại"]];
     const data = [
@@ -5029,22 +5631,39 @@ window.deleteChemicalFromEdit = async function() {
   const item = appData.inventory.find(i => i.ID === itemId);
   const itemName = item ? item.Ten : 'vật tư này';
   
-  const finalConfirm = confirm(`Bạn có chắc chắn muốn xóa hoàn toàn hóa chất/vật tư "${itemName}" ra khỏi danh mục tồn kho thực tế? \n\n* Lưu ý: Vật tư bị xóa sẽ biến mất khỏi bảng tồn kho.`);
+  // Yêu cầu nhập lý do xóa bắt buộc
+  const reason = prompt(`Nhập lý do xóa hoàn toàn hóa chất/vật tư "${itemName}" (Bắt buộc):`);
+  if (reason === null) return; // Người dùng bấm Hủy
+  
+  const trimmedReason = reason.trim();
+  if (!trimmedReason) {
+    alert("Bạn phải nhập lý do xóa mới có thể tiến hành!");
+    return;
+  }
+  
+  const finalConfirm = confirm(`XÁC NHẬN LẦN CUỐI:\n\nBạn có chắc chắn muốn xóa hoàn toàn hóa chất/vật tư "${itemName}" ra khỏi danh mục tồn kho thực tế với lý do:\n"${trimmedReason}"?\n\n* Lưu ý: Hành động này không thể hoàn tác.`);
   if (!finalConfirm) return;
   
   showLoading(true);
   
+  const userRoleLabel = currentRole === 'admin' ? 'Admin' : (currentRole === 'exporter' ? 'Người xuất kho' : (currentRole === 'importer' ? 'Người nhập kho' : 'Nhân viên'));
+  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : 
+                    (currentRole === 'exporter' ? appConfig.exporterPin : 
+                     (currentRole === 'importer' ? appConfig.importerPin : appConfig.staffPin));
+  
   const payload = {
     action: 'delete_chemical',
     itemId: itemId,
-    pin: appConfig.adminPin
+    reason: trimmedReason,
+    user: userRoleLabel,
+    pin: pinSecret
   };
   
-  if (appConfig.apiUrl) {
+  if (appConfig.apiUrl || supabaseClient) {
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        showToast(`Đã xóa hoàn toàn "${itemName}" thành công trên Supabase!`, 'success');
+        showToast(`Đã xóa hoàn toàn "${itemName}" thành công!`, 'success');
         closeEditModal();
         await loadData();
       } else {
@@ -5053,16 +5672,16 @@ window.deleteChemicalFromEdit = async function() {
     } catch (err) {
       console.error(err);
       showToast('Lỗi kết nối Supabase hoặc sai PIN. Thực hiện xóa cục bộ.', 'warning');
-      executeDeleteChemicalLocally(itemId, itemName);
+      executeDeleteChemicalLocally(itemId, itemName, trimmedReason, userRoleLabel);
     }
   } else {
-    executeDeleteChemicalLocally(itemId, itemName);
+    executeDeleteChemicalLocally(itemId, itemName, trimmedReason, userRoleLabel);
   }
   
   showLoading(false);
 };
 
-function executeDeleteChemicalLocally(itemId, itemName) {
+function executeDeleteChemicalLocally(itemId, itemName, reason, userLabel) {
   const idx = appData.inventory.findIndex(i => i.ID === itemId);
   if (idx !== -1) {
     appData.inventory.splice(idx, 1);
@@ -5073,9 +5692,9 @@ function executeDeleteChemicalLocally(itemId, itemName) {
       ID_Log: logId,
       ID_Vat_Tu: itemId,
       Ten_Vat_Tu: itemName,
-      Noi_Dung_Thay_Doi: 'Đã xóa hoàn toàn vật tư khỏi danh mục tồn kho thực tế',
+      Chi_Tiet: `Đã xóa hoàn toàn hóa chất/vật tư. Lý do: ${reason || 'Không có lý do'}`,
       Ngay_Chinh_Sua: new Date().toISOString(),
-      Nguoi_Chinh_Sua: 'Admin'
+      Nguoi_Sua: userLabel || 'Admin'
     });
     
     saveMockData();
@@ -5252,6 +5871,10 @@ function executeClearAllLocally() {
 
 // === SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN BỘ KHO QUA EXCEL (CHỈ ADMIN) ===
 window.downloadFullBackupExcel = async function() {
+  if (currentRole !== 'admin') {
+    alert('Chỉ quản trị viên mới có quyền tải dữ liệu sao lưu!');
+    return;
+  }
   showLoading(true);
   initSupabase();
   if (!supabaseClient) {
@@ -5376,6 +5999,10 @@ window.restoreFullBackupExcel = async function(event) {
 
 // --- IMPORT EXCEL BẰNG SHEETJS ---
 async function handleExcelImport(e) {
+  if (currentRole === 'student') {
+    alert('Sinh viên không có quyền nhập dữ liệu từ Excel!');
+    return;
+  }
   const file = e.target.files[0];
   if (!file) return;
 
@@ -5609,6 +6236,9 @@ function renderSettings() {
   document.getElementById('importer-pin-input').value = appConfig.importerPin || '2222';
   document.getElementById('exporter-pin-input').value = appConfig.exporterPin || '3333';
   document.getElementById('staff-pin-input').value = appConfig.staffPin || '';
+  if (document.getElementById('student-pin-input')) {
+    document.getElementById('student-pin-input').value = appConfig.studentPin || '0';
+  }
   
   document.getElementById('config-show-export').checked = !!appConfig.showAdminExportTab;
   document.getElementById('config-show-import').checked = !!appConfig.showAdminImportTab;
@@ -5616,18 +6246,32 @@ function renderSettings() {
   
   // Điền dữ liệu cho ma trận phân quyền
   const perms = appConfig.permissions || {
-    staff: {}, importer: {}, exporter: {}
+    staff: {}, student: {}, importer: {}, exporter: {}
   };
   
-  const fields = ['code', 'name', 'brand', 'spec', 'unit', 'location', 'qty', 'expiry', 'year', 'note'];
+  const fields = ['code', 'name', 'brand', 'spec', 'unit', 'location', 'qty', 'expiry', 'year', 'note', 'delete'];
   fields.forEach(f => {
     const staffEl = document.getElementById(`p-staff-${f}`);
+    const studentEl = document.getElementById(`p-student-${f}`);
     const impEl = document.getElementById(`p-importer-${f}`);
     const expEl = document.getElementById(`p-exporter-${f}`);
     
     if (staffEl) staffEl.checked = !!perms.staff?.[f];
-    if (impEl) impEl.checked = perms.importer?.[f] !== false; // mặc định true
-    if (expEl) expEl.checked = perms.exporter?.[f] !== false; // mặc định true
+    if (studentEl) studentEl.checked = !!perms.student?.[f];
+    if (impEl) {
+      if (f === 'delete') {
+        impEl.checked = !!perms.importer?.[f];
+      } else {
+        impEl.checked = perms.importer?.[f] !== false;
+      }
+    }
+    if (expEl) {
+      if (f === 'delete') {
+        expEl.checked = !!perms.exporter?.[f];
+      } else {
+        expEl.checked = perms.exporter?.[f] !== false;
+      }
+    }
   });
   
   document.getElementById('config-app-title').value = appConfig.APP_TITLE || "Kho VTHC Phòng CNSH Thực phẩm";
@@ -5637,12 +6281,11 @@ function renderSettings() {
   document.getElementById('config-tab-import').value = appConfig.TAB_NAME_IMPORT || "Nhập Kho";
   document.getElementById('config-tab-history').value = appConfig.TAB_NAME_HISTORY || "Lịch Sử";
   document.getElementById('config-tab-dashboard').value = appConfig.TAB_NAME_DASHBOARD || "Biểu Đồ";
+  renderCustomFieldsSettings();
 }
 
 function showToast(message, type = 'primary') {
-  if (type === 'success' || type === 'primary') {
-    return; // Bỏ qua các thông báo thành công hoặc thông tin không cần thiết
-  }
+  // Cho phép hiển thị tất cả các loại thông báo bao gồm cả success và primary
   let container = document.querySelector('.toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -5761,6 +6404,21 @@ function renderTimeline() {
   
   // Chỉnh sửa của Admin
   (appData.editLogs || []).forEach(item => {
+    let detailText = '';
+    try {
+      let parsed = item.Chi_Tiet;
+      if (typeof parsed === 'string') {
+        parsed = JSON.parse(parsed);
+      }
+      if (parsed && typeof parsed === 'object') {
+        detailText = parsed.formatted || '';
+      } else {
+        detailText = item.Chi_Tiet || '';
+      }
+    } catch(e) {
+      detailText = item.Chi_Tiet || '';
+    }
+
     timelineEvents.push({
       id: item.ID_Log,
       itemId: item.ID_Vat_Tu,
@@ -5769,7 +6427,7 @@ function renderTimeline() {
       date: new Date(item.Ngay_Chinh_Sua || Date.now()),
       user: item.Nguoi_Sua || 'Admin',
       itemName: item.Ten_Vat_Tu,
-      details: item.Chi_Tiet
+      details: detailText
     });
   });
   
@@ -6237,11 +6895,23 @@ window.approveGroup = async function(itemIdsStr) {
   
   let successCount = 0;
   for (const id of ids) {
+    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
     const qtyInput = document.getElementById(`approve-qty-${id}`);
-    const qty = qtyInput ? parseFloat(qtyInput.value) : 0;
+    let qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
+    if (isNaN(qty) || qty <= 0) {
+      qty = req ? parseFloat(req.So_Luong_Yeu_Cau) || 1 : 1;
+    }
+    
+    // Kiểm tra số lượng tồn kho thực tế trước khi duyệt
+    const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
+    const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
+    if (qty > currentStock) {
+      showToast(`Không đủ tồn kho để duyệt cho "${req ? req.Ten : 'vật tư'}"! (Yêu cầu duyệt: ${qty}, Hiện có: ${currentStock})`, 'danger');
+      showLoading(false);
+      return;
+    }
     
     const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
-    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
     const payload = {
       action: 'approve_export',
       requestId: id,
@@ -6356,11 +7026,23 @@ window.batchApproveRequests = async function() {
     showLoading(true);
     let successCount = 0;
     for (const id of allIds) {
-      const qtyInput = document.getElementById(`approve-qty-${id}`);
-      const qty = qtyInput ? parseFloat(qtyInput.value) : 1;
-      
-      const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
       const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+      const qtyInput = document.getElementById(`approve-qty-${id}`);
+      let qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
+      if (isNaN(qty) || qty <= 0) {
+        qty = req ? parseFloat(req.So_Luong_Yeu_Cau) || 1 : 1;
+      }
+      
+      // Kiểm tra số lượng tồn kho thực tế trước khi duyệt hàng loạt
+      const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
+      const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
+      if (qty > currentStock) {
+        showToast(`Không đủ tồn kho để duyệt hàng loạt cho "${req ? req.Ten : 'vật tư'}"! (Yêu cầu duyệt: ${qty}, Hiện có: ${currentStock})`, 'danger');
+        showLoading(false);
+        return;
+      }
+
+      const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
       const payload = {
         action: 'approve_export',
         requestId: id,
@@ -6450,6 +7132,23 @@ window.saveTechSpecsDetail = async function() {
   if (!item) return;
   
   const newVal = document.getElementById('item-detail-tech-specs').value.trim();
+  
+  let techSpecsJson = '';
+  try {
+    let parsed = item.Dac_Tinh_Ky_Thuat || '{}';
+    if (typeof parsed === 'string') {
+      parsed = JSON.parse(parsed);
+    }
+    if (parsed && typeof parsed === 'object') {
+      parsed.specText = newVal;
+      techSpecsJson = JSON.stringify(parsed);
+    } else {
+      techSpecsJson = JSON.stringify({ specText: newVal, customFields: {} });
+    }
+  } catch (e) {
+    techSpecsJson = JSON.stringify({ specText: newVal, customFields: {} });
+  }
+
   showLoading(true);
   
   if (currentRole === 'staff') {
@@ -6457,7 +7156,7 @@ window.saveTechSpecsDetail = async function() {
       action: 'propose_spec_feature',
       itemId: currentViewingItemId,
       name: item.Ten,
-      techSpecs: newVal,
+      techSpecs: techSpecsJson,
       user: 'Nhân viên'
     };
     try {
@@ -6489,7 +7188,7 @@ window.saveTechSpecsDetail = async function() {
       expiry: item.Han_Su_Dung,
       importYear: item.Nam_Nhap,
       note: item.Ghi_Chu,
-      techSpecs: newVal,
+      techSpecs: techSpecsJson,
       pin: pinSecret,
       user: currentRole === 'admin' ? 'Admin' : currentRole === 'exporter' ? 'Người xuất kho' : 'Người nhập kho'
     };
@@ -6506,7 +7205,7 @@ window.saveTechSpecsDetail = async function() {
     } catch(err) {
       console.error(err);
       // Cục bộ
-      item.Dac_Tinh_Ky_Thuat = newVal;
+      item.Dac_Tinh_Ky_Thuat = techSpecsJson;
       saveMockData();
       showToast('Đã cập nhật đặc tính kỹ thuật cục bộ!', 'success');
       closeItemHistoryModal();
@@ -6712,7 +7411,12 @@ window.clearNotification = async function(reqId) {
 
 // === HOÀN TÁC GIAO DỊCH XUẤT KHO DƯỚI 1 GIỜ ===
 window.undoExport = async function(transactionId) {
-  if (!confirm('Bạn có chắc chắn muốn hoàn tác (Undo) giao dịch xuất kho này? \nSố lượng hóa chất đã xuất sẽ được cộng hoàn trả lại tồn kho.')) {
+  const txIds = transactionId.split(',');
+  const confirmMsg = txIds.length > 1
+    ? `Bạn có chắc chắn muốn hoàn tác (Undo) nhóm giao dịch xuất kho này (${txIds.length} mặt hàng)? \nSố lượng sẽ được cộng hoàn trả lại tồn kho.`
+    : 'Bạn có chắc chắn muốn hoàn tác (Undo) giao dịch xuất kho này? \nSố lượng hóa chất đã xuất sẽ được cộng hoàn trả lại tồn kho.';
+    
+  if (!confirm(confirmMsg)) {
     return;
   }
   
@@ -6720,7 +7424,7 @@ window.undoExport = async function(transactionId) {
   const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
   const payload = {
     action: 'undo_export',
-    transactionId: transactionId,
+    transactionIds: transactionId,
     pin: pinSecret
   };
   
@@ -6734,40 +7438,47 @@ window.undoExport = async function(transactionId) {
     }
   } catch(err) {
     console.error(err);
-    const transaction = appData.exports.find(x => x.ID_Giao_Dich === transactionId);
-    if (transaction) {
-      const item = appData.inventory.find(i => i.ID === transaction.ID_Vat_Tu);
-      if (item) {
-        item.So_Luong += transaction.So_Luong;
+    txIds.forEach(txId => {
+      const transaction = appData.exports.find(x => x.ID_Giao_Dich === txId);
+      if (transaction) {
+        const item = appData.inventory.find(i => i.ID === transaction.ID_Vat_Tu);
+        if (item) {
+          item.So_Luong += transaction.So_Luong;
+        }
+        appData.exports = appData.exports.filter(x => x.ID_Giao_Dich !== txId);
+        const logId = "UNDO" + Date.now();
+        appData.editLogs.push({
+          ID_Log: logId,
+          ID_Vat_Tu: transaction.ID_Vat_Tu,
+          Ten_Vat_Tu: transaction.Ten,
+          Noi_Dung_Thay_Doi: `Hoàn tác giao dịch xuất ${txId}. Hoàn lại +${transaction.So_Luong} ${transaction.Don_Vi}`,
+          Ngay_Chinh_Sua: new Date().toISOString(),
+          Nguoi_Chinh_Sua: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
+        });
       }
-      appData.exports = appData.exports.filter(x => x.ID_Giao_Dich !== transactionId);
-      const logId = "UNDO" + Date.now();
-      appData.editLogs.push({
-        ID_Log: logId,
-        ID_Vat_Tu: transaction.ID_Vat_Tu,
-        Ten_Vat_Tu: transaction.Ten,
-        Noi_Dung_Thay_Doi: `Hoàn tác giao dịch xuất ${transactionId}. Hoàn lại +${transaction.So_Luong} ${transaction.Don_Vi}`,
-        Ngay_Chinh_Sua: new Date().toISOString(),
-        Nguoi_Chinh_Sua: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
-      });
-      
-      saveMockData();
-      showToast('Supabase chưa cấu hình. Đã thực hiện hoàn tác cục bộ thành công!', 'warning');
-      renderHistory();
-      renderInventory();
-      renderEditLogs();
-    } else {
-      showToast('Lỗi hoàn tác xuất kho: ' + err.message, 'danger');
-    }
+    });
+    
+    saveMockData();
+    showToast('Supabase chưa cấu hình. Đã thực hiện hoàn tác cục bộ thành công!', 'warning');
+    renderHistory();
+    renderInventory();
+    renderEditLogs();
   }
   showLoading(false);
 };
 
 window.cleanUpOldHistory = async function() {
   const rangeSelect = document.getElementById('clean-history-range');
-  const months = parseInt(rangeSelect.value) || 3;
+  const months = rangeSelect.value;
   
-  if (!confirm(`Bạn có chắc chắn muốn dọn dẹp và xóa vĩnh viễn các dữ liệu lịch sử (Nhập/Xuất/Nhật ký) cũ hơn ${months} tháng trên hệ thống không?`)) {
+  let confirmMsg = '';
+  if (months === 'all_processed') {
+    confirmMsg = `Bạn có chắc chắn muốn XÓA SẠCH toàn bộ các yêu cầu xuất kho đã duyệt, bị từ chối và đã hủy trên hệ thống không?`;
+  } else {
+    confirmMsg = `Bạn có chắc chắn muốn dọn dẹp và xóa vĩnh viễn các dữ liệu lịch sử (Nhập/Xuất/Nhật ký) cũ hơn ${months} tháng trên hệ thống không?`;
+  }
+  
+  if (!confirm(confirmMsg)) {
     return;
   }
   
@@ -6781,42 +7492,57 @@ window.cleanUpOldHistory = async function() {
   try {
     const json = await sendRequest(payload);
     if (json.success) {
-      showToast(`Dọn dẹp lịch sử cũ hơn ${months} tháng thành công!`, 'success');
+      if (months === 'all_processed') {
+        showToast(`Đã xóa sạch tất cả yêu cầu xuất kho đã duyệt/từ chối/hủy thành công!`, 'success');
+      } else {
+        showToast(`Dọn dẹp lịch sử cũ hơn ${months} tháng thành công!`, 'success');
+      }
       await loadData();
+      renderCancelledRequests();
+      renderMyRequests();
     } else {
       throw new Error(json.message);
     }
   } catch(err) {
     console.error(err);
-    const cutoffDate = new Date();
-    cutoffDate.setMonth(cutoffDate.getMonth() - months);
-    const cutoffTime = cutoffDate.getTime();
-    
-    appData.imports = (appData.imports || []).filter(item => {
-      const t = item.Ngay_Nhap ? new Date(item.Ngay_Nhap).getTime() : 0;
-      return t >= cutoffTime;
-    });
-    
-    appData.exports = (appData.exports || []).filter(item => {
-      const t = item.Ngay_Xuat ? new Date(item.Ngay_Xuat).getTime() : 0;
-      return t >= cutoffTime;
-    });
-    
-    appData.editLogs = (appData.editLogs || []).filter(item => {
-      const t = item.Ngay_Chinh_Sua ? new Date(item.Ngay_Chinh_Sua).getTime() : 0;
-      return t >= cutoffTime;
-    });
-    
-    appData.requests = (appData.requests || []).filter(item => {
-      if (item.Trang_Thai === 'Cho_Duyet') return true;
-      const t = item.Ngay_Yeu_Cau ? new Date(item.Ngay_Yeu_Cau).getTime() : 0;
-      return t >= cutoffTime;
-    });
-    
-    saveMockData();
-    showToast(`Supabase chưa cấu hình. Đã dọn dẹp lịch sử cũ hơn ${months} tháng cục bộ!`, 'warning');
+    if (months === 'all_processed') {
+      appData.requests = (appData.requests || []).filter(item => item.Trang_Thai === 'Cho_Duyet');
+      saveMockData();
+      showToast(`Supabase chưa cấu hình. Đã dọn dẹp sạch lịch sử các yêu cầu đã xử lý cục bộ!`, 'warning');
+    } else {
+      const monthsNum = parseInt(months) || 3;
+      const cutoffDate = new Date();
+      cutoffDate.setMonth(cutoffDate.getMonth() - monthsNum);
+      const cutoffTime = cutoffDate.getTime();
+      
+      appData.imports = (appData.imports || []).filter(item => {
+        const t = item.Ngay_Nhap ? new Date(item.Ngay_Nhap).getTime() : 0;
+        return t >= cutoffTime;
+      });
+      
+      appData.exports = (appData.exports || []).filter(item => {
+        const t = item.Ngay_Xuat ? new Date(item.Ngay_Xuat).getTime() : 0;
+        return t >= cutoffTime;
+      });
+      
+      appData.editLogs = (appData.editLogs || []).filter(item => {
+        const t = item.Ngay_Chinh_Sua ? new Date(item.Ngay_Chinh_Sua).getTime() : 0;
+        return t >= cutoffTime;
+      });
+      
+      appData.requests = (appData.requests || []).filter(item => {
+        if (item.Trang_Thai === 'Cho_Duyet') return true;
+        const t = item.Ngay_Yeu_Cau ? new Date(item.Ngay_Yeu_Cau).getTime() : 0;
+        return t >= cutoffTime;
+      });
+      
+      saveMockData();
+      showToast(`Supabase chưa cấu hình. Đã dọn dẹp lịch sử cũ hơn ${monthsNum} tháng cục bộ!`, 'warning');
+    }
     renderHistory();
     renderEditLogs();
+    renderCancelledRequests();
+    renderMyRequests();
   }
   showLoading(false);
 };
@@ -7478,9 +8204,310 @@ window.selectReplacementItem = function(itemId) {
   }
 };
 
+// --- HỆ THỐNG TRƯỜNG DỮ LIỆU TÙY CHỈNH (CUSTOM FIELDS) ---
+function getCustomFieldValue(item, fieldId) {
+  if (!item || !item.Dac_Tinh_Ky_Thuat) return '';
+  try {
+    let parsed = item.Dac_Tinh_Ky_Thuat;
+    if (typeof parsed === 'string') {
+      parsed = JSON.parse(parsed);
+    }
+    if (parsed && parsed.customFields) {
+      return parsed.customFields[fieldId] || '';
+    }
+  } catch (e) {
+    // Không phải JSON
+  }
+  return '';
+}
+
+function getTechSpecsText(item) {
+  if (!item || !item.Dac_Tinh_Ky_Thuat) return '';
+  try {
+    let parsed = item.Dac_Tinh_Ky_Thuat;
+    if (typeof parsed === 'string') {
+      parsed = JSON.parse(parsed);
+    }
+    if (parsed && parsed.specText !== undefined) {
+      return parsed.specText;
+    }
+  } catch (e) {
+    // Không phải JSON
+  }
+  return item.Dac_Tinh_Ky_Thuat;
+}
+
+window.renderCustomFieldsSettings = function() {
+  const tbody = document.getElementById('custom-fields-settings-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  
+  const customFields = appConfig.customFields || [];
+  if (customFields.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 1rem;">Chưa có trường dữ liệu tùy chỉnh nào.</td></tr>`;
+    return;
+  }
+  
+  customFields.forEach(cf => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${escapeHtml(cf.label)}</strong></td>
+      <td><span style="font-family: monospace;">${escapeHtml(cf.key)}</span></td>
+      <td><span>${escapeHtml(cf.defaultValue || '-')}</span></td>
+      <td style="text-align: center;">
+        <button class="btn btn-danger btn-sm" onclick="deleteCustomFieldConfig('${cf.key}')">Xóa 🗑️</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+};
+
+window.addCustomFieldConfig = async function() {
+  const labelInput = document.getElementById('new-cf-label');
+  const keyInput = document.getElementById('new-cf-key');
+  const defaultInput = document.getElementById('new-cf-default');
+  
+  if (!labelInput || !keyInput || !defaultInput) return;
+  
+  const label = labelInput.value.trim();
+  const key = keyInput.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  const defaultValue = defaultInput.value.trim();
+  
+  if (!label || !key) {
+    alert("Vui lòng nhập đầy đủ tên trường và mã trường!");
+    return;
+  }
+  
+  if (!appConfig.customFields) appConfig.customFields = [];
+  
+  if (appConfig.customFields.some(cf => cf.key === key)) {
+    alert("Mã trường này đã tồn tại!");
+    return;
+  }
+  
+  appConfig.customFields.push({ label, key, defaultValue });
+  localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
+  
+  labelInput.value = '';
+  keyInput.value = '';
+  defaultInput.value = '';
+  
+  renderCustomFieldsSettings();
+  renderInventory();
+  renderDynamicCustomFieldInputs();
+  
+  // Lưu lên Supabase
+  showLoading(true);
+  try {
+    await sendRequest({ action: 'save_config', config: appConfig });
+  } catch (err) {
+    console.error('Lỗi đồng bộ cấu hình trường tùy chỉnh:', err);
+  }
+  showLoading(false);
+};
+
+window.deleteCustomFieldConfig = async function(key) {
+  if (!confirm("Bạn có chắc chắn muốn xóa trường tùy chọn này không? (Dữ liệu đã nhập của hóa chất sẽ không bị mất nhưng sẽ tạm ẩn đi)")) return;
+  
+  if (!appConfig.customFields) appConfig.customFields = [];
+  appConfig.customFields = appConfig.customFields.filter(cf => cf.key !== key);
+  localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
+  
+  renderCustomFieldsSettings();
+  renderInventory();
+  renderDynamicCustomFieldInputs();
+  
+  // Lưu lên Supabase
+  showLoading(true);
+  try {
+    await sendRequest({ action: 'save_config', config: appConfig });
+  } catch (err) {
+    console.error('Lỗi đồng bộ cấu hình trường tùy chỉnh:', err);
+  }
+  showLoading(false);
+};
+
+// Render các input động cho Custom Fields ở form nhập và sửa
+window.renderDynamicCustomFieldInputs = function(currentItem = null) {
+  const editContainer = document.getElementById('edit-custom-fields-container');
+  const importContainer = document.getElementById('import-custom-fields-container');
+  const customFields = appConfig.customFields || [];
+  const isStudent = currentRole === 'student';
+  
+  if (editContainer) {
+    editContainer.innerHTML = '';
+    customFields.forEach(cf => {
+      const val = currentItem ? getCustomFieldValue(currentItem, cf.key) : '';
+      const div = document.createElement('div');
+      div.className = 'form-group';
+      div.innerHTML = `
+        <label class="form-label" for="edit-cf-${cf.key}">${escapeHtml(cf.label)}</label>
+        <input type="text" id="edit-cf-${cf.key}" class="form-control edit-custom-field-input" data-key="${cf.key}" value="${escapeHtml(val || cf.defaultValue || '')}" ${isStudent ? 'disabled' : ''}>
+      `;
+      editContainer.appendChild(div);
+    });
+  }
+  
+  if (importContainer) {
+    importContainer.innerHTML = '';
+    customFields.forEach(cf => {
+      const div = document.createElement('div');
+      div.className = 'form-group';
+      div.innerHTML = `
+        <label class="form-label" for="import-cf-${cf.key}">${escapeHtml(cf.label)}</label>
+        <input type="text" id="import-cf-${cf.key}" class="form-control import-custom-field-input" data-key="${cf.key}" value="${escapeHtml(cf.defaultValue || '')}">
+      `;
+      importContainer.appendChild(div);
+    });
+  }
+};
+
+// --- ADMIN: KHÔI PHỤC DỮ LIỆU VỀ PHIÊN BẢN CŨ (ROLLBACK) ---
+window.rollbackEdit = async function(logId) {
+  if (!confirm("Bạn có chắc chắn muốn khôi phục thông tin vật tư về phiên bản này không?")) return;
+  
+  showLoading(true);
+  const userRoleLabel = currentRole === 'admin' ? 'Admin' : (currentRole === 'exporter' ? 'Người xuất kho' : 'Người nhập kho');
+  
+  const payload = {
+    action: 'rollback_edit',
+    logId: logId,
+    user: userRoleLabel,
+    pin: appConfig.adminPin
+  };
+  
+  try {
+    const json = await sendRequest(payload);
+    if (json.success) {
+      showToast("Khôi phục phiên bản thông tin thành công!", 'success');
+      await loadData();
+    } else {
+      throw new Error(json.message);
+    }
+  } catch(err) {
+    console.error(err);
+    showToast("Không thể khôi phục dữ liệu: " + err.message, 'danger');
+  }
+  showLoading(false);
+};
+
+// --- QUẢN LÝ DANH SÁCH YÊU CẦU ĐÃ HỦY CỦA NGƯỜI DÙNG ---
+window.renderCancelledRequests = function() {
+  const tbody = document.getElementById('my-cancelled-requests-table-body');
+  if (!tbody || !appData) return;
+  
+  tbody.innerHTML = '';
+  const isStudent = currentRole === 'student';
+  const cancelledList = (!appData.requests ? [] : appData.requests).filter(req => {
+    if (req.Trang_Thai !== 'Da_Huy') return false;
+    if (isStudent) {
+      return req.Nguoi_Yeu_Cau && req.Nguoi_Yeu_Cau.toString().includes("Sinh viên");
+    }
+    return req.Nguoi_Yeu_Cau && !req.Nguoi_Yeu_Cau.toString().includes("Sinh viên");
+  });
+  
+  const grouped = groupRequests(cancelledList);
+  grouped.sort((a, b) => new Date(b.Ngay_Yeu_Cau).getTime() - new Date(a.Ngay_Yeu_Cau).getTime());
+  
+  if (grouped.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Không có yêu cầu nào bị hủy gần đây.</td></tr>`;
+    return;
+  }
+  
+  grouped.forEach(group => {
+    const tr = document.createElement('tr');
+    const dateStr = group.Ngay_Yeu_Cau ? new Date(group.Ngay_Yeu_Cau).toLocaleString('vi-VN') : '-';
+    
+    // Vẽ danh sách vật tư dạng bảng con để căn chỉnh hoàn hảo
+    const subTableHtml = `
+      <td style="padding: 0;">
+        <table style="width: 100%; border-collapse: collapse; background: transparent; margin: 0;">
+          <tbody>
+            ${group.items.map((it, idx) => `
+              <tr style="border-bottom: 1px solid var(--border); background: transparent;">
+                <td style="padding: 0.5rem; border: none; font-size: 0.85rem;">
+                  <strong>${idx + 1}. ${escapeHtml(it.Ten)}</strong>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">
+                    (${escapeHtml(it.Hang || 'K/P')} - ${escapeHtml(it.Quy_Cach || 'K/P')})
+                  </span>
+                </td>
+                <td style="padding: 0.5rem; border: none; width: 90px; text-align: right; font-weight: 600;">
+                  ${it.So_Luong_Yeu_Cau} ${it.Don_Vi || 'Cái'}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </td>
+    `;
+
+    const reqIdsStr = group.items.map(it => it.ID_Yeu_Cau).join(',');
+
+    tr.innerHTML = `
+      ${subTableHtml}
+      <td>${escapeHtml(group.Nguoi_Yeu_Cau || '-')}</td>
+      <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
+      <td style="text-align: right;">
+        <button type="button" class="btn btn-success btn-sm" onclick="undoCancelledRequest('${reqIdsStr}')" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">♻️ Hoàn tác</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+};
+
+window.undoCancelledRequest = async function(reqId) {
+  const ids = reqId.split(',');
+  showLoading(true);
+  
+  // Xóa trên Supabase trước
+  initSupabase();
+  if (supabaseClient) {
+    try {
+      const { error } = await supabaseClient.from('yeu_cau_xuat').delete().in('id_yeu_cau', ids);
+      if (error) throw error;
+    } catch(err) {
+      console.error("Lỗi xóa yêu cầu đã hủy khi hoàn tác:", err);
+    }
+  }
+  
+  // Đưa tất cả vật tư trở lại giỏ hàng
+  ids.forEach(id => {
+    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+    if (!req) return;
+
+    const existingCartItem = cart.find(c => c.itemId === req.ID_Vat_Tu);
+    if (existingCartItem) {
+      existingCartItem.qty += parseFloat(req.So_Luong_Yeu_Cau) || 1;
+    } else {
+      cart.push({
+        itemId: req.ID_Vat_Tu,
+        code: req.Ma_So || '',
+        name: req.Ten,
+        brand: req.Hang || '',
+        spec: req.Quy_Cach || '',
+        qty: parseFloat(req.So_Luong_Yeu_Cau) || 1,
+        unit: req.Don_Vi || 'Cái',
+        maxQty: currentRole === 'student' ? 9999 : 9999, // Allow 9999 for student to prevent guessing
+        selected: true
+      });
+    }
+  });
+  
+  // Cập nhật local và render lại
+  appData.requests = appData.requests.filter(r => !ids.includes(r.ID_Yeu_Cau));
+  saveMockData();
+  saveCart();
+  updateCartBadge();
+  renderCart();
+  renderCancelledRequests();
+  showLoading(false);
+  showToast(`Đã hoàn tác đưa các vật tư trở lại giỏ hàng!`, 'success');
+};
+
 window.addEventListener('DOMContentLoaded', () => {
   init();
 });
+
 
 </script>
 </body>
