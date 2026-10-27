@@ -396,57 +396,196 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 .mobile-bottom-nav { display: none; }
 
 @media (max-width: 768px) {
-  .header-nav-bar, .navbar .nav-links { display: none !important; }
-  .header-top-bar, .navbar { padding: 0.5rem 0.85rem; flex-wrap: wrap; gap: 0.4rem; }
-  .brand-icon { width: 28px; height: 28px; border-radius: 7px; }
-  .brand-name { font-size: 0.82rem; }
+  /* 1. Header & Navigation trên Mobile */
+  .header-top-bar, .navbar {
+    padding: 0.5rem 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .brand-icon { width: 30px; height: 30px; border-radius: 8px; }
+  .brand-name { font-size: 0.85rem; }
   .brand-sub  { display: none; }
-  .nav-actions { gap: 0.3rem; margin-left: 0; }
-  #role-select { width: 95px; font-size: 0.72rem; padding: 0.22rem 0.45rem; height: 28px; }
-  #theme-toggle, #excel-import-btn { padding: 0.28rem 0.5rem; font-size: 0.72rem; height: 28px; }
-  .container { padding: 0.9rem 0.85rem 76px 0.85rem; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; gap: 0.85rem !important; }
-  .card { padding: 1rem; border-radius: 10px; margin-bottom: 0.9rem; }
-  .card-title { font-size: 0.9rem; }
-  .modal { width: 96% !important; padding: 1.15rem !important; max-height: 88vh; overflow-y: auto; }
-  .mobile-bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 56px; background: var(--bg-card); border-top: 1px solid var(--border); z-index: 999; justify-content: space-around; align-items: center; box-shadow: 0 -1px 8px rgba(0,0,0,0.06); }
-  .mobile-bottom-nav .nav-item { flex-direction: column; gap: 0.12rem; padding: 0.3rem 0.2rem; font-size: 0.6rem; font-weight: 500; color: var(--text-muted); border: none !important; border-radius: 7px; flex: 1; align-items: center; justify-content: center; }
-  .mobile-bottom-nav .nav-item.active { color: var(--primary); background: var(--primary-light); }
-  .mobile-bottom-nav .nav-item[data-tab="export"].active { color: var(--danger); background: var(--danger-light); }
-  .mobile-nav-icon { font-size: 1.1rem; line-height: 1; }
-  .table-wrapper { border: none; background: transparent; box-shadow: none; }
-  .table { display: block; width: 100%; }
-  .table thead { display: none; }
-  .table tbody { display: block; width: 100%; }
-  .table tbody tr { display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 0.875rem; margin-bottom: 0.75rem; box-shadow: var(--shadow-card); }
-  .table tbody tr td { display: flex; justify-content: space-between; align-items: center; padding: 0.42rem 0; border-bottom: 1px solid var(--border); font-size: 0.845rem; }
-  .table tbody tr td:last-child { border-bottom: none; justify-content: flex-end; gap: 0.4rem; padding-top: 0.6rem; }
-  .table tbody tr td::before { font-weight: 600; color: var(--text-muted); font-size: 0.72rem; margin-right: 0.65rem; flex-shrink: 0; text-transform: uppercase; }
-  #inventory-tab .table tbody tr td:nth-of-type(1)::before  { content: "Ma so:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(2)::before  { content: "Ten vat tu:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(3)::before  { content: "Hang SX:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(4)::before  { content: "Quy cach:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(5)::before  { content: "Noi bao quan:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(6)::before  { content: "Ton kho:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(7)::before  { content: "Can xuat:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(8)::before  { content: "Han dung:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(9)::before  { content: "Nam nhap:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(10)::before { content: "Ghi chu:"; }
-  #inventory-tab .table tbody tr td:nth-of-type(11)::before { content: "Hanh dong:"; }
-  #cart-tab .table tbody tr td:nth-of-type(1)::before { content: "Chon:"; }
-  #cart-tab .table tbody tr td:nth-of-type(2)::before { content: "Ma so:"; }
-  #cart-tab .table tbody tr td:nth-of-type(3)::before { content: "Ten vat tu:"; }
-  #cart-tab .table tbody tr td:nth-of-type(4)::before { content: "Quy cach/Hang:"; }
-  #cart-tab .table tbody tr td:nth-of-type(5)::before { content: "So luong can:"; }
-  #cart-tab .table tbody tr td:nth-of-type(6)::before { content: "DVT:"; }
-  #cart-tab .table tbody tr td:nth-of-type(7)::before { content: "Hanh dong:"; }
-  #export-tab .table tbody tr td:nth-of-type(1)::before { content: "Nguoi YC:"; }
-  #export-tab .table tbody tr td:nth-of-type(2)::before { content: "Ten vat tu:"; }
-  #export-tab .table tbody tr td:nth-of-type(3)::before { content: "Quy cach:"; }
-  #export-tab .table tbody tr td:nth-of-type(4)::before { content: "So luong:"; }
-  #export-tab .table tbody tr td:nth-of-type(5)::before { content: "Muc dich:"; }
-  #export-tab .table tbody tr td:nth-of-type(6)::before { content: "Ghi chu:"; }
-  #export-tab .table tbody tr td:nth-of-type(7)::before { content: "Hanh dong:"; }
+  #changelog-badge-btn { display: none; } /* Ẩn bớt huy hiệu trên mobile hẹp */
+  .nav-actions { gap: 0.4rem; margin-left: auto; }
+  #role-select { font-size: 0.78rem; padding: 0.25rem 0.5rem; height: 32px; }
+  #theme-toggle { padding: 0.3rem 0.55rem; font-size: 0.78rem; height: 32px; }
+  #logout-btn { padding: 0.3rem 0.55rem; font-size: 0.78rem; height: 32px; }
+  #excel-import-btn { display: none !important; }
+
+  /* Thanh điều hướng tab cuộn ngang mượt mà bằng ngón tay */
+  .header-nav-bar {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.4rem 0.6rem !important;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-nav-bar::-webkit-scrollbar {
+    height: 3px;
+  }
+  .header-nav-bar::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px;
+  }
+  .header-nav-bar .nav-links {
+    display: flex !important;
+    gap: 0.35rem !important;
+    width: auto !important;
+    white-space: nowrap !important;
+  }
+  .header-nav-bar .nav-item {
+    display: inline-flex !important;
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.82rem !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    touch-action: manipulation;
+  }
+
+  /* 2. Layout & Container */
+  .container {
+    padding: 0.75rem 0.65rem 40px 0.65rem;
+  }
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  .card {
+    padding: 0.9rem;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .card-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.65rem;
+  }
+
+  /* 3. Toolbar Tìm Kiếm & Bộ Lọc Vị Trí */
+  .inventory-search-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+  .inventory-search-toolbar .search-container {
+    width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+  }
+  .filter-location-wrapper {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+  .filter-location-select {
+    width: 100% !important;
+    height: 40px;
+  }
+
+  /* 4. Tối Ưu Bảng Biểu Tránh Vỡ Giao Diện */
+  .table-wrapper {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    margin-bottom: 0.85rem;
+  }
+  .table {
+    display: table !important;
+    width: 100% !important;
+    min-width: 580px; /* Cho phép vuốt ngang trơn tru mà không bị bóp nghẹt chữ */
+  }
+  .table thead {
+    display: table-header-group !important;
+  }
+  .table tbody {
+    display: table-row-group !important;
+  }
+  .table tbody tr {
+    display: table-row !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+  .table tbody tr td {
+    display: table-cell !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 0.6rem 0.5rem !important;
+    font-size: 0.82rem !important;
+  }
+  .table tbody tr td::before {
+    display: none !important;
+  }
+
+  /* Nút bấm cảm ứng to rõ, dễ chạm ngón tay */
+  .btn {
+    min-height: 34px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.82rem;
+    touch-action: manipulation;
+  }
+  .btn-sm {
+    min-height: 30px;
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.78rem !important;
+  }
+  .quantity-control .qty-btn {
+    min-width: 32px;
+    min-height: 32px;
+    touch-action: manipulation;
+  }
+
+  /* 5. Modals trên Mobile */
+  .modal {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 1rem !important;
+    max-height: 90vh !important;
+    border-radius: 12px !important;
+  }
+  .form-control, input, select, textarea {
+    font-size: 15px !important; /* Chống auto-zoom phiền toái trên Safari iOS */
+  }
+
+  /* 6. Phiếu In Xuất Kho trên Mobile */
+  .voucher-paper {
+    padding: 1.25rem 0.85rem !important;
+    width: 100% !important;
+  }
+  .voucher-header {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .voucher-title {
+    font-size: 1.15rem !important;
+    margin: 0.6rem 0 0.4rem 0 !important;
+  }
+  .voucher-meta-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.35rem !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .voucher-signatures {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    font-size: 0.85rem !important;
+    margin-top: 1.25rem !important;
+  }
+  .voucher-sig-space {
+    height: 45px !important;
+  }
 }
 
 /* === NOTIFICATION BADGE === */
@@ -1085,6 +1224,23 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
   box-shadow: 0 0 0 1.5px #2563eb;
 }
 
+/* Ẩn hoàn toàn nút nạp excel trên header ở tất cả vai trò */
+#excel-import-btn {
+  display: none !important;
+}
+
+/* Hiệu ứng click vào tên hóa chất */
+.clickable-item-name {
+  cursor: pointer;
+  color: var(--primary, #2563eb);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+.clickable-item-name:hover {
+  text-decoration: underline !important;
+  color: #1d4ed8 !important;
+  transform: translateY(-1px);
+}
 
 </style>
 </head>
@@ -1115,7 +1271,6 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       <!-- Tách vai trò người dùng, chế độ tối và đăng xuất về góc phải -->
       <div class="nav-actions">
         <input type="file" id="excel-file-input" accept=".xlsx, .xls" style="display: none;">
-        <button class="btn btn-success" id="excel-import-btn" style="padding: 0.42rem 0.85rem; font-size: 0.82rem; display: none;">📁 Nạp file Excel</button>
         
         <div style="display: flex; align-items: center; gap: 0.35rem; background: var(--border); padding: 0.32rem 0.65rem; border-radius: 6px;">
           <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500;">Vai trò:</span>
@@ -1200,15 +1355,15 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <table class="table">
             <thead>
               <tr id="inventory-table-header-row">
-                <th style="width: 95px; text-align: center;">Mã Số</th>
-                <th style="width: 24%; min-width: 190px;">Tên Vật Tư /<br>Hóa Chất</th>
-                <th style="width: 130px;">Xuất Xứ /<br>Hãng</th>
-                <th style="width: 130px;">Quy Cách</th>
-                <th style="width: 155px;">Vị Trí<br>Bảo Quản</th>
-                <th style="width: 75px; text-align: center;">Đơn Vị</th>
-                <th style="width: 105px; text-align: right;">Số Lượng<br>Tồn</th>
-                <th style="width: 130px; text-align: center;">Cần Xuất</th>
-                <th style="text-align: right; width: 125px;" class="admin-only-cell">Hành Động</th>
+                <th style="width: 8%; min-width: 85px; text-align: center;">Mã Số</th>
+                <th style="width: 18%; min-width: 160px;">Tên Vật Tư /<br>Hóa Chất</th>
+                <th style="width: 14%; min-width: 125px;">Xuất Xứ /<br>Hãng</th>
+                <th style="width: 14%; min-width: 125px;">Quy Cách</th>
+                <th style="width: 18%; min-width: 145px;">Vị Trí<br>Bảo Quản</th>
+                <th style="width: 6%; min-width: 70px; text-align: center;">Đơn Vị</th>
+                <th style="width: 8%; min-width: 85px; text-align: right;">Số Lượng<br>Tồn</th>
+                <th style="width: 10%; min-width: 110px; text-align: center;">Cần Xuất</th>
+                <th style="width: 10%; min-width: 115px; text-align: right;" class="admin-only-cell">Hành Động</th>
               </tr>
             </thead>
             <tbody id="inventory-table-body">
@@ -1306,7 +1461,6 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                 <th style="width: 130px;">Vị Trí Tủ<br>Dùng Chung</th>
                 <th style="width: 75px; text-align: center;">Số<br>Chai</th>
                 <th style="width: 130px; background: rgba(37, 99, 235, 0.05); color: #1e3a8a; text-align: center;">Khối Lượng /<br>Thể Tích Còn</th>
-                <th style="width: 100px; text-align: center;">Trạng<br>Thái</th>
                 <th style="width: 110px;">Ngày<br>Cập Nhật</th>
                 <th style="min-width: 120px;">Ghi Chú</th>
                 <th style="text-align: right; width: 135px;">Thao Tác</th>
@@ -1785,11 +1939,6 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Theo dõi nhật ký xuất nhập kho và xuất báo cáo kiểm kê Excel.</p>
         </div>
         <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-          <div class="view-toggle-buttons" style="display: flex; background: var(--bg-input); padding: 4px; border-radius: var(--radius-sm); border: 1px solid var(--border); margin-right: 0.5rem;">
-            <button type="button" id="toggle-timeline-btn" class="btn active" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 4px; background: var(--primary); color: white;">📜 Dòng thời gian</button>
-            <button type="button" id="toggle-tables-btn" class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 4px; background: transparent; color: var(--text-muted);">📊 Bảng biểu</button>
-          </div>
-          
           <select id="report-time-filter" class="form-control" style="width: 150px; padding: 0.5rem 1rem;">
             <option value="all">Tất cả thời gian</option>
             <option value="week">Tuần này</option>
@@ -1800,13 +1949,8 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         </div>
       </div>
 
-      <!-- CONTAINER DÒNG THỜI GIAN HOẠT ĐỘNG (TIMELINE VIEW) -->
-      <div id="history-timeline-container" class="timeline-container" style="max-height: 400px; overflow-y: auto; margin-bottom: 2rem;">
-        <!-- JS auto render -->
-      </div>
-
-      <!-- CONTAINER BẢNG BIỂU CHI TIẾT (TABLE VIEW) -->
-      <div id="history-tables-container" style="display: none;">
+      <!-- CONTAINER BẢNG BIỂU CHI TIẾT (HIỂN THỊ MẶC ĐỊNH) -->
+      <div id="history-tables-container">
         <!-- 1. LỊCH SỬ XUẤT KHO (ĐƯỢC ƯU TIÊN LÊN TRÊN, RỘNG RÃI 100%, KHÔNG BỊ CO ÉP LỆCH BẢNG) -->
         <div class="card" style="margin-bottom: 1.5rem;">
           <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
@@ -1866,7 +2010,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
             <thead>
               <tr>
                 <th>Mã Nhật Ký</th>
-                <th>ID Vật Tư</th>
+                <th>Mã Số / ID</th>
                 <th>Tên Vật Tư</th>
                 <th>Nội Dung Thay Đổi</th>
                 <th>Thời Gian Sửa</th>
@@ -2439,6 +2583,9 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
             <p><strong>Ghi chú:</strong> <span id="item-detail-note"></span></p>
           </div>
         </div>
+
+        <!-- Khung Gợi Ý & Phân Bổ Nhập Trước Xuất Trước (FIFO) -->
+        <div id="item-detail-fifo-box" style="margin-bottom: 1.25rem; display: none;"></div>
 
         <div class="form-group" style="border-top: 1px solid var(--border); padding-top: 1rem;">
           <label class="form-label" style="font-weight:700; color:var(--primary); font-size:0.85rem;">🧬 Đặc Tính Kỹ Thuật (Thông số, nồng độ, bảo quản...):</label>
@@ -3418,7 +3565,7 @@ async function sendRequest(payload) {
       
       for (let k = 0; k < items.length; k++) {
         const rawItem = items[k];
-        const requestId = "YC" + Date.now() + Math.floor(Math.random() * 100) + k;
+        const requestId = "YC" + Date.now().toString().slice(-6) + k;
         const { error } = await supabaseClient.from('yeu_cau_xuat').insert({
           id_yeu_cau: requestId,
           id_vat_tu: rawItem.itemId,
@@ -3515,7 +3662,7 @@ async function sendRequest(payload) {
         nguoi_nhan: req.nguoi_yeu_cau,
         muc_dich: payload.purpose || req.muc_dich,
         nguoi_xuat: userRole,
-        ghi_chu: `Duyệt từ yêu cầu ${payload.requestId}. ${note}`
+        ghi_chu: (note && note !== 'Duyệt theo nhóm đề xuất') ? note : (req.ghi_chu || 'Xuất theo yêu cầu')
       });
       if (expLogErr) throw expLogErr;
       
@@ -3820,7 +3967,7 @@ async function sendRequest(payload) {
       return { success: true };
     }
     
-    // 9. Undo Export
+    // 9. Undo Export (Hoàn tác xuất kho & trả yêu cầu về Chờ duyệt / Giỏ hàng)
     if (payload.action === 'undo_export') {
       const txIds = Array.isArray(payload.transactionIds)
         ? payload.transactionIds
@@ -3831,6 +3978,7 @@ async function sendRequest(payload) {
         if (expErr) throw expErr;
         if (!exp) continue;
         
+        // 1. Hoàn trả lại số lượng vào tồn kho thực tế
         const { data: inv, error: invErr } = await supabaseClient.from('kho_vat_tu').select('so_luong').eq('id', exp.id_vat_tu).maybeSingle();
         if (invErr) throw invErr;
         if (inv) {
@@ -3838,7 +3986,29 @@ async function sendRequest(payload) {
           const { error: updErr } = await supabaseClient.from('kho_vat_tu').update({ so_luong: newQty }).eq('id', exp.id_vat_tu);
           if (updErr) throw updErr;
         }
+
+        // 2. Nếu món này xuất phát từ yêu cầu của người khác: Chuyển yêu cầu trở lại 'Cho_Duyet'
+        try {
+          const { data: matchedReqs } = await supabaseClient
+            .from('yeu_cau_xuat')
+            .select('id_yeu_cau')
+            .eq('id_vat_tu', exp.id_vat_tu)
+            .eq('nguoi_yeu_cau', exp.nguoi_nhan)
+            .eq('trang_thai', 'Da_Duyet')
+            .order('ngay_yeu_cau', { ascending: false })
+            .limit(1);
+
+          if (matchedReqs && matchedReqs.length > 0) {
+            await supabaseClient.from('yeu_cau_xuat').update({
+              trang_thai: 'Cho_Duyet',
+              ghi_chu: 'Đã hoàn tác xuất kho (quay lại danh sách chờ duyệt)'
+            }).eq('id_yeu_cau', matchedReqs[0].id_yeu_cau);
+          }
+        } catch (reqErr) {
+          console.warn('Lỗi trả lại yêu cầu xuất kho về chờ duyệt:', reqErr);
+        }
         
+        // 3. Xóa giao dịch khỏi lịch sử xuất
         const { error: delErr } = await supabaseClient.from('lich_su_xuat').delete().eq('id_giao_dich', txId);
         if (delErr) throw delErr;
       }
@@ -4304,7 +4474,8 @@ function updateNavigationByRole(forceTab = null) {
     directExportCard.style.display = isAdmin ? 'block' : 'none';
   }
   
-  document.getElementById('excel-import-btn').style.display = (isAdmin || isImporter) ? 'inline-block' : 'none';
+  const excelBtnHeader = document.getElementById('excel-import-btn');
+  if (excelBtnHeader) excelBtnHeader.style.display = 'none';
 
   // Phân quyền tại Tủ Dùng Chung: Sinh viên không được thêm hoặc nạp Excel
   const btnOpenScAddModal = document.getElementById('btn-open-sc-add-modal');
@@ -4633,6 +4804,8 @@ function setupEventListeners() {
   const excelInput = document.getElementById('excel-file-input');
   if (excelBtn && excelInput) {
     excelBtn.addEventListener('click', () => excelInput.click());
+  }
+  if (excelInput) {
     excelInput.addEventListener('change', handleExcelImport);
   }
 
@@ -5144,29 +5317,29 @@ function renderInventoryHeaders() {
   const isStudent = currentRole === 'student';
   
   let html = `
-    <th style="width: 95px; text-align: center;">Mã Số</th>
-    <th style="width: 24%; min-width: 190px;">Tên Vật Tư /<br>Hóa Chất</th>
-    <th style="width: 130px;">Xuất Xứ /<br>Hãng</th>
-    <th style="width: 130px;">Quy Cách</th>
+    <th style="width: 8%; min-width: 85px; text-align: center;">Mã Số</th>
+    <th style="${isStudent ? 'width: 25%;' : 'width: 18%;'} min-width: 160px;">Tên Vật Tư /<br>Hóa Chất</th>
+    <th style="${isStudent ? 'width: 18%;' : 'width: 14%;'} min-width: 125px;">Xuất Xứ /<br>Hãng</th>
+    <th style="${isStudent ? 'width: 18%;' : 'width: 14%;'} min-width: 125px;">Quy Cách</th>
   `;
   
   if (!isStudent) {
-    html += `<th style="width: 155px;">Vị Trí<br>Bảo Quản</th>`;
+    html += `<th style="width: 18%; min-width: 145px;">Vị Trí<br>Bảo Quản</th>`;
   }
   
-  html += `<th style="width: 75px; text-align: center;">Đơn Vị</th>`;
+  html += `<th style="width: 6%; min-width: 70px; text-align: center;">Đơn Vị</th>`;
   
   customFields.forEach(cf => {
     html += `<th style="min-width: 110px;">${escapeHtml(cf.label)}</th>`;
   });
   
   if (!isStudent) {
-    html += `<th style="width: 105px; text-align: right;">Số Lượng<br>Tồn</th>`;
+    html += `<th style="width: 8%; min-width: 85px; text-align: right;">Số Lượng<br>Tồn</th>`;
   }
   
   html += `
-    <th style="width: 130px; text-align: center;">Cần xuất</th>
-    <th style="text-align: right; width: 125px;" class="admin-only-cell">Hành Động</th>
+    <th style="width: 10%; min-width: 110px; text-align: center;">Cần xuất</th>
+    <th style="width: 10%; min-width: 115px; text-align: right;" class="admin-only-cell">Hành Động</th>
   `;
   
   headerRow.innerHTML = html;
@@ -5279,9 +5452,20 @@ function renderInventory() {
     });
 
     const formattedName = formatChemicalName(item.Ten);
-    const nameCellHtml = isStudent 
-      ? `<strong>${escapeHtml(formattedName)}</strong>` 
-      : `<span class="clickable-item-name" style="cursor: pointer; color: var(--primary); text-decoration: none;" onclick="openItemHistoryModal('${item.ID}')"><strong>${escapeHtml(formattedName)}</strong></span>`;
+    
+    // Kiểm tra gợi ý FIFO cho từng vật tư tồn kho
+    let fifoBadgeStockHtml = '';
+    const fifo = getItemFifoSuggestion(item.ID);
+    if (fifo && fifo.hasMultiBatches && fifo.activeBatch && parseFloat(item.So_Luong) > 0) {
+      fifoBadgeStockHtml = `<div style="margin-top: 2px;"><span class="badge" style="background: rgba(245, 158, 11, 0.12); color: #b45309; font-size: 0.72rem; padding: 1px 5px; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600;" title="${escapeHtml(fifo.suggestionText)}">⚡ Lô cũ: ${fifo.activeBatch.year || fifo.activeBatch.dateStr} (còn ~${fifo.activeBatch.qtyRemaining})</span></div>`;
+    }
+
+    const nameCellHtml = `
+      <span class="clickable-item-name" style="cursor: pointer; color: var(--primary); text-decoration: none;" onclick="openItemHistoryModal('${item.ID}')" title="Bấm để xem thông tin chi tiết hóa chất">
+        <strong>${escapeHtml(formattedName)}</strong>
+      </span>
+      ${fifoBadgeStockHtml}
+    `;
       
     // Căn phải số lượng tồn kho
     const qtyBadgeHtml = isStudent 
@@ -5318,24 +5502,163 @@ function renderInventory() {
   });
 }
 
+// ============================================================
+// === TÍNH NĂNG THÔNG MINH: QUẢN LÝ LÔ NHẬP TRƯỚC XUẤT TRƯỚC (FIFO) ===
+// ============================================================
+function getItemFifoSuggestion(itemId) {
+  // TIÊU CHÍ 2: Quyền sinh viên không được nhìn thấy FIFO
+  if (currentRole === 'student') return null;
+
+  if (!appData || !appData.inventory) return null;
+  const item = appData.inventory.find(i => String(i.ID) === String(itemId));
+  if (!item) return null;
+
+  const currentStock = parseFloat(item.So_Luong) || 0;
+  if (currentStock <= 0) return null; // Hết tồn kho thì không cần FIFO
+
+  // 1. Lọc tất cả các lần nhập kho của vật tư này
+  const itemImports = (appData.imports || []).filter(imp => {
+    if (imp.ID_Vat_Tu && String(imp.ID_Vat_Tu) === String(itemId)) return true;
+    if (imp.Ten && item.Ten && removeVietnameseTones(imp.Ten.trim().toLowerCase()) === removeVietnameseTones(item.Ten.trim().toLowerCase())) {
+      if (!imp.Hang || !item.Hang || imp.Hang === 'K/P' || item.Hang === 'K/P') return true;
+      return removeVietnameseTones(imp.Hang.trim().toLowerCase()) === removeVietnameseTones(item.Hang.trim().toLowerCase());
+    }
+    return false;
+  }).sort((a, b) => new Date(a.Ngay_Nhap || 0) - new Date(b.Ngay_Nhap || 0));
+
+  // Nếu lịch sử nhập ít hơn 2 lần -> Không có nhiều lô
+  if (itemImports.length < 2) return null;
+
+  // 2. Lọc tất cả các lần xuất kho của vật tư này
+  const itemExports = (appData.exports || []).filter(exp => {
+    if (exp.ID_Vat_Tu && String(exp.ID_Vat_Tu) === String(itemId)) return true;
+    if (exp.Ten && item.Ten && removeVietnameseTones(exp.Ten.trim().toLowerCase()) === removeVietnameseTones(item.Ten.trim().toLowerCase())) {
+      return true;
+    }
+    return false;
+  });
+
+  const totalExported = itemExports.reduce((sum, e) => sum + (parseFloat(e.So_Luong) || 0), 0);
+
+  // 3. Phân bổ FIFO lần lượt qua các đợt nhập
+  let runningExport = totalExported;
+  const batches = [];
+  let activeBatch = null;
+
+  itemImports.forEach((imp, idx) => {
+    const impQty = parseFloat(imp.So_Luong) || 0;
+    const dateObj = imp.Ngay_Nhap ? new Date(imp.Ngay_Nhap) : null;
+    const dateStr = dateObj ? dateObj.toLocaleDateString('vi-VN') : 'Đợt trước';
+    const yearStr = dateObj ? dateObj.getFullYear() : (item.Nam_Nhap || '');
+
+    let status = 'waiting';
+    let remainingInBatch = 0;
+
+    if (runningExport >= impQty && impQty > 0) {
+      status = 'completed'; // Đã xuất hết
+      remainingInBatch = 0;
+      runningExport -= impQty;
+    } else {
+      remainingInBatch = Math.max(0, impQty - runningExport);
+      if (!activeBatch && remainingInBatch > 0) {
+        status = 'active'; // Lô cũ nhất còn hàng
+        activeBatch = {
+          index: idx + 1,
+          id: imp.ID_Giao_Dich,
+          dateObj: dateObj,
+          dateStr: dateStr,
+          year: yearStr,
+          qtyRemaining: remainingInBatch,
+          initialQty: impQty,
+          unit: imp.Don_Vi || item.Don_Vi || 'Chai',
+          note: imp.Ghi_Chu || ''
+        };
+      } else {
+        status = 'waiting';
+      }
+      runningExport = 0;
+    }
+
+    batches.push({
+      index: idx + 1,
+      id: imp.ID_Giao_Dich,
+      dateObj: dateObj,
+      dateStr: dateStr,
+      year: yearStr,
+      qtyRemaining: remainingInBatch,
+      initialQty: impQty,
+      unit: imp.Don_Vi || item.Don_Vi || 'Chai',
+      status: status,
+      note: imp.Ghi_Chu || '',
+      importer: imp.Nguoi_Nhap || ''
+    });
+  });
+
+  // TIÊU CHÍ 3: Chỉ xét các đợt THỰC TẾ CÒN HÀNG TỒN TRONG KHO (qtyRemaining > 0)
+  // Nếu đợt trước đã xuất hết, kho chỉ còn đúng 1 đợt thì KHÔNG HIỆN FIFO!
+  const batchesWithStock = batches.filter(b => b.qtyRemaining > 0);
+  if (batchesWithStock.length < 2) {
+    return null;
+  }
+
+  // TIÊU CHÍ 1: Khoảng cách giữa đợt cũ nhất còn tồn và đợt mới nhất còn tồn phải từ 6 tháng (180 ngày) trở lên hoặc khác năm nhập!
+  const oldestBatch = batchesWithStock[0];
+  const newestBatch = batchesWithStock[batchesWithStock.length - 1];
+
+  let isTimeGapSignificant = false;
+  if (oldestBatch.dateObj && newestBatch.dateObj) {
+    const diffMs = Math.abs(newestBatch.dateObj.getTime() - oldestBatch.dateObj.getTime());
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+    if (diffDays >= 180) { // 6 tháng trở lên
+      isTimeGapSignificant = true;
+    }
+  } else if (oldestBatch.year && newestBatch.year && String(oldestBatch.year) !== String(newestBatch.year)) {
+    isTimeGapSignificant = true;
+  }
+
+  // Nếu nhập cùng ngày hoặc cách nhau dưới 6 tháng -> KHÔNG HIỆN FIFO
+  if (!isTimeGapSignificant) {
+    return null;
+  }
+
+  if (!activeBatch && batchesWithStock.length > 0) {
+    activeBatch = batchesWithStock[0];
+  }
+
+  const suggestionText = `Ưu tiên xuất đợt ${activeBatch.year || activeBatch.dateStr} (còn ~${activeBatch.qtyRemaining} ${activeBatch.unit})`;
+
+  return {
+    hasMultiBatches: true,
+    totalBatchesWithStock: batchesWithStock.length,
+    activeBatch: activeBatch,
+    batches: batches,
+    batchesWithStock: batchesWithStock,
+    totalExported: totalExported,
+    currentStock: currentStock,
+    suggestionText: suggestionText
+  };
+}
+
 // --- XEM LỊCH SỬ RIÊNG BIỆT CỦA 1 VẬT TƯ/HÓA CHẤT ---
 let currentViewingItemId = null;
 
 window.openItemHistoryModal = function(itemId) {
-  if (currentRole === 'student') {
-    alert("Bạn không có quyền xem lịch sử chi tiết của hóa chất / vật tư!");
-    return;
-  }
   if (!appData) return;
   const item = appData.inventory.find(i => i.ID === itemId);
   if (!item) return;
 
   currentViewingItemId = itemId;
 
+  // Cập nhật tab lịch sử theo vai trò
+  const historyTabBtn = document.getElementById('modal-tab-history-btn');
+  if (historyTabBtn) {
+    historyTabBtn.style.display = (currentRole === 'student') ? 'none' : 'inline-block';
+  }
+
   // Cập nhật tiêu đề modal
   const modalTitle = document.getElementById('item-history-modal-title');
   if (modalTitle) {
-    modalTitle.innerHTML = `🧪 Chi tiết: <span style="color: var(--primary);">${item.Ten}</span>`;
+    modalTitle.innerHTML = `🧪 Chi tiết: <span style="color: var(--primary);">${escapeHtml(item.Ten)}</span>`;
   }
 
   // 1. Điền thông tin cơ bản & Đặc tính
@@ -5350,6 +5673,62 @@ window.openItemHistoryModal = function(itemId) {
   document.getElementById('item-detail-year').textContent = item.Nam_Nhap || '-';
   document.getElementById('item-detail-note').textContent = item.Ghi_Chu || '-';
   
+  // TÍNH NĂNG FIFO: Chỉ hiển thị khi thỏa mãn (có từ 2 đợt còn tồn cách nhau >= 6 tháng, không phải sinh viên)
+  const fifo = getItemFifoSuggestion(itemId);
+  const fifoBox = document.getElementById('item-detail-fifo-box');
+  if (fifoBox) {
+    if (fifo && fifo.hasMultiBatches && fifo.activeBatch && currentRole !== 'student') {
+      const batchListHtml = fifo.batchesWithStock.map(b => {
+        let badgeBg = '#f1f5f9';
+        let badgeColor = '#64748b';
+        let badgeText = '⚪ Chờ xuất sau';
+        let rowStyle = 'padding: 4px 6px;';
+        
+        if (b.status === 'active') {
+          badgeBg = '#fef3c7';
+          badgeColor = '#b45309';
+          badgeText = `⚡ Đang ưu tiên xuất (còn ~${b.qtyRemaining} ${b.unit})`;
+          rowStyle = 'font-weight: 600; background: rgba(245, 158, 11, 0.08); border-radius: 4px; padding: 4px 6px;';
+        } else {
+          badgeBg = '#ecfdf5';
+          badgeColor = '#047857';
+          badgeText = `⏳ Dự trữ đợt sau (còn ${b.qtyRemaining} ${b.unit})`;
+          rowStyle = 'color: var(--text-secondary); padding: 2px 6px;';
+        }
+
+        return `
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-bottom: 4px; ${rowStyle}">
+            <span>Đợt ${b.index} (${b.dateStr}${b.year ? ` - Năm ${b.year}` : ''}): Còn tồn ${b.qtyRemaining} / ${b.initialQty} ${b.unit}</span>
+            <span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; font-size: 0.74rem; border: 1px solid currentColor;">${badgeText}</span>
+          </div>
+        `;
+      }).join('');
+
+      fifoBox.innerHTML = `
+        <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-left: 5px solid #f59e0b; border-radius: 8px; padding: 0.75rem 1rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+            <span style="font-weight: 700; color: #9a3412; font-size: 0.88rem; display: flex; align-items: center; gap: 0.35rem;">
+              ⚡ Quản Lý Lô Theo Nguyên Tắc FIFO (Nhập Trước Xuất Trước)
+            </span>
+            <span class="badge" style="background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; font-size: 0.72rem; font-weight: 700;">
+              ${fifo.totalBatchesWithStock} đợt còn tồn (cách nhau ≥ 6 tháng)
+            </span>
+          </div>
+          <div style="font-size: 0.82rem; color: #78350f; margin-bottom: 0.6rem;">
+            👉 <strong>Chỉ dẫn xuất kho:</strong> Kho đang tồn các chai ở các đợt nhập cách xa nhau. Người xuất cần lấy các chai thuộc đợt <strong>${fifo.activeBatch.year || fifo.activeBatch.dateStr}</strong> ra giao trước để tránh bị quá hạn sử dụng (còn lại khoảng <strong>${fifo.activeBatch.qtyRemaining} ${fifo.activeBatch.unit}</strong> của đợt cũ này).
+          </div>
+          <div style="background: #ffffff; border: 1px solid #fed7aa; border-radius: 6px; padding: 0.5rem 0.75rem;">
+            ${batchListHtml}
+          </div>
+        </div>
+      `;
+      fifoBox.style.display = 'block';
+    } else {
+      fifoBox.style.display = 'none';
+      fifoBox.innerHTML = '';
+    }
+  }
+
   const techSpecsArea = document.getElementById('item-detail-tech-specs');
   if (techSpecsArea) {
     techSpecsArea.value = getTechSpecsText(item) || '';
@@ -5385,9 +5764,25 @@ window.openItemHistoryModal = function(itemId) {
     } else {
       [...itemImports].reverse().forEach(imp => {
         const dateStr = imp.Ngay_Nhap ? new Date(imp.Ngay_Nhap).toLocaleString('vi-VN') : '-';
+        
+        // Kiểm tra trạng thái FIFO của lần nhập này
+        let fifoBadge = '';
+        if (fifo && fifo.batches) {
+          const matchedBatch = fifo.batches.find(b => b.id === imp.ID_Giao_Dich);
+          if (matchedBatch) {
+            if (matchedBatch.status === 'active') {
+              fifoBadge = `<br><span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #f59e0b; font-size:0.7rem; font-weight:700; margin-top:2px;">⚡ Ưu tiên xuất (còn ~${matchedBatch.qtyRemaining})</span>`;
+            } else if (matchedBatch.status === 'completed') {
+              fifoBadge = `<br><span class="badge" style="background:#f1f5f9; color:#64748b; font-size:0.7rem; margin-top:2px;">⚪ Đã xuất hết</span>`;
+            } else if (matchedBatch.status === 'waiting') {
+              fifoBadge = `<br><span class="badge" style="background:#ecfdf5; color:#047857; font-size:0.7rem; margin-top:2px;">⏳ Dự trữ</span>`;
+            }
+          }
+        }
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><span style="font-family: monospace; font-size: 0.8rem;">${imp.ID_Giao_Dich}</span></td>
+          <td><span style="font-family: monospace; font-size: 0.8rem;">${imp.ID_Giao_Dich}</span>${fifoBadge}</td>
           <td><span class="badge badge-success">+${imp.So_Luong} ${imp.Don_Vi || 'cái'}</span></td>
           <td><span style="font-size: 0.8rem;">${dateStr}</span></td>
           <td><span class="badge badge-primary">${imp.Nguoi_Nhap || '-'}</span></td>
@@ -6019,10 +6414,22 @@ function renderAdminRequests() {
         overStockWarningHtml = `<span style="color: var(--danger); font-weight: 600; font-size: 0.8rem; margin-left: 0.5rem;" title="Vượt quá tồn kho thực tế (Còn tồn: ${currentStock} ${it.Don_Vi || 'Cái'})">⚠️ (Tồn: ${currentStock})</span>`;
       }
 
+      // Nhắc nhở FIFO nếu có nhiều đợt nhập
+      let fifoAlertHtml = '';
+      const fifo = it.ID_Vat_Tu ? getItemFifoSuggestion(it.ID_Vat_Tu) : null;
+      if (fifo && fifo.hasMultiBatches && fifo.activeBatch) {
+        fifoAlertHtml = `
+          <div style="margin-top: 4px; font-size: 0.74rem; color: #b45309; background: rgba(245, 158, 11, 0.12); padding: 2px 7px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(245, 158, 11, 0.3);">
+            ⚡ <strong>FIFO:</strong> Ưu tiên xuất đợt <strong>${fifo.activeBatch.year || fifo.activeBatch.dateStr}</strong> (còn ~${fifo.activeBatch.qtyRemaining} ${fifo.activeBatch.unit})
+          </div>
+        `;
+      }
+
       itemsHtml += `
         <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-app); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
           <div style="font-size: 0.85rem;">
             ${labelHtml}
+            ${fifoAlertHtml}
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <div class="quantity-control" style="max-width: 100px; height:28px;">
@@ -6108,8 +6515,9 @@ function renderHistory() {
 
   if (!appData) return;
 
-  // Render Dòng thời gian trước
-  renderTimeline();
+  // Không render dòng thời gian theo yêu cầu người dùng (bỏ dòng thời gian, chỉ hiển thị bảng biểu)
+  const isTablesContainer = document.getElementById('history-tables-container');
+  if (isTablesContainer) isTablesContainer.style.display = 'block';
 
   if (importBody) {
     importBody.innerHTML = '';
@@ -6143,12 +6551,14 @@ function renderHistory() {
         
         const isExporterOrAdmin = currentRole === 'admin' || currentRole === 'exporter';
         const dateXuat = new Date(group.Ngay_Xuat || Date.now());
-        const isUnderOneHour = (Date.now() - dateXuat.getTime()) < 3600000;
+        // Cho phép Admin luôn được hoàn tác; Exporter được hoàn tác trong vòng 48 giờ
+        const hoursDiff = (Date.now() - dateXuat.getTime()) / 3600000;
+        const canUndo = isExporterOrAdmin && (currentRole === 'admin' || hoursDiff <= 48);
         
         const txIdsStr = group.items.map(it => it.ID_Giao_Dich).join(',');
 
         let undoBtnHtml = '';
-        if (isExporterOrAdmin && isUnderOneHour) {
+        if (canUndo) {
           undoBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--danger); font-weight: 600;" onclick="undoExport('${txIdsStr}')">↩️ Hoàn tác</button>`;
         } else {
           undoBtnHtml = `<span style="font-size:0.75rem; color:var(--text-muted);">-</span>`;
@@ -6177,13 +6587,18 @@ function renderHistory() {
           </td>
         `;
 
+        let cleanGroupNote = (group.Ghi_Chu || '').trim();
+        cleanGroupNote = cleanGroupNote.replace(/Duyệt từ yêu cầu\s+YC[0-9a-zA-Z_-]+\.?/gi, '').trim();
+        cleanGroupNote = cleanGroupNote.replace(/Duyệt theo nhóm đề xuất\.?/gi, '').trim();
+        if (!cleanGroupNote) cleanGroupNote = 'Duyệt xuất theo yêu cầu';
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
           ${subTableHtml}
           <td><span class="badge badge-primary">${escapeHtml(group.Nguoi_Nhan)}</span></td>
           <td><span style="font-size: 0.85rem;">${escapeHtml(group.Muc_Dich)}</span></td>
           <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
-          <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(group.Ghi_Chu || '-')}</span></td>
+          <td><span style="font-size: 0.85rem; color: var(--text-secondary);">${escapeHtml(cleanGroupNote)}</span></td>
           <td style="text-align: right; white-space: nowrap;">
             <button class="btn btn-primary btn-sm" style="padding: 0.25rem 0.55rem; font-size: 0.72rem; margin-right: 0.35rem;" onclick="openPrintExportModal('${txIdsStr}')">🖨️ In Phiếu</button>
             ${undoBtnHtml}
@@ -6280,14 +6695,27 @@ function renderEditLogs() {
       }
     }
 
+    // Rút gọn Mã Nhật Ký và ID Vật Tư
+    const cleanLogId = (log.ID_Log || '').replace(/^EDIT/, '#LOG-');
+    
+    // Ưu tiên hiển thị Mã Số của vật tư trong kho thay vì ID kỹ thuật dài ngoằng
+    const targetItem = (appData.inventory || []).find(i => i.ID === log.ID_Vat_Tu || i.Ten === log.Ten_Vat_Tu);
+    let itemCodeHtml = '';
+    if (targetItem && targetItem.Ma_So && targetItem.Ma_So !== '-') {
+      itemCodeHtml = `<span class="item-code-chip">${escapeHtml(targetItem.Ma_So)}</span>`;
+    } else {
+      const shortId = (log.ID_Vat_Tu || '').length > 8 ? '#' + (log.ID_Vat_Tu.slice(-4)) : (log.ID_Vat_Tu || '-');
+      itemCodeHtml = `<span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(shortId)}</span>`;
+    }
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td><span style="font-family: monospace; font-size: 0.85rem;">${log.ID_Log}</span></td>
-      <td><span style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted);">${log.ID_Vat_Tu}</span></td>
-      <td><strong>${log.Ten_Vat_Tu}</strong></td>
-      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${detailText}</span></td>
+      <td><span style="font-family: monospace; font-size: 0.8rem; font-weight: 600;">${cleanLogId}</span></td>
+      <td>${itemCodeHtml}</td>
+      <td><strong>${escapeHtml(log.Ten_Vat_Tu)}</strong></td>
+      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(detailText)}</span></td>
       <td><span style="font-size: 0.85rem;">${dateStr}</span></td>
-      <td><span class="badge badge-primary">${log.Nguoi_Sua || 'Admin'}</span></td>
+      <td><span class="badge badge-primary">${escapeHtml(log.Nguoi_Sua || 'Admin')}</span></td>
       <td style="text-align: right;" class="admin-only-cell">${rollbackBtnHtml}</td>
     `;
     tbody.appendChild(tr);
@@ -6555,7 +6983,7 @@ async function handleImportSubmit(e) {
   };
 
   const newItem = {
-    id: 'IMP' + Date.now() + Math.floor(Math.random() * 100),
+    id: 'IMP' + Date.now().toString().slice(-6),
     code: code,
     name: name,
     brand: brand || '',
@@ -6961,11 +7389,11 @@ window.downloadSampleExcel = function() {
     return;
   }
   try {
-    const headers = [["Mã số", "Danh mục vật tư", "Hãng", "Quy cách", "Nơi bảo quản", "Còn lại"]];
+    const headers = [["Mã số", "Danh mục vật tư", "Hãng", "Quy cách", "Đơn vị tính", "Nơi bảo quản", "Còn lại"]];
     const data = [
-      ["TPVT-B1", "Bấc đèn cồn", "VN", "cái", "tủ D1", 2],
-      ["TPVT-B2", "Bản sắc ký TLC Silica gel 60", "Merck", "Hộp", "Kho B", 12],
-      ["TPVT-B3", "Bao hấp 30x50 cm", "VN", "kg", "Kho A", 5]
+      ["TPVT-B1", "Bấc đèn cồn", "VN", "cái", "Cái", "tủ D1", 2],
+      ["TPVT-B2", "Bản sắc ký TLC Silica gel 60", "Merck", "Hộp", "Hộp", "Kho B", 12],
+      ["TPVT-B3", "Bao hấp 30x50 cm", "VN", "kg", "Kg", "Kho A", 5]
     ];
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.aoa_to_sheet(headers.concat(data));
@@ -7191,19 +7619,44 @@ window.clearAllInventoryWithBackup = async function() {
     pin: appConfig.adminPin
   };
   
-  if (appConfig.apiUrl) {
+  initSupabase();
+  if (supabaseClient) {
+    try {
+      const [delInv, delImp, delExp, delReq, delLog] = await Promise.all([
+        supabaseClient.from('kho_vat_tu').delete().neq('id', 'X_X_X_NO_MATCH_X_X_X'),
+        supabaseClient.from('lich_su_nhap').delete().neq('id_giao_dich', 'X_X_X_NO_MATCH_X_X_X'),
+        supabaseClient.from('lich_su_xuat').delete().neq('id_giao_dich', 'X_X_X_NO_MATCH_X_X_X'),
+        supabaseClient.from('yeu_cau_xuat').delete().neq('id_yeu_cau', 'X_X_X_NO_MATCH_X_X_X'),
+        supabaseClient.from('lich_su_sua_thong_tin').delete().neq('id_log', 'X_X_X_NO_MATCH_X_X_X')
+      ]);
+      if (delInv.error) throw delInv.error;
+
+      appData.inventory = [];
+      appData.imports = [];
+      appData.exports = [];
+      appData.requests = [];
+      appData.editLogs = [];
+      saveMockData();
+      showToast('Đã xóa sạch toàn bộ dữ liệu kho trên Supabase thành công!', 'success');
+      await loadData();
+      switchTab('inventory');
+    } catch (err) {
+      console.error("Lỗi xóa Supabase:", err);
+      showToast('Lỗi khi xóa dữ liệu trên Supabase: ' + err.message, 'danger');
+    }
+  } else if (appConfig.apiUrl) {
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        showToast('Đã xóa sạch toàn bộ kho trên Supabase thành công!', 'success');
+        showToast('Đã xóa sạch toàn bộ kho thành công!', 'success');
         await loadData();
+        switchTab('inventory');
       } else {
         throw new Error(json.message);
       }
     } catch (err) {
       console.error(err);
-      showToast('Lỗi kết nối Supabase. Tiến hành xóa dữ liệu cục bộ.', 'warning');
-      executeClearAllLocally();
+      showToast('Lỗi gửi yêu cầu xóa: ' + err.message, 'danger');
     }
   } else {
     executeClearAllLocally();
@@ -7395,7 +7848,7 @@ async function handleExcelImport(e) {
       }
 
       const headers = rows[headerRowIndex];
-      let colCode = -1, colName = -1, colBrand = -1, colSpec = -1, colLocation = -1, colQty = -1;
+      let colCode = -1, colName = -1, colBrand = -1, colSpec = -1, colUnit = -1, colLocation = -1, colQty = -1;
       
       headers.forEach((h, idx) => {
         if (!h) return;
@@ -7404,6 +7857,7 @@ async function handleExcelImport(e) {
         else if (text.includes('danh muc vat tu') || text.includes('ten')) colName = idx;
         else if (text.includes('xuat xu') || text.includes('hang')) colBrand = idx;
         else if (text.includes('quy cach')) colSpec = idx;
+        else if (text.includes('don vi') || text.includes('dvt')) colUnit = idx;
         else if (text.includes('noi bao quan')) colLocation = idx;
         else if (text.includes('con lai') || text.includes('thuc te')) colQty = idx;
       });
@@ -7429,13 +7883,16 @@ async function handleExcelImport(e) {
         let qtyVal = parseFloat(row[colQty]);
         if (isNaN(qtyVal)) qtyVal = 0;
 
-        let unitVal = 'Cái';
-        if (specVal.toLowerCase().includes('chai')) unitVal = 'Chai';
-        else if (specVal.toLowerCase().includes('lo')) unitVal = 'Lọ';
-        else if (specVal.toLowerCase().includes('hop')) unitVal = 'Hộp';
-        else if (specVal.toLowerCase().includes('kg')) unitVal = 'Kg';
-        else if (specVal.toLowerCase().includes('cuon')) unitVal = 'Cuộn';
-        else if (specVal.toLowerCase().includes('doi')) unitVal = 'Đôi';
+        let unitVal = (colUnit !== -1 && row[colUnit]) ? row[colUnit].toString().trim() : '';
+        if (!unitVal) {
+          if (specVal.toLowerCase().includes('chai')) unitVal = 'Chai';
+          else if (specVal.toLowerCase().includes('lo')) unitVal = 'Lọ';
+          else if (specVal.toLowerCase().includes('hop')) unitVal = 'Hộp';
+          else if (specVal.toLowerCase().includes('kg')) unitVal = 'Kg';
+          else if (specVal.toLowerCase().includes('cuon')) unitVal = 'Cuộn';
+          else if (specVal.toLowerCase().includes('doi')) unitVal = 'Đôi';
+          else unitVal = 'Cái';
+        }
 
         items.push({
           code: codeVal,
@@ -7459,7 +7916,7 @@ async function handleExcelImport(e) {
 
       items.forEach(excelItem => {
         importCart.push({
-          id: 'IMP' + Date.now() + Math.floor(Math.random() * 1000) + Math.random().toString().slice(-4),
+          id: 'IMP' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10),
           code: excelItem.code,
           name: excelItem.name,
           brand: excelItem.brand || '',
@@ -7680,41 +8137,12 @@ function showToast(message, type = 'primary') {
   }, 4000);
 }
 
-// --- SWITCH HISTORY VIEW ---
+// --- SWITCH HISTORY VIEW (Mặc định hiển thị Bảng biểu chi tiết) ---
 window.switchHistoryView = function(viewType) {
-  const toggleTimelineBtn = document.getElementById('toggle-timeline-btn');
-  const toggleTablesBtn = document.getElementById('toggle-tables-btn');
-  const timelineContainer = document.getElementById('history-timeline-container');
   const tablesContainer = document.getElementById('history-tables-container');
-  
-  if (viewType === 'timeline') {
-    if (toggleTimelineBtn) {
-      toggleTimelineBtn.classList.add('active');
-      toggleTimelineBtn.style.background = 'var(--primary)';
-      toggleTimelineBtn.style.color = 'white';
-    }
-    if (toggleTablesBtn) {
-      toggleTablesBtn.classList.remove('active');
-      toggleTablesBtn.style.background = 'transparent';
-      toggleTablesBtn.style.color = 'var(--text-muted)';
-    }
-    if (timelineContainer) timelineContainer.style.display = 'block';
-    if (tablesContainer) tablesContainer.style.display = 'none';
-    renderTimeline();
-  } else {
-    if (toggleTimelineBtn) {
-      toggleTimelineBtn.classList.remove('active');
-      toggleTimelineBtn.style.background = 'transparent';
-      toggleTimelineBtn.style.color = 'var(--text-muted)';
-    }
-    if (toggleTablesBtn) {
-      toggleTablesBtn.classList.add('active');
-      toggleTablesBtn.style.background = 'var(--primary)';
-      toggleTablesBtn.style.color = 'white';
-    }
-    if (timelineContainer) timelineContainer.style.display = 'none';
-    if (tablesContainer) tablesContainer.style.display = 'block';
-  }
+  if (tablesContainer) tablesContainer.style.display = 'block';
+  const timelineContainer = document.getElementById('history-timeline-container');
+  if (timelineContainer) timelineContainer.style.display = 'none';
 };
 
 // --- RENDER DÒNG THỜI GIAN HOẠT ĐỘNG CHUNG (TIMELINE VIEW) ---
@@ -8809,6 +9237,20 @@ window.undoExport = async function(transactionId) {
         if (item) {
           item.So_Luong += transaction.So_Luong;
         }
+
+        // Hoàn lại yêu cầu của người nhận về 'Cho_Duyet' nếu có
+        if (appData.requests) {
+          const matchedReq = [...appData.requests].reverse().find(r => 
+            r.ID_Vat_Tu === transaction.ID_Vat_Tu && 
+            r.Nguoi_Yeu_Cau === transaction.Nguoi_Nhan && 
+            r.Trang_Thai === 'Da_Duyet'
+          );
+          if (matchedReq) {
+            matchedReq.Trang_Thai = 'Cho_Duyet';
+            matchedReq.Ghi_Chu = 'Đã hoàn tác xuất kho (quay lại danh sách chờ duyệt)';
+          }
+        }
+
         appData.exports = appData.exports.filter(x => x.ID_Giao_Dich !== txId);
         const logId = "UNDO" + Date.now();
         appData.editLogs.push({
@@ -8823,10 +9265,12 @@ window.undoExport = async function(transactionId) {
     });
     
     saveMockData();
-    showToast('Supabase chưa cấu hình. Đã thực hiện hoàn tác cục bộ thành công!', 'warning');
+    showToast('Đã hoàn tác xuất kho và hoàn trả yêu cầu về danh sách chờ duyệt!', 'success');
     renderHistory();
     renderInventory();
     renderEditLogs();
+    renderAdminRequests();
+    renderCart();
   }
   showLoading(false);
 };
@@ -9043,43 +9487,30 @@ window.renderDashboardCharts = function() {
     }
   };
 
-  // 2. CHUẨN BỊ DATA CHO LINE CHART (TOP 5 THỰC TẾ)
-  const getTop5Data = (timeRange, filteredList) => {
+    // 2. CHUẨN BỊ DATA CHO BIỂU ĐỒ BIẾN ĐỘNG THEO NGÀY (TỔNG LƯỢNG XUẤT KHO)
+  const getDailyExportTrendData = (timeRange, filteredList) => {
     const now = new Date();
-    const itemCounts = {};
-    filteredList.forEach(x => {
-      const name = x.Ten || 'Chưa đặt tên';
-      const qty = parseFloat(x.So_Luong) || 0;
-      itemCounts[name] = (itemCounts[name] || 0) + qty;
-    });
-
-    const topNames = Object.entries(itemCounts)
-      .sort((a, b) => b[1] - a[1])
-      .map(e => e[0])
-      .slice(0, 5);
-
-    const lineData = [];
+    const trendData = [];
 
     if (timeRange === '30') {
       for (let i = 29; i >= 0; i--) {
         const d = new Date(now);
         d.setDate(now.getDate() - i);
         const dateStr = formatDateKey(d);
-        const row = { name: `Ngày ${d.getDate()}`, dateStr };
-        
-        topNames.forEach(name => {
-          row[name] = 0;
-        });
-
+        let totalQty = 0;
+        let countTx = 0;
         filteredList.forEach(x => {
           if (x.Ngay_Xuat && x.Ngay_Xuat.startsWith(dateStr)) {
-            const name = x.Ten || 'Chưa đặt tên';
-            if (topNames.includes(name)) {
-              row[name] += parseFloat(x.So_Luong) || 0;
-            }
+            totalQty += parseFloat(x.So_Luong) || 0;
+            countTx += 1;
           }
         });
-        lineData.push(row);
+        trendData.push({
+          name: `${d.getDate()}/${d.getMonth() + 1}`,
+          fullDate: `Ngày ${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`,
+          tong_xuat: Math.round(totalQty * 100) / 100,
+          so_lan: countTx
+        });
       }
     } else if (timeRange === '90') {
       for (let i = 11; i >= 0; i--) {
@@ -9087,24 +9518,23 @@ window.renderDashboardCharts = function() {
         start.setDate(now.getDate() - (i * 7 + 6));
         const end = new Date(now);
         end.setDate(now.getDate() - (i * 7));
-        const row = { name: `Tuần ${12 - i}` };
-        
-        topNames.forEach(name => {
-          row[name] = 0;
-        });
-
+        let totalQty = 0;
+        let countTx = 0;
         filteredList.forEach(x => {
           if (x.Ngay_Xuat) {
             const xDate = new Date(x.Ngay_Xuat);
             if (xDate >= start && xDate <= end) {
-              const name = x.Ten || 'Chưa đặt tên';
-              if (topNames.includes(name)) {
-                row[name] += parseFloat(x.So_Luong) || 0;
-              }
+              totalQty += parseFloat(x.So_Luong) || 0;
+              countTx += 1;
             }
           }
         });
-        lineData.push(row);
+        trendData.push({
+          name: `${start.getDate()}/${start.getMonth() + 1}`,
+          fullDate: `Từ ${start.getDate()}/${start.getMonth() + 1} đến ${end.getDate()}/${end.getMonth() + 1}`,
+          tong_xuat: Math.round(totalQty * 100) / 100,
+          so_lan: countTx
+        });
       }
     } else {
       for (let i = 11; i >= 0; i--) {
@@ -9112,27 +9542,25 @@ window.renderDashboardCharts = function() {
         const year = m.getFullYear();
         const month = String(m.getMonth() + 1).padStart(2, '0');
         const key = `${year}-${month}`;
-        const row = { name: `${m.getMonth() + 1}/${year}` };
-        
-        topNames.forEach(name => {
-          row[name] = 0;
-        });
-
+        let totalQty = 0;
+        let countTx = 0;
         filteredList.forEach(x => {
           if (x.Ngay_Xuat && x.Ngay_Xuat.startsWith(key)) {
-            const name = x.Ten || 'Chưa đặt tên';
-            if (topNames.includes(name)) {
-              row[name] += parseFloat(x.So_Luong) || 0;
-            }
+            totalQty += parseFloat(x.So_Luong) || 0;
+            countTx += 1;
           }
         });
-        lineData.push(row);
+        trendData.push({
+          name: `T${m.getMonth() + 1}`,
+          fullDate: `Tháng ${m.getMonth() + 1}/${year}`,
+          tong_xuat: Math.round(totalQty * 100) / 100,
+          so_lan: countTx
+        });
       }
     }
 
-    return { topNames, lineData };
+    return trendData;
   };
-
 
   // 3. CHUẨN BỊ DATA CHO BAR CHART DỰ ÁN (THỰC TẾ)
   const getBarData = (timeRange, filteredList) => {
@@ -9358,6 +9786,56 @@ window.renderDashboardCharts = function() {
     );
   };
 
+  // 2. Component Biểu đồ biến động tổng lượng xuất kho theo ngày
+  const DailyExportTrendComponent = ({ trendData }) => {
+    const CustomTooltip = ({ active, payload, label }) => {
+      if (active && payload && payload.length) {
+        const dataPoint = payload[0].payload;
+        return el('div', { style: { background: '#0b0f19', border: '1px solid #1f2937', borderRadius: '8px', padding: '0.75rem', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.5)' } },
+          el('p', { style: { fontSize: '0.75rem', color: '#9ca3af', margin: '0 0 0.35rem 0', fontWeight: '600' } }, dataPoint.fullDate || label),
+          el('div', { style: { display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem' } },
+            el('span', { style: { width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' } }),
+            el('span', { style: { color: '#e5e7eb' } }, 'Tổng lượng xuất:'),
+            el('span', { style: { fontWeight: '700', color: '#10b981' } }, `${dataPoint.tong_xuat}`)
+          ),
+          dataPoint.so_lan > 0 ? el('p', { style: { fontSize: '0.7rem', color: '#9ca3af', margin: '0.3rem 0 0 0' } }, `(${dataPoint.so_lan} lượt xuất kho)`) : null
+        );
+      }
+      return null;
+    };
+
+    return el('div', { className: 'card h-full flex flex-col justify-between', style: { margin: 0, padding: '1.25rem' } },
+      el('div', { className: 'card-header mb-4' },
+        el('div', { className: 'flex items-center gap-2' },
+          el('span', { style: { fontSize: '1.25rem' } }, '📈'),
+          el('div', null,
+            el('div', { style: { fontWeight: '600', fontSize: '0.95rem' } }, 'Biểu đồ biến động xuất kho theo ngày'),
+            el('div', { style: { fontSize: '0.75rem', color: 'var(--text-muted)' } }, 'Tổng số lượng vật tư, hóa chất xuất kho thực tế theo từng ngày')
+          )
+        )
+      ),
+      el('div', { className: 'flex-grow-1 w-full', style: { height: '300px' } },
+        el(ResponsiveContainer, { width: '100%', height: '100%' },
+          el(LineChart, { data: trendData, margin: { top: 10, right: 15, left: -20, bottom: 0 } },
+            el(CartesianGrid, { strokeDasharray: '3 3', stroke: 'rgba(255,255,255,0.06)' }),
+            el(XAxis, { dataKey: 'name', stroke: '#64748b', fontSize: 10, tickLine: false, axisLine: false, dy: 10 }),
+            el(YAxis, { stroke: '#64748b', fontSize: 10, tickLine: false, axisLine: false, dx: -5 }),
+            el(Tooltip, { content: el(CustomTooltip) }),
+            el(Line, { 
+              type: 'monotone', 
+              dataKey: 'tong_xuat', 
+              name: 'Tổng lượng xuất', 
+              stroke: '#10b981', 
+              strokeWidth: 2.5, 
+              dot: { r: 2.5, fill: '#10b981' }, 
+              activeDot: { r: 5, strokeWidth: 0, fill: '#34d399' } 
+            })
+          )
+        )
+      )
+    );
+  };
+
   // 3. Component Stacked Bar Chart Phân bổ
   const ProjectDistributionComponent = ({ purposes, barFinalData }) => {
     const colors = [
@@ -9428,7 +9906,7 @@ window.renderDashboardCharts = function() {
     const hasData = filteredExports.length > 0;
 
     const heatmapData = getHeatmapData(timeRange, filteredExports);
-    const { topNames, lineData } = getTop5Data(timeRange, filteredExports);
+    const trendData = getDailyExportTrendData(timeRange, filteredExports);
     const { purposes, barData } = getBarData(timeRange, filteredExports);
 
     return el('div', { className: 'react-dashboard-container' },
@@ -9473,11 +9951,12 @@ window.renderDashboardCharts = function() {
       :
         el('div', { className: 'react-dashboard-grid' },
           el('div', { className: 'grid-col-full' }, el(HeatmapComponent, { heatmapData, timeRange })),
-          el('div', { className: 'grid-col-60' }, el(Top5LineChartComponent, { topNames, lineFinalData: lineData })),
+          el('div', { className: 'grid-col-60' }, el(DailyExportTrendComponent, { trendData })),
           el('div', { className: 'grid-col-40' }, el(ProjectDistributionComponent, { purposes, barFinalData: barData }))
         )
     );
   };
+
 
   // Render to DOM using ReactDOM.createRoot
   try {
@@ -9901,19 +10380,63 @@ window.openPrintExportModal = function(txIdsStr) {
   const vSigRecip = document.getElementById('voucher-sig-recipient-name');
   const vSigExp = document.getElementById('voucher-sig-exporter-name');
 
-  const defaultExporter = appConfig.exporterName || 'Người xuất kho';
-  const currentExporter = firstExp.Nguoi_Xuat || defaultExporter;
+  // Ưu tiên Họ tên người xuất kho mặc định mà Admin đã sửa trong Cài Đặt
+  let currentExporter = '';
+  if (appConfig.exporterName && appConfig.exporterName.trim() && appConfig.exporterName.trim() !== 'Người xuất kho') {
+    currentExporter = appConfig.exporterName.trim();
+  } else if (firstExp.Nguoi_Xuat && firstExp.Nguoi_Xuat !== 'Admin' && firstExp.Nguoi_Xuat !== 'Người xuất kho') {
+    currentExporter = firstExp.Nguoi_Xuat;
+  } else {
+    currentExporter = appConfig.exporterName || (currentRole === 'admin' ? 'Quản trị viên' : 'Người xuất kho');
+  }
 
   if (vOrgTitle) vOrgTitle.textContent = appConfig.labOrgName || 'HỆ THỐNG QUẢN LÝ PHÒNG THÍ NGHIỆM';
   if (vOrgSub) vOrgSub.textContent = appConfig.labRoomName || 'Phòng Thí Nghiệm CNSH Thực Phẩm';
   if (vDate) vDate.textContent = dateStr;
-  if (vCode) vCode.textContent = ids.join(', ');
+  // Rút gọn mã phiếu chuyên nghiệp: thay vì ghép hàng loạt mã XK dài lê thê
+  let displayVoucherCode = '';
+  if (ids.length === 1) {
+    displayVoucherCode = ids[0];
+  } else {
+    const yearShort = firstExp.Ngay_Xuat ? new Date(firstExp.Ngay_Xuat).getFullYear().toString().slice(-2) : '26';
+    const monthPad = firstExp.Ngay_Xuat ? String(new Date(firstExp.Ngay_Xuat).getMonth() + 1).padStart(2, '0') : '10';
+    const cleanTail = (firstExp.ID_Giao_Dich || '').replace(/[^0-9]/g, '').slice(-4) || '001';
+    displayVoucherCode = `PXK-${yearShort}${monthPad}-${cleanTail} (${ids.length} mục)`;
+  }
+  if (vCode) vCode.textContent = displayVoucherCode;
   if (vRecip) vRecip.textContent = firstExp.Nguoi_Nhan || '-';
-  if (vExp) vExp.textContent = currentExporter;
+  if (vExp) {
+    vExp.textContent = currentExporter;
+    vExp.oninput = () => {
+      if (vSigExp) vSigExp.textContent = vExp.textContent.trim();
+      appConfig.exporterName = vExp.textContent.trim();
+      localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
+    };
+  }
   if (vPurp) vPurp.textContent = firstExp.Muc_Dich || 'Nghiên cứu / Thực hành';
-  if (vNote) vNote.textContent = exportsList.map(e => e.Ghi_Chu).filter(Boolean).join('; ') || 'Không';
+  
+  // Tối ưu ghi chú: Loại bỏ hoàn toàn chuỗi rác kỹ thuật "Duyệt từ yêu cầu YC..." lặp đi lặp lại
+  const cleanNotes = exportsList.map(e => {
+    let note = (e.Ghi_Chu || '').trim();
+    note = note.replace(/Duyệt từ yêu cầu\s+YC[0-9a-zA-Z_-]+\.?/gi, '').trim();
+    note = note.replace(/Duyệt theo nhóm đề xuất\.?/gi, '').trim();
+    return note;
+  }).filter(n => n.length > 0 && n !== '-' && n !== ';');
+
+  const uniqueNotes = [...new Set(cleanNotes)];
+  const displayNote = uniqueNotes.length > 0 
+    ? uniqueNotes.join('; ') 
+    : 'Bàn giao vật tư, hóa chất thực hành & nghiên cứu phòng thí nghiệm';
+  if (vNote) vNote.textContent = displayNote;
   if (vSigRecip) vSigRecip.textContent = firstExp.Nguoi_Nhan || '(Người nhận)';
-  if (vSigExp) vSigExp.textContent = currentExporter;
+  if (vSigExp) {
+    vSigExp.textContent = currentExporter;
+    vSigExp.oninput = () => {
+      if (vExp) vExp.textContent = vSigExp.textContent.trim();
+      appConfig.exporterName = vSigExp.textContent.trim();
+      localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(appConfig));
+    };
+  }
 
   const tbody = document.getElementById('voucher-items-tbody');
   if (tbody) {
@@ -9923,11 +10446,23 @@ window.openPrintExportModal = function(txIdsStr) {
       const locationStr = itemInKho ? (itemInKho.Noi_Bao_Quan || '-') : '-';
       const codeStr = itemInKho ? (itemInKho.Ma_So || '-') : '-';
 
+      // Nhắc nhở FIFO trên phiếu in xuất kho
+      const fifo = itemInKho ? getItemFifoSuggestion(itemInKho.ID) : null;
+      let fifoPrintHtml = '';
+      if (fifo && fifo.hasMultiBatches && fifo.activeBatch) {
+        fifoPrintHtml = `<div style="font-size: 7.5pt; color: #b45309; font-weight: 600; margin-top: 2px;">⚡ Nhắc FIFO: Lấy lô đợt ${fifo.activeBatch.year || fifo.activeBatch.dateStr} trước (còn ~${fifo.activeBatch.qtyRemaining} ${fifo.activeBatch.unit})</div>`;
+      } else if (fifo && fifo.expiryDate && fifo.expiryDate !== '-') {
+        fifoPrintHtml = `<div style="font-size: 7.5pt; color: #64748b; margin-top: 2px;">HSD: ${escapeHtml(fifo.expiryDate)}</div>`;
+      }
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td style="text-align: center;">${idx + 1}</td>
         <td style="text-align: center; font-family: monospace;">${escapeHtml(codeStr)}</td>
-        <td><strong>${escapeHtml(exp.Ten)}</strong></td>
+        <td>
+          <strong>${escapeHtml(exp.Ten)}</strong>
+          ${fifoPrintHtml}
+        </td>
         <td>${escapeHtml(exp.Hang || 'K/P')}</td>
         <td>${escapeHtml(exp.Quy_Cach || 'K/P')}</td>
         <td style="text-align: center;">${escapeHtml(exp.Don_Vi || 'Cái')}</td>
@@ -10650,7 +11185,7 @@ window.renderSharedCabinet = function() {
   if (filtered.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="11" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+        <td colspan="10" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
           <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🗄️</div>
           <div style="font-weight: 600; font-size: 1rem; margin-bottom: 0.25rem;">Không tìm thấy hóa chất / vật tư nào trong Tủ Dùng Chung!</div>
           <div style="font-size: 0.85rem; margin-bottom: 1rem;">Bạn có thể bấm nút bên dưới để nhập nhanh các chai hóa chất có sẵn trong phòng lab.</div>
@@ -10745,7 +11280,7 @@ window.renderSharedCabinet = function() {
 
     const codeVal = item.ma_so || item.Ma_So || '';
     const codeHtml = codeVal 
-      ? `<span class="item-code-chip">${escapeHtml(codeVal)}</span>` 
+      ? `<span class="item-code-chip clickable-item-name" style="cursor: pointer;" onclick="openSharedCabinetItemDetail('${item.id}')" title="Bấm xem chi tiết hóa chất">${escapeHtml(codeVal)}</span>` 
       : renderMissingData('', 'code');
 
     const formattedName = formatChemicalName(item.ten || '');
@@ -10758,7 +11293,9 @@ window.renderSharedCabinet = function() {
     tr.innerHTML = `
       <td style="text-align: center;">${codeHtml}</td>
       <td style="font-weight: 600;">
-        <div style="color: var(--primary); font-size: 0.95rem;">${escapeHtml(formattedName)}</div>
+        <span class="clickable-item-name" style="cursor: pointer; color: var(--primary); font-size: 0.95rem;" onclick="openSharedCabinetItemDetail('${item.id}')" title="Bấm để xem chi tiết hóa chất">
+          <strong>${escapeHtml(formattedName)}</strong>
+        </span>
       </td>
       <td>${brandHtml}</td>
       <td style="font-size: 0.85rem; color: var(--text-secondary);">${specHtml}</td>
@@ -10775,9 +11312,6 @@ window.renderSharedCabinet = function() {
           ⚖️ ${escapeHtml(item.khoi_luong_con_lai || 'Chưa cập nhật')}
         </span>
       </td>
-      <td style="text-align: center;">
-        ${statusBadgeHtml}
-      </td>
       <td style="font-size: 0.78rem;">
         <div>🕒 ${updatedDateStr}</div>
         <div style="color: var(--text-muted);">👤 ${escapeHtml(item.nguoi_cap_nhat || item.nguoi_dua_vao || 'Thành viên')}</div>
@@ -10792,6 +11326,135 @@ window.renderSharedCabinet = function() {
 
     tbody.appendChild(tr);
   });
+};
+
+// --- XEM CHI TIẾT HÓA CHẤT / VẬT TƯ TRONG TỦ DÙNG CHUNG ---
+window.openSharedCabinetItemDetail = function(scId) {
+  if (!appData) return;
+  const scItem = (appData.sharedCabinet || []).find(i => String(i.id) === String(scId));
+  if (!scItem) return;
+
+  // 1. Tìm kiếm hóa chất tương ứng trong danh mục kho chính
+  let invItem = null;
+  if (appData.inventory && appData.inventory.length > 0) {
+    invItem = appData.inventory.find(i => {
+      if (scItem.id_vat_tu && String(i.ID) === String(scItem.id_vat_tu)) return true;
+      if (scItem.ma_so && i.Ma_So && scItem.ma_so !== '-' && i.Ma_So.trim().toLowerCase() === scItem.ma_so.trim().toLowerCase()) return true;
+      const cleanInv = removeVietnameseTones(i.Ten || '').trim().toLowerCase();
+      const cleanSc = removeVietnameseTones(scItem.ten || '').trim().toLowerCase();
+      if (cleanInv && cleanInv === cleanSc) {
+        if (!scItem.hang || !i.Hang || scItem.hang === 'K/P' || i.Hang === 'K/P') return true;
+        return removeVietnameseTones(i.Hang).trim().toLowerCase() === removeVietnameseTones(scItem.hang).trim().toLowerCase();
+      }
+      return false;
+    });
+  }
+
+  if (invItem) {
+    // Mở modal thông tin chi tiết của vật tư trong kho
+    openItemHistoryModal(invItem.ID);
+
+    // Chú thích thêm thông tin thực tế tại Tủ Dùng Chung
+    const locEl = document.getElementById('item-detail-location');
+    if (locEl) {
+      locEl.innerHTML = `
+        ${escapeHtml(invItem.Noi_Bao_Quan || 'Chưa xếp')}
+        <div style="margin-top: 4px;">
+          <span class="badge" style="background: rgba(37, 99, 235, 0.12); color: #1d4ed8; font-weight: 600; font-size: 0.8rem; border: 1px solid rgba(37, 99, 235, 0.25);">
+            🗄️ Đang mở tại: ${escapeHtml(scItem.vi_tri_tu || 'Tủ dùng chung')} (Còn lại: ${escapeHtml(scItem.khoi_luong_con_lai || 'Đang dùng')})
+          </span>
+        </div>
+      `;
+    }
+    const titleEl = document.getElementById('item-history-modal-title');
+    if (titleEl) {
+      titleEl.innerHTML = `🧪 Chi tiết: <span style="color: var(--primary);">${escapeHtml(invItem.Ten)}</span> <span class="badge badge-success" style="font-size: 0.72rem; vertical-align: middle; margin-left: 0.4rem;">Tủ Dùng Chung</span>`;
+    }
+    return;
+  }
+
+  // 2. Trường hợp hóa chất lưu hành riêng ở Tủ Dùng Chung
+  currentViewingItemId = null;
+  const historyTabBtn = document.getElementById('modal-tab-history-btn');
+  if (historyTabBtn) {
+    historyTabBtn.style.display = (currentRole === 'student') ? 'none' : 'inline-block';
+  }
+
+  const modalTitle = document.getElementById('item-history-modal-title');
+  if (modalTitle) {
+    modalTitle.innerHTML = `🧪 Chi tiết Tủ Dùng Chung: <span style="color: var(--primary);">${escapeHtml(scItem.ten || '-')}</span>`;
+  }
+
+  document.getElementById('item-detail-code').textContent = scItem.ma_so || '-';
+  document.getElementById('item-detail-name').textContent = scItem.ten || '-';
+  document.getElementById('item-detail-brand').textContent = scItem.hang || '-';
+  document.getElementById('item-detail-spec').textContent = scItem.quy_cach || '-';
+  document.getElementById('item-detail-location').innerHTML = `<span class="badge" style="background: rgba(37, 99, 235, 0.12); color: #1d4ed8; font-weight: 600; font-size: 0.85rem;">🗄️ ${escapeHtml(scItem.vi_tri_tu || 'Tủ dùng chung')}</span>`;
+  document.getElementById('item-detail-qty').textContent = `${scItem.so_luong || 1}`;
+  document.getElementById('item-detail-unit').textContent = `${scItem.don_vi || 'Chai'} (Lượng còn lại: ${scItem.khoi_luong_con_lai || 'Đang mở dùng'})`;
+  document.getElementById('item-detail-expiry').textContent = scItem.han_su_dung || '-';
+  document.getElementById('item-detail-year').textContent = scItem.nam_nhap || '-';
+  document.getElementById('item-detail-note').textContent = `${scItem.ghi_chu || 'Hóa chất dùng chung tại phòng thí nghiệm.'} [Cập nhật: ${scItem.nguoi_cap_nhat || scItem.nguoi_dua_vao || 'Thành viên'}]`;
+
+  // Ẩn khung FIFO khi xem chi tiết hóa chất riêng của tủ dùng chung
+  const fifoBox = document.getElementById('item-detail-fifo-box');
+  if (fifoBox) {
+    fifoBox.style.display = 'none';
+    fifoBox.innerHTML = '';
+  }
+
+  const techSpecsArea = document.getElementById('item-detail-tech-specs');
+  if (techSpecsArea) {
+    techSpecsArea.value = scItem.dac_tinh || '';
+  }
+
+  const saveBtn = document.getElementById('btn-save-tech-specs');
+  if (saveBtn) {
+    saveBtn.style.display = (currentRole === 'student') ? 'none' : 'inline-block';
+  }
+
+  // Điền bảng thông tin lịch sử
+  const importTbody = document.getElementById('item-import-history-tbody');
+  if (importTbody) {
+    const dateStr = scItem.ngay_cap_nhat ? new Date(scItem.ngay_cap_nhat).toLocaleString('vi-VN') : '-';
+    importTbody.innerHTML = `
+      <tr>
+        <td><span style="font-family: monospace; font-size: 0.8rem;">#TDC-${String(scItem.id).slice(-6)}</span></td>
+        <td><span class="badge badge-success">+${scItem.so_luong || 1} ${escapeHtml(scItem.don_vi || 'Chai')}</span></td>
+        <td><span style="font-size: 0.8rem;">${dateStr}</span></td>
+        <td><span class="badge badge-primary">${escapeHtml(scItem.nguoi_dua_vao || 'Thành viên Lab')}</span></td>
+        <td><span style="font-size: 0.8rem; color: var(--text-muted);">${escapeHtml(scItem.ghi_chu || 'Đưa vào Tủ Dùng Chung phòng lab')}</span></td>
+      </tr>
+    `;
+  }
+
+  const exportTbody = document.getElementById('item-export-history-tbody');
+  if (exportTbody) {
+    exportTbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1.25rem;">
+          Chai hóa chất này phục vụ trực tiếp tại <strong>${escapeHtml(scItem.vi_tri_tu || 'Tủ dùng chung')}</strong>, đo/cân trực tiếp theo nhu cầu thí nghiệm (lượng còn ghi nhận: <strong>${escapeHtml(scItem.khoi_luong_con_lai || 'Đang mở')}</strong>).
+        </td>
+      </tr>
+    `;
+  }
+
+  const editTbody = document.getElementById('item-edit-logs-tbody');
+  if (editTbody) {
+    editTbody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 0.8rem;">
+          Người cập nhật gần nhất: <strong>${escapeHtml(scItem.nguoi_cap_nhat || scItem.nguoi_dua_vao || 'Thành viên')}</strong>
+        </td>
+      </tr>
+    `;
+  }
+
+  switchModalTab('info');
+  const modal = document.getElementById('item-history-modal-overlay');
+  if (modal) {
+    modal.classList.add('active');
+  }
 };
 
 window.handleSharedCabinetSearch = function() {
