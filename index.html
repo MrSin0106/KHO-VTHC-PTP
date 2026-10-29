@@ -1242,6 +1242,299 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
   transform: translateY(-1px);
 }
 
+/* === CHẾ ĐỘ NHẬP KHO: PILL SWITCHER & QUICK PASTE ZONE === */
+.mode-tabs-pill {
+  display: inline-flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  box-shadow: var(--shadow-card);
+}
+
+.mode-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.15rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mode-tab-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-table-hover);
+}
+
+.mode-tab-btn.active {
+  background: var(--primary);
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(23, 168, 99, 0.3);
+}
+
+.mode-tab-btn.active .badge {
+  background: #ffffff !important;
+  color: var(--primary) !important;
+}
+
+/* Khung dán thông minh Paste Zone */
+.paste-zone-box {
+  margin-top: 1rem;
+  border: 2px dashed rgba(23, 168, 99, 0.45);
+  border-radius: 12px;
+  background: rgba(23, 168, 99, 0.03);
+  padding: 1.25rem;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.paste-zone-box:hover, .paste-zone-box:focus-within {
+  border-color: var(--primary);
+  background: rgba(23, 168, 99, 0.06);
+  box-shadow: 0 0 0 4px rgba(23, 168, 99, 0.12);
+}
+
+.paste-zone-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  margin-bottom: 0.85rem;
+}
+
+.paste-zone-icon {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+body.dark-mode .paste-zone-icon {
+  background: var(--bg-input);
+}
+
+.paste-zone-instruction {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.paste-primary-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.paste-primary-text kbd {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.paste-sub-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.quick-paste-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 0.75rem;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  background: var(--bg-input);
+  color: var(--text-main);
+  border: 1px solid var(--border-input);
+  border-radius: 8px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.quick-paste-textarea:focus {
+  border-color: var(--primary);
+}
+
+/* Bảng tính Mini Spreadsheet Quick-Paste Grid */
+.quick-paste-grid-table {
+  min-width: 1480px !important;
+  width: 100% !important;
+  table-layout: auto !important;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.quick-paste-grid-table th {
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 8px 10px !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid var(--border);
+}
+
+.quick-paste-grid-table th .th-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.quick-paste-grid-table input.grid-cell-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-main);
+  padding: 6px 8px;
+  font-size: 0.83rem;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.quick-paste-grid-table textarea.grid-cell-name {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-main);
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 42px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.quick-paste-grid-table input.grid-cell-input:hover,
+.quick-paste-grid-table textarea.grid-cell-name:hover {
+  background: var(--bg-input);
+  border-color: var(--border);
+}
+
+.quick-paste-grid-table input.grid-cell-input:focus,
+.quick-paste-grid-table textarea.grid-cell-name:focus {
+  background: var(--bg-input);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(23, 168, 99, 0.2);
+}
+
+/* Đánh dấu ô thiếu thông tin bắt buộc */
+.quick-paste-grid-table .cell-invalid {
+  border: 1.5px solid var(--danger) !important;
+  background-color: rgba(229, 62, 62, 0.08) !important;
+}
+
+.quick-paste-grid-table .cell-invalid:focus {
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.25) !important;
+}
+
+.quick-paste-grid-table tr.row-invalid {
+  background-color: rgba(229, 62, 62, 0.04) !important;
+}
+
+.quick-paste-row-del {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+
+.quick-paste-row-del:hover {
+  color: var(--danger);
+  background: rgba(229, 62, 62, 0.12);
+}
+
+/* Nút xóa nhanh toàn bộ dữ liệu 1 cột trên Header */
+.col-clear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  padding: 0;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.col-clear-btn:hover {
+  color: var(--danger) !important;
+  background: rgba(229, 62, 62, 0.14) !important;
+  border-color: rgba(229, 62, 62, 0.3) !important;
+  transform: scale(1.08);
+}
+
+/* Tối ưu hiển thị chiều rộng cột tên hóa chất và vật tư */
+#inventory-table-header-row th:nth-child(2),
+#inventory-table-body td:nth-child(2) {
+  min-width: 360px !important;
+  word-break: break-word;
+}
+
+#shared-cabinet-tab .table th:nth-child(2),
+#shared-cabinet-tbody td:nth-child(2) {
+  min-width: 320px !important;
+  word-break: break-word;
+}
+
+#import-cart-table textarea.table-input {
+  min-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border-radius: 6px;
+}
+
+.quick-paste-grid-table textarea.grid-cell-name {
+  min-width: 360px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  border-radius: 6px;
+}
+
 </style>
 </head>
 <body>
@@ -1355,15 +1648,15 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <table class="table">
             <thead>
               <tr id="inventory-table-header-row">
-                <th style="width: 8%; min-width: 85px; text-align: center;">Mã Số</th>
-                <th style="width: 18%; min-width: 160px;">Tên Vật Tư /<br>Hóa Chất</th>
-                <th style="width: 14%; min-width: 125px;">Xuất Xứ /<br>Hãng</th>
-                <th style="width: 14%; min-width: 125px;">Quy Cách</th>
-                <th style="width: 18%; min-width: 145px;">Vị Trí<br>Bảo Quản</th>
-                <th style="width: 6%; min-width: 70px; text-align: center;">Đơn Vị</th>
-                <th style="width: 8%; min-width: 85px; text-align: right;">Số Lượng<br>Tồn</th>
-                <th style="width: 10%; min-width: 110px; text-align: center;">Cần Xuất</th>
-                <th style="width: 10%; min-width: 115px; text-align: right;" class="admin-only-cell">Hành Động</th>
+                <th style="width: 75px; min-width: 75px; text-align: center;">Mã Số</th>
+                <th style="min-width: 360px; width: 40%;">Tên Vật Tư /<br>Hóa Chất</th>
+                <th style="width: 95px; min-width: 90px;">Xuất Xứ /<br>Hãng</th>
+                <th style="width: 100px; min-width: 95px;">Quy Cách</th>
+                <th style="width: 65px; min-width: 60px; text-align: center;">Đơn Vị</th>
+                <th style="width: 110px; min-width: 105px;">Vị Trí<br>Bảo Quản</th>
+                <th style="width: 75px; min-width: 70px; text-align: right;">Số Lượng<br>Tồn</th>
+                <th style="width: 90px; min-width: 85px; text-align: center;">Cần Xuất</th>
+                <th style="width: 105px; min-width: 100px; text-align: right;" class="admin-only-cell">Hành Động</th>
               </tr>
             </thead>
             <tbody id="inventory-table-body">
@@ -1454,16 +1747,17 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <table class="table">
             <thead>
               <tr>
-                <th style="width: 95px; text-align: center;">Mã Số</th>
-                <th style="width: 22%; min-width: 170px;">Tên Hóa Chất /<br>Vật Tư</th>
-                <th style="width: 110px;">Hãng</th>
-                <th style="width: 110px;">Quy Cách<br>Ban Đầu</th>
-                <th style="width: 130px;">Vị Trí Tủ<br>Dùng Chung</th>
-                <th style="width: 75px; text-align: center;">Số<br>Chai</th>
-                <th style="width: 130px; background: rgba(37, 99, 235, 0.05); color: #1e3a8a; text-align: center;">Khối Lượng /<br>Thể Tích Còn</th>
-                <th style="width: 110px;">Ngày<br>Cập Nhật</th>
-                <th style="min-width: 120px;">Ghi Chú</th>
-                <th style="text-align: right; width: 135px;">Thao Tác</th>
+                <th style="width: 85px; min-width: 80px; text-align: center;">Mã Số</th>
+                <th style="min-width: 320px; width: 32%;">Tên Hóa Chất /<br>Vật Tư</th>
+                <th style="width: 95px; min-width: 90px;">Hãng</th>
+                <th style="width: 100px; min-width: 90px;">Quy Cách<br>Ban Đầu</th>
+                <th style="width: 65px; min-width: 60px; text-align: center;">Đơn Vị</th>
+                <th style="width: 115px; min-width: 105px;">Vị Trí Tủ<br>Dùng Chung</th>
+                <th style="width: 75px; min-width: 70px; text-align: center;">Số Lượng</th>
+                <th style="width: 130px; min-width: 120px; background: rgba(37, 99, 235, 0.05); color: #1e3a8a; text-align: center;">Khối Lượng /<br>Thể Tích Còn</th>
+                <th style="width: 110px; min-width: 105px;">Ngày<br>Cập Nhật</th>
+                <th style="min-width: 110px;">Ghi Chú</th>
+                <th style="text-align: right; width: 130px; min-width: 125px;">Thao Tác</th>
               </tr>
             </thead>
             <tbody id="shared-cabinet-tbody">
@@ -1599,134 +1893,336 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 
     <!-- 3. TAB: NHẬP KHO (Importer / Admin) -->
     <section class="tab-content" id="import-tab">
-      <div class="card" style="max-width: 800px; margin: 0 auto;">
-        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-          <div style="display: flex; align-items: center;"><span class="badge-import-icon" style="margin-right: 0.5rem;">📥</span> Phiếu Nhập Kho Hóa Chất / Vật Tư Mới</div>
-          <div style="display: flex; gap: 0.45rem; align-items: center;">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="downloadSampleExcel()" style="display: flex; align-items: center; gap: 0.3rem;">
-              📥 Tải Excel Mẫu
-            </button>
-            <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('excel-file-input').click()" style="display: flex; align-items: center; gap: 0.3rem;">
-              📂 Nạp file Excel
-            </button>
+      
+      <!-- Bộ chuyển đổi 2 chế độ: Nhập lẻ từng món vs Dán nhanh từ Excel -->
+      <div class="import-mode-nav-container" style="max-width: 900px; margin: 0 auto 1.25rem auto; text-align: center;">
+        <div class="mode-tabs-pill">
+          <button type="button" class="mode-tab-btn active" id="btn-mode-quick-paste" onclick="switchImportMode('quick-paste')">
+            <span style="font-size: 1.1rem;">⚡</span>
+            <span>Dán Nhanh Từ Excel / List</span>
+            <span class="badge badge-success" style="font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px;">Siêu tốc</span>
+          </button>
+          <button type="button" class="mode-tab-btn" id="btn-mode-single" onclick="switchImportMode('single')">
+            <span style="font-size: 1.1rem;">📝</span>
+            <span>Nhập lẻ từng món (Form chi tiết)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CHẾ ĐỘ 1: DÁN NHANH TRỰC TIẾP TỪ EXCEL / GOOGLE SHEETS -->
+      <div id="import-quick-paste-mode-wrapper" style="max-width: 1050px; margin: 0 auto;">
+        <div class="card" style="border: 1px solid rgba(23, 168, 99, 0.35); box-shadow: 0 4px 20px rgba(23, 168, 99, 0.08);">
+          <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="background: #107c41; color: white; border-radius: 6px; padding: 4px 8px; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                📊 EXCEL
+              </span>
+              <div>
+                <strong style="font-size: 1.05rem; color: var(--text-main);">Vùng Dán Danh Sách Nhập Kho Trực Tiếp</strong>
+                <div style="font-size: 0.78rem; color: var(--text-muted); font-weight: 400;">
+                  Copy các hàng từ Excel/Google Sheets rồi nhấn <b>Ctrl + V</b> vào đây (Không cần tải file mẫu)
+                </div>
+              </div>
+            </div>
+            
+            <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="copySampleExcelHeaders()" title="Sao chép thứ tự tiêu đề các cột chuẩn để dán vào Excel">
+                📋 Sao chép cột mẫu
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="loadQuickPasteDemoData()" title="Nạp thử 3 dòng dữ liệu mẫu để trải nghiệm nhanh">
+                🧪 Thử dữ liệu mẫu
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="pasteFromClipboard()" title="Dán trực tiếp từ bộ nhớ tạm Clipboard">
+                📋 Dán từ Clipboard
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadSampleExcel()" title="Tải file mẫu Excel (.xlsx)">
+                📥 Tải .xlsx mẫu
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('excel-file-input').click()" title="Nạp từ file máy tính">
+                📂 Nạp file Excel
+              </button>
+            </div>
+          </div>
+
+          <!-- Khung nhận diện dán thông minh Paste Zone -->
+          <div class="paste-zone-box" id="paste-zone-box">
+            <div class="paste-zone-banner" onclick="document.getElementById('quick-paste-textarea').focus()">
+              <div class="paste-zone-icon">📋</div>
+              <div class="paste-zone-instruction">
+                <span class="paste-primary-text">Bấm vào đây rồi nhấn phím <kbd>Ctrl</kbd> + <kbd>V</kbd> để dán từ Excel / Google Sheets</span>
+                <span class="paste-sub-text">Hệ thống tự động tách cột (Mã, Tên, Hãng, Quy cách, ĐVT, Vị trí, Số lượng, Hạn dùng, Năm nhập, Ghi chú)</span>
+              </div>
+            </div>
+            <textarea id="quick-paste-textarea" class="quick-paste-textarea" placeholder="Bấm vào đây và nhấn Ctrl + V để dán danh sách hàng copy từ file Excel..." onpaste="handleQuickPasteEvent(event)" oninput="handleQuickPasteInput(this.value)"></textarea>
+          </div>
+
+          <!-- Bảng Xem Trước Dạng Bảng Tính Mini (Spreadsheet Grid Preview) -->
+          <div id="quick-paste-preview-section" style="display: none; margin-top: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; background: var(--bg-table-header); padding: 0.65rem 0.85rem; border-radius: 8px; border: 1px solid var(--border);">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="font-weight: 700; color: var(--primary); font-size: 0.95rem;">
+                  📊 Bảng danh sách nhận diện (<span id="quick-paste-valid-count">0</span> dòng)
+                </span>
+                <span id="quick-paste-invalid-badge" class="badge badge-danger" style="display: none; font-size: 0.75rem;">0 dòng thiếu tên</span>
+              </div>
+              <div style="display: flex; gap: 0.45rem;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="addQuickPasteRow()">+ Thêm 1 dòng trống</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="clearQuickPasteTable()">🧹 Xóa trắng bảng</button>
+              </div>
+            </div>
+
+            <!-- Khung cuộn ngang dọc cho bảng xem trước -->
+            <div class="table-wrapper" style="max-height: 420px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px;">
+              <table class="table quick-paste-grid-table" style="font-size: 0.82rem; margin: 0;">
+                <thead>
+                  <tr style="position: sticky; top: 0; z-index: 10; background: var(--bg-card); box-shadow: 0 1px 2px rgba(0,0,0,0.06);">
+                    <th style="width: 45px; min-width: 45px; text-align: center;">#</th>
+                    <th style="width: 110px; min-width: 100px;">
+                      <div class="th-content">
+                        <span>Mã số</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('code')" title="Xóa sạch dữ liệu cột Mã số">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 390px; min-width: 360px;">
+                      <div class="th-content">
+                        <span>Tên hóa chất / vật tư <span style="color:var(--danger)">*</span></span>
+                        <span style="font-size: 0.68rem; font-weight: normal; color: var(--text-muted);">(Ctrl+Enter xuống dòng)</span>
+                      </div>
+                    </th>
+                    <th style="width: 120px; min-width: 110px;">
+                      <div class="th-content">
+                        <span>Hãng/Xuất xứ</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('brand')" title="Xóa sạch dữ liệu cột Hãng">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 120px; min-width: 110px;">
+                      <div class="th-content">
+                        <span>Quy cách</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('spec')" title="Xóa sạch dữ liệu cột Quy cách">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 95px; min-width: 90px;">
+                      <div class="th-content">
+                        <span>ĐVT <span style="color:var(--danger)">*</span></span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('unit')" title="Xóa sạch dữ liệu cột ĐVT">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 130px; min-width: 120px;">
+                      <div class="th-content">
+                        <span>Nơi bảo quản</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('location')" title="Xóa sạch dữ liệu cột Nơi bảo quản">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 100px; min-width: 95px;">
+                      <div class="th-content">
+                        <span>SL nhập <span style="color:var(--danger)">*</span></span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('qty')" title="Đặt lại SL = 1">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 155px; min-width: 150px;">
+                      <div class="th-content">
+                        <span>Hạn sử dụng</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('expiry')" title="Xóa sạch dữ liệu cột Hạn dùng">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 115px; min-width: 110px;">
+                      <div class="th-content">
+                        <span>Năm nhập</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('importYear')" title="Xóa sạch dữ liệu cột Năm nhập">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 170px; min-width: 160px;">
+                      <div class="th-content">
+                        <span>Ghi chú</span>
+                        <button type="button" class="col-clear-btn" onclick="clearQuickPasteColumn('note')" title="Xóa sạch dữ liệu cột Ghi chú">✕</button>
+                      </div>
+                    </th>
+                    <th style="width: 55px; min-width: 55px; text-align: center;">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="quick-paste-tbody">
+                  <!-- Render động bằng JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tùy chọn chuyển thẳng vào Tủ Dùng Chung cho lô dán nhanh -->
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(139, 92, 246, 0.08); border: 1.5px dashed #8b5cf6; border-radius: 8px; padding: 0.65rem 1rem; margin-top: 1.25rem; flex-wrap: wrap;">
+              <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-weight: 600; color: #7c3aed; margin: 0;">
+                <input type="checkbox" id="quick-paste-is-shared-cabinet" onchange="toggleSharedCabinetQuickPaste()" style="width: 18px; height: 18px; accent-color: #8b5cf6;">
+                <span>🧪 Nhập lô này vào Tủ Hóa Chất Dùng Chung (không tính vào tồn kho chính)</span>
+              </label>
+              <div id="quick-paste-shared-location-wrap" style="display: none; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 0.85rem; color: #6d28d9; font-weight: 600;">Vị trí tủ:</span>
+                <input type="text" id="quick-paste-shared-location" class="form-control" style="width: 220px; padding: 0.35rem 0.65rem; font-size: 0.85rem; height: auto;" list="list-shared-locations" placeholder="Tủ dùng chung A">
+              </div>
+            </div>
+
+            <!-- Thanh nút đẩy vào rổ hoặc lưu thẳng -->
+            <div style="display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-secondary" onclick="clearQuickPasteTable()">
+                Hủy bỏ / Nhập lại ↺
+              </button>
+              <button type="button" class="btn btn-success" onclick="transferQuickPasteToCart()" style="font-weight: 600; padding: 0.6rem 1.25rem; font-size: 0.92rem;">
+                📥 Đưa <span id="btn-transfer-count">0</span> vật tư vào Rổ Hàng Nhập
+              </button>
+            </div>
           </div>
         </div>
-        
-        <form id="import-form">
-          <div class="grid-2">
-            <div class="form-group">
-              <label class="form-label" for="import-code">Mã số vật tư</label>
-              <input type="text" id="import-code" class="form-control" placeholder="Ví dụ: TPVT-B1">
-            </div>
+      </div>
 
-            <div class="form-group autocomplete-wrapper">
-              <label class="form-label" for="import-name">Tên hóa chất / vật tư <span style="color: var(--danger);">*</span></label>
-              <input type="text" id="import-name" class="form-control" placeholder="Gõ tên vật tư..." required autocomplete="off">
-              <div id="import-suggestions" class="suggestion-box"></div>
-              <div id="import-duplicate-alert" style="display: none;"></div>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <div class="form-label-with-action">
-                <label class="form-label" for="import-brand">Xuất xứ / Hãng</label>
-                <button type="button" class="label-settings-btn" onclick="openSettingsModal('brands')">⚙️ Cài đặt</button>
-              </div>
-              <select id="import-brand" class="form-control"></select>
-              <input type="text" id="import-brand-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
-            </div>
-
-            <div class="form-group">
-              <div class="form-label-with-action">
-                <label class="form-label" for="import-spec">Quy cách đóng gói</label>
-                <button type="button" class="label-settings-btn" onclick="openSettingsModal('specs')">⚙️ Cài đặt</button>
-              </div>
-              <select id="import-spec" class="form-control"></select>
-              <input type="text" id="import-spec-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
+      <!-- CHẾ ĐỘ 2: NHẬP LẺ TỪNG MÓN (Form chi tiết hiện tại) -->
+      <div id="import-single-mode-wrapper" style="max-width: 800px; margin: 0 auto; display: none;">
+        <div class="card">
+          <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div style="display: flex; align-items: center;"><span class="badge-import-icon" style="margin-right: 0.5rem;">📥</span> Phiếu Nhập Kho Hóa Chất / Vật Tư Mới (Từng món)</div>
+            <div style="display: flex; gap: 0.45rem; align-items: center;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadSampleExcel()" style="display: flex; align-items: center; gap: 0.3rem;">
+                📥 Tải Excel Mẫu
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('excel-file-input').click()" style="display: flex; align-items: center; gap: 0.3rem;">
+                📂 Nạp file Excel
+              </button>
             </div>
           </div>
-
-          <div class="grid-2">
-            <div class="form-group">
-              <div class="form-label-with-action">
-                <label class="form-label" for="import-location">Vị trí bảo quản</label>
-                <button type="button" class="label-settings-btn" onclick="openSettingsModal('locations')">⚙️ Cài đặt</button>
+          
+          <form id="import-form">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="import-code">Mã số vật tư</label>
+                <input type="text" id="import-code" class="form-control" placeholder="Ví dụ: TPVT-B1">
               </div>
-              <select id="import-location" class="form-control"></select>
-              <input type="text" id="import-location-custom" class="form-control" placeholder="Hoặc tự gõ vị trí mới..." style="margin-top: 0.5rem;">
-            </div>
 
-            <div class="form-group">
-              <div class="form-label-with-action">
-                <label class="form-label" for="import-unit">Đơn vị tính</label>
-                <button type="button" class="label-settings-btn" onclick="openSettingsModal('units')">⚙️ Cài đặt</button>
-              </div>
-              <select id="import-unit" class="form-control"></select>
-              <input type="text" id="import-unit-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
-            </div>
-          </div>
-
-          <div class="grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
-            <div class="form-group">
-              <label class="form-label">Số lượng nhập</label>
-              <div class="quantity-control">
-                <button type="button" class="qty-btn qty-minus">-</button>
-                <input type="number" id="import-qty" class="qty-input" value="1" min="1" step="1">
-                <button type="button" class="qty-btn qty-plus">+</button>
+              <div class="form-group autocomplete-wrapper">
+                <label class="form-label" for="import-name">Tên hóa chất / vật tư <span style="color: var(--danger);">*</span></label>
+                <input type="text" id="import-name" class="form-control" placeholder="Gõ tên vật tư..." required autocomplete="off">
+                <div id="import-suggestions" class="suggestion-box"></div>
+                <div id="import-duplicate-alert" style="display: none;"></div>
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="import-expiry">Hạn sử dụng</label>
-              <input type="date" id="import-expiry" class="form-control">
+            <div class="grid-2">
+              <div class="form-group">
+                <div class="form-label-with-action">
+                  <label class="form-label" for="import-brand">Xuất xứ / Hãng</label>
+                  <button type="button" class="label-settings-btn" onclick="openSettingsModal('brands')">⚙️ Cài đặt</button>
+                </div>
+                <select id="import-brand" class="form-control"></select>
+                <input type="text" id="import-brand-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
+              </div>
+
+              <div class="form-group">
+                <div class="form-label-with-action">
+                  <label class="form-label" for="import-spec">Quy cách đóng gói</label>
+                  <button type="button" class="label-settings-btn" onclick="openSettingsModal('specs')">⚙️ Cài đặt</button>
+                </div>
+                <select id="import-spec" class="form-control"></select>
+                <input type="text" id="import-spec-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <div class="form-label-with-action">
+                  <label class="form-label" for="import-location">Vị trí bảo quản</label>
+                  <button type="button" class="label-settings-btn" onclick="openSettingsModal('locations')">⚙️ Cài đặt</button>
+                </div>
+                <select id="import-location" class="form-control"></select>
+                <input type="text" id="import-location-custom" class="form-control" placeholder="Hoặc tự gõ vị trí mới..." style="margin-top: 0.5rem;">
+              </div>
+
+              <div class="form-group">
+                <div class="form-label-with-action">
+                  <label class="form-label" for="import-unit">Đơn vị tính</label>
+                  <button type="button" class="label-settings-btn" onclick="openSettingsModal('units')">⚙️ Cài đặt</button>
+                </div>
+                <select id="import-unit" class="form-control"></select>
+                <input type="text" id="import-unit-custom" class="form-control" placeholder="Hoặc tự gõ..." style="margin-top: 0.5rem;">
+              </div>
+            </div>
+
+            <div class="grid-3" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+              <div class="form-group">
+                <label class="form-label">Số lượng nhập</label>
+                <div class="quantity-control">
+                  <button type="button" class="qty-btn qty-minus">-</button>
+                  <input type="number" id="import-qty" class="qty-input" value="1" min="1" step="1">
+                  <button type="button" class="qty-btn qty-plus">+</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="import-expiry">Hạn sử dụng</label>
+                <input type="date" id="import-expiry" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="import-year">Năm nhập kho</label>
+                <input type="text" id="import-year" class="form-control" placeholder="Ví dụ: 2026">
+              </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="import-year">Năm nhập kho</label>
-              <input type="text" id="import-year" class="form-control" placeholder="Ví dụ: 2026">
+              <label class="form-label" for="import-note">Ghi chú nhập kho</label>
+              <textarea id="import-note" class="form-control" placeholder="Để trống hoặc ghi chú thêm nếu cần..."></textarea>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label" for="import-note">Ghi chú nhập kho</label>
-            <textarea id="import-note" class="form-control" placeholder="Để trống hoặc ghi chú thêm nếu cần..."></textarea>
-          </div>
+            <!-- Container chứa các trường custom field động khi nhập kho -->
+            <div id="import-custom-fields-container" class="grid-2" style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;"></div>
 
-          <!-- Container chứa các trường custom field động khi nhập kho -->
-          <div id="import-custom-fields-container" class="grid-2" style="margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;"></div>
+            <!-- TÙY CHỌN: NHẬP VÀO TỦ HÓA CHẤT & VẬT TƯ DÙNG CHUNG -->
+            <div class="shared-cabinet-import-box" style="background: rgba(139, 92, 246, 0.08); border: 1.5px dashed #8b5cf6; border-radius: 8px; padding: 0.85rem 1rem; margin-top: 1.25rem;">
+              <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-weight: 600; color: #7c3aed; margin: 0;">
+                <input type="checkbox" id="import-is-shared-cabinet" onchange="toggleSharedCabinetFields('import')" style="width: 18px; height: 18px; accent-color: #8b5cf6;">
+                <span>🧪 Nhập kho vào Tủ Dùng Chung (không tính vào tồn kho chính)</span>
+              </label>
+              <div id="import-shared-cabinet-fields" style="display: none; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid rgba(139, 92, 246, 0.25);">
+                <div class="grid-2">
+                  <div class="form-group" style="margin-bottom: 0.5rem;">
+                    <label class="form-label" style="font-size: 0.85rem;">Vị trí Tủ dùng chung <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="import-shared-location" class="form-control" list="list-shared-locations" placeholder="Ví dụ: Tủ dùng chung A, Tủ dùng chung B, Tủ hút, Tủ lạnh 4°C...">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0.5rem;">
+                    <label class="form-label" style="font-size: 0.85rem;">Khối lượng / Thể tích ban đầu</label>
+                    <input type="text" id="import-shared-remain" class="form-control" placeholder="Ví dụ: 500g, 1000mL, 100% (để trống sẽ lấy theo quy cách)">
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <div style="text-align: right; margin-top: 1.5rem;">
-            <button type="reset" class="btn btn-secondary">Đặt lại</button>
-            <button type="submit" class="btn btn-success">📥 Thêm vào rổ hàng nhập</button>
-          </div>
-        </form>
+            <div style="text-align: right; margin-top: 1.5rem;">
+              <button type="reset" class="btn btn-secondary">Đặt lại</button>
+              <button type="submit" class="btn btn-success">📥 Thêm vào rổ hàng nhập</button>
+            </div>
+          </form>
+        </div>
       </div>
 
       <!-- Rổ Hàng Nhập Kho (Mới) -->
-      <div class="card" id="import-cart-card" style="max-width: 1000px; margin: 1.5rem auto 0 auto; display: none;">
+      <div class="card" id="import-cart-card" style="max-width: 1350px; margin: 1.5rem auto 0 auto; display: none;">
         <div class="card-title" style="display: flex; justify-content: space-between; align-items: center;">
           <span>🛒 Rổ Hàng Đang Chờ Nhập Kho</span>
           <span id="import-cart-badge" class="badge badge-success" style="font-size: 0.85rem; padding: 0.25rem 0.6rem;">0</span>
         </div>
         <div class="table-wrapper">
-          <table class="table" id="import-cart-table">
+          <table class="table" id="import-cart-table" style="min-width: 1650px; width: 100%;">
             <thead>
               <tr>
-                <th style="width: 45px; text-align: center;">
+                <th style="width: 45px; min-width: 45px; text-align: center;">
                   <input type="checkbox" id="import-select-all" style="width: 16px; height: 16px; cursor: pointer;">
                 </th>
-                <th>Mã số</th>
-                <th>Tên hóa chất / vật tư</th>
-                <th>Hãng/Xuất xứ</th>
-                <th>Quy cách</th>
-                <th style="width: 130px;">Số lượng nhập</th>
-                <th>ĐVT</th>
-                <th>Vị trí</th>
-                <th>Hạn dùng</th>
-                <th>Năm nhập</th>
-                <th>Ghi chú</th>
-                <th style="text-align: right; width: 120px;">Hành động</th>
+                <th style="width: 95px; min-width: 90px;">Mã số</th>
+                <th style="min-width: 400px; width: 420px;">Tên hóa chất / vật tư</th>
+                <th style="width: 110px; min-width: 100px;">Hãng/Xuất xứ</th>
+                <th style="width: 110px; min-width: 100px;">Quy cách</th>
+                <th style="width: 130px; min-width: 125px; text-align: center;">Mục tiêu nhập</th>
+                <th style="width: 110px; min-width: 105px; text-align: center;">Số lượng nhập</th>
+                <th style="width: 75px; min-width: 70px; text-align: center;">ĐVT</th>
+                <th style="width: 115px; min-width: 110px;">Vị trí</th>
+                <th style="width: 125px; min-width: 120px;">Hạn dùng</th>
+                <th style="width: 85px; min-width: 80px; text-align: center;">Năm nhập</th>
+                <th style="min-width: 125px;">Ghi chú</th>
+                <th style="text-align: right; width: 95px; min-width: 90px;">Hành động</th>
               </tr>
             </thead>
             <tbody id="import-cart-tbody">
@@ -1737,10 +2233,10 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <div style="text-align: right; margin-top: 1.25rem; display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
           <div id="import-batch-actions" style="display: none; gap: 0.5rem; margin-right: auto;">
             <button class="btn btn-danger btn-sm" onclick="deleteSelectedImportItems()">🗑️ Xóa các mục đã chọn</button>
-            <button class="btn btn-success btn-sm" onclick="submitSelectedImportItems()">📥 Duyệt các mục đã chọn</button>
+            <button class="btn btn-success btn-sm" onclick="submitSelectedImportItems(this)">📥 Duyệt các mục đã chọn</button>
           </div>
           <button class="btn btn-secondary" onclick="clearImportCart()">Xóa toàn bộ rổ 🗑️</button>
-          <button class="btn btn-success" onclick="submitImportCart()">📥 Duyệt & lưu toàn bộ rổ vào kho</button>
+          <button class="btn btn-success" onclick="submitImportCart(this)">📥 Duyệt & lưu toàn bộ rổ vào kho</button>
         </div>
       </div>
 
@@ -2056,26 +2552,29 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         <div class="card-title">🔒 Bảo mật Phân Quyền & Google Sheets</div>
         
         <form id="config-api-form">
-          <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+          <div style="font-size: 0.8rem; color: var(--success); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.35rem;">
+            🔒 <em>Mọi mật khẩu đều được tự động băm mã hóa một chiều (SHA-256). Để trống nếu không muốn thay đổi.</em>
+          </div>
+          <div class="grid-4" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
             <div class="form-group">
               <label class="form-label" for="admin-pin-input">PIN Admin (Tối cao)</label>
-              <input type="password" id="admin-pin-input" class="form-control" placeholder="Mặc định: 1234">
+              <input type="password" id="admin-pin-input" class="form-control" placeholder="•••••••• (Nhập để đổi mới)">
             </div>
             <div class="form-group">
               <label class="form-label" for="importer-pin-input">PIN Người Nhập Kho</label>
-              <input type="password" id="importer-pin-input" class="form-control" placeholder="Mặc định: 2222">
+              <input type="password" id="importer-pin-input" class="form-control" placeholder="•••••••• (Nhập để đổi mới)">
             </div>
             <div class="form-group">
               <label class="form-label" for="exporter-pin-input">PIN Người Xuất Kho</label>
-              <input type="password" id="exporter-pin-input" class="form-control" placeholder="Mặc định: 3333">
+              <input type="password" id="exporter-pin-input" class="form-control" placeholder="•••••••• (Nhập để đổi mới)">
             </div>
             <div class="form-group">
               <label class="form-label" for="staff-pin-input">PIN Nhân Viên</label>
-              <input type="password" id="staff-pin-input" class="form-control" placeholder="Để trống nếu không bảo mật">
+              <input type="password" id="staff-pin-input" class="form-control" placeholder="•••••••• (Nhập để đổi mới)">
             </div>
             <div class="form-group">
               <label class="form-label" for="student-pin-input">PIN Sinh Viên</label>
-              <input type="password" id="student-pin-input" class="form-control" placeholder="Mặc định: 0">
+              <input type="password" id="student-pin-input" class="form-control" placeholder="•••••••• (Nhập để đổi mới)">
             </div>
           </div>
           
@@ -2290,16 +2789,25 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
         </div>
       </div>
 
-      <div class="card" style="max-width: 800px; margin: 1.5rem auto 0 auto; border: 1px solid var(--primary-pale);">
-        <div class="card-title" style="color: var(--primary);">💾 Sao lưu & Phục hồi dữ liệu kho</div>
+      <div class="card" style="max-width: 800px; margin: 1.5rem auto 0 auto; border: 2px solid var(--primary); background: var(--card-bg);">
+        <div class="card-title" style="color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
+          🛡️ Sao Lưu & An Toàn Dữ Liệu Kho (Backup Khẩn Cấp)
+        </div>
         <div style="padding: 0.5rem 0;">
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.4;">
-            Tải toàn bộ cơ sở dữ liệu hiện tại về máy tính dưới dạng file Excel để lưu trữ, hoặc nạp file Excel sao lưu trước đó để khôi phục lại dữ liệu kho.
-            <br><strong style="color: var(--danger);">* Lưu ý: Khôi phục dữ liệu sẽ ghi đè và thay thế toàn bộ dữ liệu hiện tại. Hệ thống sẽ tự động tải xuống một bản sao lưu dự phòng trước khi khôi phục.</strong>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5;">
+            Tải bản sao lưu toàn diện mọi dữ liệu phòng thí nghiệm (Tồn kho, Lịch sử nhập/xuất, Yêu cầu xuất, Tủ dùng chung, Cấu hình). Khuyến nghị Admin nên bấm tải file sao lưu định kỳ hàng tuần để phòng ngừa sự cố hoặc kẻ xấu phá hoại.
+            <br><strong style="color: var(--danger);">* Lưu ý khi Khôi phục: Nạp file sẽ ghi đè và thay thế toàn bộ dữ liệu hiện tại. Hệ thống sẽ tự động tải xuống một bản sao lưu dự phòng trước khi khôi phục.</strong>
           </p>
           <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-            <button type="button" class="btn btn-secondary" onclick="downloadFullBackupExcel()">📥 Tải file Excel sao lưu</button>
-            <button type="button" class="btn btn-primary" onclick="document.getElementById('backup-file-input').click()">📤 Nạp file Excel khôi phục</button>
+            <button type="button" class="btn btn-primary" onclick="downloadFullBackupJSON()" style="font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;">
+              💾 Tải bản sao lưu dự phòng 1-Click (.JSON)
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="downloadFullBackupExcel()" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+              📊 Tải file Excel sao lưu (.xlsx)
+            </button>
+            <button type="button" class="btn btn-outline" style="border: 1px dashed var(--border);" onclick="document.getElementById('backup-file-input').click()">
+              📤 Nạp file Excel khôi phục
+            </button>
             <input type="file" id="backup-file-input" accept=".xlsx" style="display: none;" onchange="restoreFullBackupExcel(event)">
           </div>
         </div>
@@ -2990,7 +3498,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 
           <div class="grid-2" style="background: rgba(37, 99, 235, 0.05); padding: 0.85rem; border-radius: 8px; border: 1px solid rgba(37, 99, 235, 0.15); margin-bottom: 1rem;">
             <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" style="font-weight: 600; color: #1e3a8a;">Số lượng chai/lọ <span style="color: var(--danger);">*</span></label>
+              <label class="form-label" style="font-weight: 600; color: #1e3a8a;">Số lượng <span style="color: var(--danger);">*</span></label>
               <input type="number" id="sc-add-qty" class="form-control" value="1" min="0" step="1" required>
             </div>
             <div class="form-group" style="margin-bottom: 0;">
@@ -3042,7 +3550,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
 
           <div class="grid-2">
             <div class="form-group">
-              <label class="form-label">Số lượng chai/lọ</label>
+              <label class="form-label">Số lượng</label>
               <input type="number" id="sc-edit-qty" class="form-control" min="0" step="1">
             </div>
             <div class="form-group">
@@ -3054,7 +3562,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
           <div class="form-group" style="background: #fff1f2; border: 1px dashed #f43f5e; padding: 0.75rem; border-radius: 6px;">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: #be123c; font-weight: 600; margin: 0;">
               <input type="checkbox" id="sc-edit-is-empty" onchange="handleSharedEmptyToggle(this.checked)" style="width: 17px; height: 17px; accent-color: #e11d48;">
-              <span>⚪ Đánh dấu chai này ĐÃ HẾT (Số lượng = 0)</span>
+              <span>⚪ Đánh dấu mục này ĐÃ HẾT (Số lượng = 0)</span>
             </label>
           </div>
 
@@ -3071,7 +3579,7 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
       </form>
   <!-- MODAL XEM TRƯỚC VÀ DUYỆT NẠP EXCEL VÀO TỦ DÙNG CHUNG -->
   <div class="modal-overlay" id="shared-cabinet-excel-preview-modal-overlay">
-    <div class="modal" style="max-width: 920px; width: 95%;">
+    <div class="modal" style="max-width: 960px; width: 95%;">
       <div class="modal-header">
         <h3 style="font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 0.5rem;">
           📑 Xem Trước Danh Sách Nạp Vào Tủ Dùng Chung
@@ -3090,11 +3598,12 @@ body.dark-mode .item-code-chip { background: var(--primary-light); }
                   <input type="checkbox" id="sc-preview-select-all" checked onchange="toggleSelectAllSharedCabinetPreview(this.checked)" style="width: 16px; height: 16px; cursor: pointer;">
                 </th>
                 <th style="width: 85px; text-align: center;">Mã Số</th>
-                <th style="min-width: 160px;">Tên Hóa Chất / Vật Tư</th>
+                <th style="min-width: 220px;">Tên Hóa Chất / Vật Tư</th>
                 <th style="width: 90px;">Hãng</th>
                 <th style="width: 90px;">Quy Cách</th>
-                <th style="width: 120px;">Vị Trí Tủ</th>
-                <th style="width: 70px; text-align: center;">SL Chai</th>
+                <th style="width: 70px; text-align: center;">Đơn Vị</th>
+                <th style="width: 110px;">Vị Trí Tủ</th>
+                <th style="width: 75px; text-align: center;">Số Lượng</th>
                 <th style="width: 110px;">Khối Lượng Còn</th>
                 <th>Ghi Chú</th>
               </tr>
@@ -3152,10 +3661,11 @@ const DEFAULT_CONFIGS = {
   apiUrl: '', 
   supabaseUrl: 'https://mbjyybqguvlnjtqyvmni.supabase.co',
   supabaseKey: 'sb_publishable_mVxdko-USJ_BF_M2sYfrFQ_0lgfxAnA',
-  adminPin: '1234',
-  importerPin: '2222',
-  exporterPin: '3333',
-  staffPin: '1111',
+  adminPin: '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', // Mặc định '1234' (SHA-256)
+  importerPin: 'edee29f882543b956620b26d0ee0e7e950399b1c4222f5de05e06425b4c995e9', // Mặc định '2222' (SHA-256)
+  exporterPin: '318aee3fed8c9d040d35a7fc1fa776fb31303833aa2de885354ddf3d44d8fb69', // Mặc định '3333' (SHA-256)
+  staffPin: '0ffe1abd1a08215353c233d6e009613e95eec4253832a761af28ff37ac5a150c', // Mặc định '1111' (SHA-256)
+  studentPin: '5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9', // Mặc định '0' (SHA-256)
   showAdminExportTab: false,
   showAdminImportTab: false,
   showAdminCartTab: false,
@@ -3327,12 +3837,108 @@ function removeVietnameseTones(str) {
   return str.toLowerCase().trim();
 }
 
+// ============================================================
+// === MODULE BẢO MẬT: SHA-256 HASHING & ANTI BRUTE-FORCE ===
+// ============================================================
+
+// Băm mật khẩu một chiều theo thuật toán SHA-256 chuẩn Web Crypto API
+async function hashSHA256(text) {
+  if (text === null || text === undefined) return '';
+  const str = text.toString().trim();
+  if (!str) return '';
+  try {
+    const msgUint8 = new TextEncoder().encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (err) {
+    console.error('Lỗi mã hóa SHA-256:', err);
+    return str;
+  }
+}
+
+// Kiểm tra xem một chuỗi có phải là chuỗi SHA-256 hash (64 hex characters) hay không
+function isSHA256Hash(str) {
+  return typeof str === 'string' && /^[0-9a-f]{64}$/i.test(str.trim());
+}
+
+// Xác thực mã PIN nhập vào với mã PIN lưu trữ (hỗ trợ cả hash SHA-256 và plaintext cũ)
+async function verifyPin(inputPin, storedPin) {
+  const inStr = (inputPin || '').toString().trim();
+  const stStr = (storedPin || '').toString().trim();
+  if (!inStr || !stStr) return false;
+  if (isSHA256Hash(stStr)) {
+    const hashedInput = await hashSHA256(inStr);
+    return hashedInput.toLowerCase() === stStr.toLowerCase();
+  }
+  // Tương thích ngược: nếu storedPin trong cấu hình cũ chưa hash
+  const hashedInput = await hashSHA256(inStr);
+  return inStr === stStr || hashedInput.toLowerCase() === stStr.toLowerCase();
+}
+
+// Khóa chống dò mật khẩu (Anti-Brute Force) riêng biệt theo từng thiết bị và từng vai trò
+const AUTH_RATE_LIMIT_PREFIX = 'LAB_AUTH_LOCK_V1_';
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_TIME_MS = 15 * 60 * 1000; // Khóa 15 phút
+
+function getAuthAttemptState(role) {
+  try {
+    const raw = localStorage.getItem(AUTH_RATE_LIMIT_PREFIX + role);
+    if (!raw) return { count: 0, lockedUntil: 0 };
+    const parsed = JSON.parse(raw);
+    return {
+      count: Number(parsed.count) || 0,
+      lockedUntil: Number(parsed.lockedUntil) || 0
+    };
+  } catch (e) {
+    return { count: 0, lockedUntil: 0 };
+  }
+}
+
+function recordFailedLogin(role) {
+  const state = getAuthAttemptState(role);
+  state.count += 1;
+  if (state.count >= MAX_LOGIN_ATTEMPTS) {
+    state.lockedUntil = Date.now() + LOCKOUT_TIME_MS;
+  }
+  try {
+    localStorage.setItem(AUTH_RATE_LIMIT_PREFIX + role, JSON.stringify(state));
+  } catch (e) {}
+  return state;
+}
+
+function clearAuthAttempts(role) {
+  try {
+    localStorage.removeItem(AUTH_RATE_LIMIT_PREFIX + role);
+  } catch (e) {}
+}
+
+function checkLoginLockout(role) {
+  const state = getAuthAttemptState(role);
+  if (state.lockedUntil && state.lockedUntil > Date.now()) {
+    const remainingMinutes = Math.ceil((state.lockedUntil - Date.now()) / 60000);
+    return {
+      isLocked: true,
+      remainingMinutes
+    };
+  }
+  if (state.lockedUntil && state.lockedUntil <= Date.now()) {
+    clearAuthAttempts(role);
+  }
+  return {
+    isLocked: false,
+    remainingMinutes: 0,
+    remainingAttempts: Math.max(0, MAX_LOGIN_ATTEMPTS - state.count)
+  };
+}
+
 function getPinForRole(role) {
-  if (role === 'admin') return appConfig.adminPin || '1234';
-  if (role === 'importer') return appConfig.importerPin || '2222';
-  if (role === 'exporter') return appConfig.exporterPin || '3333';
-  if (role === 'staff') return appConfig.staffPin || '1111';
-  if (role === 'student') return appConfig.studentPin || '0';
+  if (!appConfig) return DEFAULT_CONFIGS.staffPin;
+  if (role === 'admin') return appConfig.adminPin || DEFAULT_CONFIGS.adminPin;
+  if (role === 'importer') return appConfig.importerPin || DEFAULT_CONFIGS.importerPin;
+  if (role === 'exporter') return appConfig.exporterPin || DEFAULT_CONFIGS.exporterPin;
+  if (role === 'staff') return appConfig.staffPin !== undefined ? appConfig.staffPin : DEFAULT_CONFIGS.staffPin;
+  if (role === 'student') return appConfig.studentPin !== undefined ? appConfig.studentPin : DEFAULT_CONFIGS.studentPin;
   return '';
 }
 
@@ -3342,13 +3948,20 @@ function checkUserSession() {
   const savedPin = localStorage.getItem('LAB_SESSION_PIN');
   const loginTime = parseInt(localStorage.getItem('LAB_SESSION_TIME') || '0', 10);
   
+  const checkPinMatch = (saved, current, admin) => {
+    if (!saved) return false;
+    const s = saved.toString().trim().toLowerCase();
+    const c = (current || '').toString().trim().toLowerCase();
+    const a = (admin || '').toString().trim().toLowerCase();
+    return s === c || s === a;
+  };
+
   if (remember && role && savedPin && loginTime) {
     const oneMonthMs = 30 * 24 * 60 * 60 * 1000;
     if (Date.now() - loginTime < oneMonthMs) {
-      const currentPin = getPinForRole(role).toString().trim();
-      const adminPin = (appConfig.adminPin || '1234').toString().trim();
-      const savedPinStr = savedPin.toString().trim();
-      if (savedPinStr === currentPin || savedPinStr === adminPin) {
+      const currentPin = getPinForRole(role);
+      const adminPin = appConfig ? (appConfig.adminPin || DEFAULT_CONFIGS.adminPin) : DEFAULT_CONFIGS.adminPin;
+      if (checkPinMatch(savedPin, currentPin, adminPin)) {
         currentRole = role;
         return true;
       }
@@ -3358,10 +3971,9 @@ function checkUserSession() {
   const sRole = sessionStorage.getItem('LAB_SESSION_ROLE');
   const sSavedPin = sessionStorage.getItem('LAB_SESSION_PIN');
   if (sRole && sSavedPin) {
-    const currentPin = getPinForRole(sRole).toString().trim();
-    const adminPin = (appConfig.adminPin || '1234').toString().trim();
-    const sSavedPinStr = sSavedPin.toString().trim();
-    if (sSavedPinStr === currentPin || sSavedPinStr === adminPin) {
+    const currentPin = getPinForRole(sRole);
+    const adminPin = appConfig ? (appConfig.adminPin || DEFAULT_CONFIGS.adminPin) : DEFAULT_CONFIGS.adminPin;
+    if (checkPinMatch(sSavedPin, currentPin, adminPin)) {
       currentRole = sRole;
       return true;
     }
@@ -3478,6 +4090,65 @@ function init() {
   }
 }
 
+// ============================================================
+// === HỆ THỐNG KHÓA THAO TÁC TOÀN CỤC (ANTI-DUPLICATE & CONCURRENCY GUARD) ===
+// ============================================================
+const activeOperationLocks = new Set();
+
+window.runGuardedOperation = async function(lockKey, buttonOrForm, asyncCallback) {
+  if (activeOperationLocks.has(lockKey)) {
+    console.warn(`[LockGuard] Thao tác "${lockKey}" đang được xử lý, chặn lượt click trùng lặp!`);
+    return false;
+  }
+  
+  activeOperationLocks.add(lockKey);
+  showLoading(true);
+  
+  // Disable button & đổi giao diện
+  let targetBtn = null;
+  let originalBtnHtml = '';
+  if (buttonOrForm) {
+    if (typeof buttonOrForm === 'string') {
+      targetBtn = document.getElementById(buttonOrForm);
+    } else if (buttonOrForm instanceof HTMLElement) {
+      targetBtn = (buttonOrForm.tagName === 'BUTTON' || buttonOrForm.tagName === 'INPUT') 
+        ? buttonOrForm 
+        : buttonOrForm.querySelector('button[type="submit"], button.btn-success, button.btn-primary');
+    }
+    if (targetBtn) {
+      originalBtnHtml = targetBtn.innerHTML;
+      targetBtn.disabled = true;
+      targetBtn.style.pointerEvents = 'none';
+      targetBtn.style.opacity = '0.65';
+      if (targetBtn.tagName === 'BUTTON') {
+        targetBtn.innerHTML = `⏳ Đang xử lý...`;
+      }
+    }
+  }
+  
+  try {
+    const res = await asyncCallback();
+    return res;
+  } catch(err) {
+    console.error(`Lỗi trong [${lockKey}]:`, err);
+    throw err;
+  } finally {
+    // Giữ khóa tối thiểu 1.2 giây sau khi API phản hồi để chặn triệt để double-click
+    setTimeout(() => {
+      activeOperationLocks.delete(lockKey);
+      if (targetBtn) {
+        targetBtn.disabled = false;
+        targetBtn.style.pointerEvents = '';
+        targetBtn.style.opacity = '';
+        if (targetBtn.tagName === 'BUTTON') {
+          targetBtn.innerHTML = originalBtnHtml;
+        }
+      }
+    }, 1200);
+    showLoading(false);
+  }
+};
+
 // Hàm gửi request đa nền tảng (tự động dùng google.script.run khi chạy trực tiếp trên Google Apps Script)
 async function sendRequest(payload) {
   initSupabase();
@@ -3555,7 +4226,7 @@ async function sendRequest(payload) {
       return { success: true };
     }
     
-    // 3. Request Export (Yêu cầu xuất kho)
+    // 3. Request Export (Yêu cầu xuất kho) - Chống tạo yêu cầu trùng lặp
     if (payload.action === 'request_export' || payload.action === 'bulk_request_export') {
       const items = payload.items || [payload];
       const recipient = payload.recipient;
@@ -3565,6 +4236,24 @@ async function sendRequest(payload) {
       
       for (let k = 0; k < items.length; k++) {
         const rawItem = items[k];
+
+        // Kiểm tra chống spam trùng lặp: nếu cùng người yêu cầu, cùng vật tư và đang 'Cho_Duyet' trong vòng 10 giây
+        const { data: existingDup } = await supabaseClient
+          .from('yeu_cau_xuat')
+          .select('id_yeu_cau')
+          .eq('id_vat_tu', rawItem.itemId)
+          .eq('nguoi_yeu_cau', recipient)
+          .eq('so_luong_yeu_cau', rawItem.qty)
+          .eq('trang_thai', 'Cho_Duyet')
+          .order('ngay_yeu_cau', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        if (existingDup) {
+          console.warn(`[AntiDuplicate] Đã có yêu cầu đang chờ duyệt cho vật tư ${rawItem.name} của ${recipient}, bỏ qua lệnh trùng!`);
+          continue;
+        }
+
         const requestId = "YC" + Date.now().toString().slice(-6) + k;
         const { error } = await supabaseClient.from('yeu_cau_xuat').insert({
           id_yeu_cau: requestId,
@@ -3585,10 +4274,16 @@ async function sendRequest(payload) {
       return { success: true };
     }
     
-    // 4. Approve Export (Duyệt xuất kho)
+    // 4. Approve Export (Duyệt xuất kho) - KHÓA CHỐNG CHỒNG LỆNH TRIỆT ĐỂ (ATOMIC OPTIMISTIC LOCKING)
     if (payload.action === 'approve_export') {
       const { data: req, error: reqErr } = await supabaseClient.from('yeu_cau_xuat').select('*').eq('id_yeu_cau', payload.requestId).single();
       if (reqErr) throw reqErr;
+      
+      // KIỂM TRA TRẠNG THÁI: Nếu không còn là 'Cho_Duyet', lập tức bỏ qua không duyệt lại!
+      if (req.trang_thai !== 'Cho_Duyet') {
+        console.warn(`[AntiDuplicate] Yêu cầu ${payload.requestId} đã ở trạng thái [${req.trang_thai}], bỏ qua không duyệt lại!`);
+        return { success: true, message: 'Yêu cầu này đã được xử lý trước đó.' };
+      }
       
       let itemId = req.id_vat_tu;
       let name = req.ten;
@@ -3613,6 +4308,29 @@ async function sendRequest(payload) {
       }
       
       const approvedQty = parseFloat(payload.qty);
+
+      // BƯỚC KHÓA ATOMIC: Cập nhật trạng thái sang 'Da_Duyet' VỚI ĐIỀU KIỆN 'Cho_Duyet'
+      // Chỉ duy nhất 1 request đầu tiên update được thành công!
+      const { data: lockedRows, error: reqUpdErr } = await supabaseClient.from('yeu_cau_xuat').update({
+        id_vat_tu: itemId,
+        ten: name,
+        hang: brand,
+        quy_cach: spec,
+        don_vi: unit,
+        so_luong_yeu_cau: approvedQty,
+        muc_dich: payload.purpose || req.muc_dich,
+        trang_thai: 'Da_Duyet',
+        ghi_chu: note
+      }).eq('id_yeu_cau', payload.requestId).eq('trang_thai', 'Cho_Duyet').select();
+      
+      if (reqUpdErr) throw reqUpdErr;
+      if (!lockedRows || lockedRows.length === 0) {
+        // Đã có luồng song song duyệt trước trong tích tắc!
+        console.warn(`[AntiDuplicate] Yêu cầu ${payload.requestId} đã bị luồng khác duyệt trước, dừng trừ tồn kho lần 2!`);
+        return { success: true, message: 'Yêu cầu đã được phê duyệt.' };
+      }
+
+      // CHỈ KHI CHIẾM KHÓA THÀNH CÔNG MỚI TIẾN HÀNH TRỪ TỒN KHO VÀ GHI VÀO LỊCH SỬ XUẤT
       let updatedSuccess = false;
 
       // 1. Thử gọi RPC atomic transaction nếu đã tạo trên Supabase
@@ -3637,6 +4355,8 @@ async function sendRequest(payload) {
         
         const freshQty = parseFloat(inv.so_luong) || 0;
         if (freshQty < approvedQty) {
+          // Hoàn tác lại trạng thái yêu cầu nếu kho không đủ
+          await supabaseClient.from('yeu_cau_xuat').update({ trang_thai: 'Cho_Duyet' }).eq('id_yeu_cau', payload.requestId);
           throw new Error(`Tồn kho của "${inv.ten}" không đủ duyệt! (Tồn thực tế hiện có: ${freshQty}, yêu cầu duyệt: ${approvedQty})`);
         }
         
@@ -3665,19 +4385,6 @@ async function sendRequest(payload) {
         ghi_chu: (note && note !== 'Duyệt theo nhóm đề xuất') ? note : (req.ghi_chu || 'Xuất theo yêu cầu')
       });
       if (expLogErr) throw expLogErr;
-      
-      const { error: reqUpdErr } = await supabaseClient.from('yeu_cau_xuat').update({
-        id_vat_tu: itemId,
-        ten: name,
-        hang: brand,
-        quy_cach: spec,
-        don_vi: unit,
-        so_luong_yeu_cau: approvedQty,
-        muc_dich: payload.purpose || req.muc_dich,
-        trang_thai: 'Da_Duyet',
-        ghi_chu: note
-      }).eq('id_yeu_cau', payload.requestId);
-      if (reqUpdErr) throw reqUpdErr;
       
       return { success: true };
     }
@@ -3967,18 +4674,31 @@ async function sendRequest(payload) {
       return { success: true };
     }
     
-    // 9. Undo Export (Hoàn tác xuất kho & trả yêu cầu về Chờ duyệt / Giỏ hàng)
+    // 9. Undo Export (Hoàn tác xuất kho & trả yêu cầu về Chờ duyệt / Giỏ hàng) - CHỐNG HOÀN TÁC TRÙNG LẶP
     if (payload.action === 'undo_export') {
       const txIds = Array.isArray(payload.transactionIds)
         ? payload.transactionIds
         : (payload.transactionIds ? payload.transactionIds.split(',') : [payload.transactionId].filter(Boolean));
 
       for (const txId of txIds) {
-        const { data: exp, error: expErr } = await supabaseClient.from('lich_su_xuat').select('*').eq('id_giao_dich', txId).maybeSingle();
-        if (expErr) throw expErr;
-        if (!exp) continue;
+        // 1. Thử xóa giao dịch khỏi bảng lich_su_xuat trước (Atomic Lock)
+        // Chỉ duy nhất request đầu tiên xóa được dòng này!
+        const { data: deletedRows, error: delErr } = await supabaseClient
+          .from('lich_su_xuat')
+          .delete()
+          .eq('id_giao_dich', txId)
+          .select();
         
-        // 1. Hoàn trả lại số lượng vào tồn kho thực tế
+        if (delErr) throw delErr;
+        if (!deletedRows || deletedRows.length === 0) {
+          // Giao dịch này đã được hoàn tác bởi luồng trước đó rồi!
+          console.warn(`[AntiDuplicate] Giao dịch ${txId} đã được hoàn tác trước đó, bỏ qua không cộng lại tồn kho!`);
+          continue;
+        }
+
+        const exp = deletedRows[0];
+        
+        // 2. Chỉ khi xóa thành công đúng 1 lần thì mới hoàn trả số lượng vào tồn kho thực tế
         const { data: inv, error: invErr } = await supabaseClient.from('kho_vat_tu').select('so_luong').eq('id', exp.id_vat_tu).maybeSingle();
         if (invErr) throw invErr;
         if (inv) {
@@ -3987,7 +4707,7 @@ async function sendRequest(payload) {
           if (updErr) throw updErr;
         }
 
-        // 2. Nếu món này xuất phát từ yêu cầu của người khác: Chuyển yêu cầu trở lại 'Cho_Duyet'
+        // 3. Nếu món này xuất phát từ yêu cầu của người khác: Chuyển yêu cầu trở lại 'Cho_Duyet'
         try {
           const { data: matchedReqs } = await supabaseClient
             .from('yeu_cau_xuat')
@@ -4007,10 +4727,6 @@ async function sendRequest(payload) {
         } catch (reqErr) {
           console.warn('Lỗi trả lại yêu cầu xuất kho về chờ duyệt:', reqErr);
         }
-        
-        // 3. Xóa giao dịch khỏi lịch sử xuất
-        const { error: delErr } = await supabaseClient.from('lich_su_xuat').delete().eq('id_giao_dich', txId);
-        if (delErr) throw delErr;
       }
       
       return { success: true };
@@ -4688,12 +5404,19 @@ function setupEventListeners() {
   }
 
   // 3. Thực hiện Đăng nhập
-  const doLogin = () => {
+  const doLogin = async () => {
     const roleSelect = document.getElementById('login-role');
     const role = roleSelect ? roleSelect.value : 'staff';
-    const password = passInput ? passInput.value : '';
+    const password = passInput ? passInput.value.trim() : '';
     const rememberCheckbox = document.getElementById('login-remember');
     const remember = rememberCheckbox ? rememberCheckbox.checked : false;
+
+    // Kiểm tra khóa chống dò mật khẩu trên thiết bị này cho vai trò này
+    const lockStatus = checkLoginLockout(role);
+    if (lockStatus.isLocked) {
+      showToast(`⛔ Thiết bị này đã nhập sai quá ${MAX_LOGIN_ATTEMPTS} lần! Vai trò này đang bị tạm khóa. Vui lòng thử lại sau ${lockStatus.remainingMinutes} phút nữa.`, 'danger');
+      return;
+    }
 
     if (!password) {
       showToast('Vui lòng nhập mật khẩu xác thực!', 'warning');
@@ -4701,30 +5424,53 @@ function setupEventListeners() {
     }
 
     const correctPin = getPinForRole(role);
-    const adminPin = appConfig.adminPin || '1234';
+    const adminPin = appConfig ? (appConfig.adminPin || DEFAULT_CONFIGS.adminPin) : DEFAULT_CONFIGS.adminPin;
 
-    if (password === correctPin || password === adminPin) {
+    const isMatchRole = await verifyPin(password, correctPin);
+    const isMatchAdmin = await verifyPin(password, adminPin);
+
+    if (isMatchRole || isMatchAdmin) {
+      // Đăng nhập thành công -> xóa lịch sử nhập sai của vai trò này trên thiết bị
+      clearAuthAttempts(role);
+
       currentRole = role;
+      
+      // Lưu chuỗi hash hoặc mã định danh an toàn vào session (không lưu pass thô)
+      const sessionPinVal = isSHA256Hash(correctPin) ? correctPin : (await hashSHA256(password));
       
       if (remember) {
         localStorage.setItem('LAB_SESSION_ROLE', role);
-        localStorage.setItem('LAB_SESSION_PIN', password);
+        localStorage.setItem('LAB_SESSION_PIN', sessionPinVal);
         localStorage.setItem('LAB_SESSION_TIME', Date.now().toString());
         localStorage.setItem('LAB_SESSION_REMEMBER', 'true');
       } else {
         sessionStorage.setItem('LAB_SESSION_ROLE', role);
-        sessionStorage.setItem('LAB_SESSION_PIN', password);
+        sessionStorage.setItem('LAB_SESSION_PIN', sessionPinVal);
         localStorage.removeItem('LAB_SESSION_REMEMBER');
       }
 
-      showToast(`Đăng nhập thành công vai trò: ${role === 'admin' ? 'Quản trị viên (Admin)' : role === 'importer' ? 'Người nhập kho' : role === 'exporter' ? 'Người xuất kho' : 'Nhân viên'}!`, 'success');
+      const roleDisplayNames = {
+        admin: 'Quản trị viên (Admin)',
+        importer: 'Người nhập kho',
+        exporter: 'Người xuất kho',
+        staff: 'Nhân viên Lab',
+        student: 'Sinh viên'
+      };
+
+      showToast(`Đăng nhập thành công vai trò: ${roleDisplayNames[role] || role}!`, 'success');
       showLoginScreen(false);
       
       loadData();
       updateNavigationByRole();
       initSilentPolling();
     } else {
-      showToast('Mật khẩu xác thực vai trò không chính xác!', 'danger');
+      const state = recordFailedLogin(role);
+      if (state.count >= MAX_LOGIN_ATTEMPTS) {
+        showToast(`⛔ Bạn đã nhập sai ${MAX_LOGIN_ATTEMPTS} lần liên tiếp! Thiết bị này đã bị tạm khóa đăng nhập vai trò này trong 15 phút.`, 'danger');
+      } else {
+        const remaining = MAX_LOGIN_ATTEMPTS - state.count;
+        showToast(`Mật khẩu xác thực không chính xác! Còn ${remaining} lần thử trước khi bị tạm khóa thiết bị.`, 'danger');
+      }
     }
   };
 
@@ -4832,11 +5578,21 @@ function setupEventListeners() {
     const urlInput = document.getElementById('supabase-url-input') ? document.getElementById('supabase-url-input').value.trim() : '';
     const keyInput = document.getElementById('supabase-key-input') ? document.getElementById('supabase-key-input').value.trim() : '';
     
-    if (pinAdmin) appConfig.adminPin = pinAdmin;
-    if (pinImporter) appConfig.importerPin = pinImporter;
-    if (pinExporter) appConfig.exporterPin = pinExporter;
-    appConfig.staffPin = pinStaff;
-    if (pinStudent !== '') appConfig.studentPin = pinStudent;
+    if (pinAdmin) {
+      appConfig.adminPin = isSHA256Hash(pinAdmin) ? pinAdmin : await hashSHA256(pinAdmin);
+    }
+    if (pinImporter) {
+      appConfig.importerPin = isSHA256Hash(pinImporter) ? pinImporter : await hashSHA256(pinImporter);
+    }
+    if (pinExporter) {
+      appConfig.exporterPin = isSHA256Hash(pinExporter) ? pinExporter : await hashSHA256(pinExporter);
+    }
+    if (pinStaff) {
+      appConfig.staffPin = isSHA256Hash(pinStaff) ? pinStaff : await hashSHA256(pinStaff);
+    }
+    if (pinStudent !== '') {
+      appConfig.studentPin = isSHA256Hash(pinStudent) ? pinStudent : await hashSHA256(pinStudent);
+    }
     appConfig.supabaseUrl = urlInput;
     appConfig.supabaseKey = keyInput;
     
@@ -4934,7 +5690,7 @@ function setupEventListeners() {
     // Cập nhật lại session pin của chính admin để tránh bị đăng xuất
     if (currentRole === 'admin') {
       const remember = localStorage.getItem('LAB_SESSION_REMEMBER') === 'true';
-      const newAdminPin = appConfig.adminPin || '1234';
+      const newAdminPin = appConfig.adminPin || DEFAULT_CONFIGS.adminPin;
       if (remember) {
         localStorage.setItem('LAB_SESSION_PIN', newAdminPin);
       } else {
@@ -5002,6 +5758,8 @@ function switchTab(tabId) {
     renderNotifications();
   } else if (tabId === 'import') {
     renderImportCart();
+    const savedMode = localStorage.getItem('LAB_IMPORT_MODE') || 'quick-paste';
+    switchImportMode(savedMode);
   }
 }
 
@@ -5317,29 +6075,28 @@ function renderInventoryHeaders() {
   const isStudent = currentRole === 'student';
   
   let html = `
-    <th style="width: 8%; min-width: 85px; text-align: center;">Mã Số</th>
-    <th style="${isStudent ? 'width: 25%;' : 'width: 18%;'} min-width: 160px;">Tên Vật Tư /<br>Hóa Chất</th>
-    <th style="${isStudent ? 'width: 18%;' : 'width: 14%;'} min-width: 125px;">Xuất Xứ /<br>Hãng</th>
-    <th style="${isStudent ? 'width: 18%;' : 'width: 14%;'} min-width: 125px;">Quy Cách</th>
+    <th style="width: 75px; min-width: 75px; text-align: center;">Mã Số</th>
+    <th style="${isStudent ? 'width: 48%; min-width: 380px;' : 'width: 40%; min-width: 360px;'}">Tên Vật Tư /<br>Hóa Chất</th>
+    <th style="${isStudent ? 'width: 110px;' : 'width: 95px;'} min-width: 90px;">Xuất Xứ /<br>Hãng</th>
+    <th style="${isStudent ? 'width: 110px;' : 'width: 100px;'} min-width: 95px;">Quy Cách</th>
+    <th style="width: 65px; min-width: 60px; text-align: center;">Đơn Vị</th>
   `;
   
   if (!isStudent) {
-    html += `<th style="width: 18%; min-width: 145px;">Vị Trí<br>Bảo Quản</th>`;
+    html += `<th style="width: 115px; min-width: 105px;">Vị Trí<br>Bảo Quản</th>`;
   }
   
-  html += `<th style="width: 6%; min-width: 70px; text-align: center;">Đơn Vị</th>`;
-  
   customFields.forEach(cf => {
-    html += `<th style="min-width: 110px;">${escapeHtml(cf.label)}</th>`;
+    html += `<th style="min-width: 95px;">${escapeHtml(cf.label)}</th>`;
   });
   
   if (!isStudent) {
-    html += `<th style="width: 8%; min-width: 85px; text-align: right;">Số Lượng<br>Tồn</th>`;
+    html += `<th style="width: 75px; min-width: 70px; text-align: right;">Số Lượng<br>Tồn</th>`;
   }
   
   html += `
-    <th style="width: 10%; min-width: 110px; text-align: center;">Cần xuất</th>
-    <th style="width: 10%; min-width: 115px; text-align: right;" class="admin-only-cell">Hành Động</th>
+    <th style="width: 90px; min-width: 85px; text-align: center;">Cần xuất</th>
+    <th style="width: 105px; min-width: 100px; text-align: right;" class="admin-only-cell">Hành Động</th>
   `;
   
   headerRow.innerHTML = html;
@@ -5488,11 +6245,11 @@ function renderInventory() {
 
     tr.innerHTML = `
       <td style="text-align: center;">${codeHtml}</td>
-      <td>${nameCellHtml}</td>
+      <td style="font-weight: 600; min-width: 360px; line-height: 1.45;">${nameCellHtml}</td>
       <td>${brandHtml}</td>
-      <td>${specHtml}</td>
+      <td style="white-space: nowrap;">${specHtml}</td>
+      <td style="text-align: center; font-weight: 600;">${escapeHtml(item.Don_Vi || 'Cái')}</td>
       ${locationCellHtml}
-      <td>${escapeHtml(item.Don_Vi || 'Cái')}</td>
       ${customCellsHtml}
       ${qtyBadgeHtml}
       <td style="text-align: center;">${qtySelectHtml}</td>
@@ -6030,7 +6787,7 @@ window.removeFromCart = function(index) {
   showToast('Đã xóa vật tư khỏi giỏ hàng.', 'primary');
 };
 
-// --- XỬ LÝ SUBMIT TOÀN BỘ GIỎ HÀNG ---
+// --- XỬ LÝ SUBMIT TOÀN BỘ GIỎ HÀNG (CHỐNG CHỒNG LỆNH & SUBMIT TRÙNG LẶP) ---
 async function handleCartCheckoutSubmit(e) {
   e.preventDefault();
 
@@ -6051,142 +6808,143 @@ async function handleCartCheckoutSubmit(e) {
     return;
   }
 
-  showLoading(true);
+  const formEl = document.getElementById('cart-action-form');
+  return runGuardedOperation('cart_checkout_submit', formEl, async () => {
+    const isRequestMode = currentRole === 'staff' || currentRole === 'student';
 
-  const isRequestMode = currentRole === 'staff' || currentRole === 'student';
-
-  if (isRequestMode) {
-    if (currentRole === 'student') {
-      const pendingReqs = (!appData.requests ? [] : appData.requests).filter(req => 
-        req.Trang_Thai === 'Cho_Duyet' && 
-        req.Nguoi_Yeu_Cau && 
-        req.Nguoi_Yeu_Cau.toString().includes("Sinh viên")
-      );
-      const pendingGroupsCount = groupRequests(pendingReqs).length;
-      if (pendingGroupsCount >= 8) {
-        showToast('Bạn đã đạt tối đa 8 lượt yêu cầu đang chờ duyệt. Vui lòng đợi phê duyệt hoặc hủy bớt lô cũ!', 'danger');
-        showLoading(false);
-        return;
+    if (isRequestMode) {
+      if (currentRole === 'student') {
+        const pendingReqs = (!appData.requests ? [] : appData.requests).filter(req => 
+          req.Trang_Thai === 'Cho_Duyet' && 
+          req.Nguoi_Yeu_Cau && 
+          req.Nguoi_Yeu_Cau.toString().includes("Sinh viên")
+        );
+        const pendingGroupsCount = groupRequests(pendingReqs).length;
+        if (pendingGroupsCount >= 8) {
+          showToast('Bạn đã đạt tối đa 8 lượt yêu cầu đang chờ duyệt. Vui lòng đợi phê duyệt hoặc hủy bớt lô cũ!', 'danger');
+          return;
+        }
       }
-    }
-    const finalRecipient = currentRole === 'student' ? ("Sinh viên của " + recipient) : recipient;
-    const payload = {
-      action: 'bulk_request_export',
-      items: selectedItems,
-      recipient: finalRecipient,
-      purpose: purpose || 'Yêu cầu sử dụng',
-      note: note,
-      date: new Date().toISOString(),
-      pin: currentRole === 'staff' ? appConfig.staffPin : appConfig.studentPin
-    };
-
-    try {
-      const json = await sendRequest(payload);
-      if (json.success) {
-        showToast('Đã gửi toàn bộ giỏ hàng lên hệ thống phê duyệt!', 'success');
-        cart = cart.filter(c => !c.selected);
-        saveCart();
-        updateCartBadge();
-        document.getElementById('cart-action-form').reset();
-        await loadData();
-        switchTab('inventory');
-      } else {
-        throw new Error(json.message);
-      }
-    } catch (err) {
-      console.error(err);
-      showToast('Supabase lỗi. Ghi nhận yêu cầu cục bộ.', 'warning');
-      executeBulkRequestLocally(selectedItems, finalRecipient, purpose, note);
-    }
-  } else {
-    let successCount = 0;
-    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
-    const userRoleName = currentRole === 'admin' ? 'Admin' : 'Người xuất kho';
-
-    for (let k = 0; k < selectedItems.length; k++) {
-      const target = selectedItems[k];
+      const finalRecipient = currentRole === 'student' ? ("Sinh viên của " + recipient) : recipient;
       const payload = {
-        action: 'export',
-        itemId: target.itemId,
-        qty: target.qty,
-        recipient: recipient,
-        purpose: purpose,
+        action: 'bulk_request_export',
+        items: selectedItems,
+        recipient: finalRecipient,
+        purpose: purpose || 'Yêu cầu sử dụng',
         note: note,
         date: new Date().toISOString(),
-        pin: pinSecret,
-        user: userRoleName
+        pin: currentRole === 'staff' ? appConfig.staffPin : appConfig.studentPin
       };
 
       try {
         const json = await sendRequest(payload);
         if (json.success) {
-          successCount++;
+          showToast('Đã gửi toàn bộ giỏ hàng lên hệ thống phê duyệt!', 'success');
+          cart = cart.filter(c => !c.selected);
+          saveCart();
+          updateCartBadge();
+          if (formEl) formEl.reset();
+          await loadData();
+          switchTab('inventory');
         } else {
           throw new Error(json.message);
         }
       } catch (err) {
         console.error(err);
-        const item = appData.inventory.find(i => i.ID === target.itemId);
-        if (item) {
-          item.So_Luong -= target.qty;
-          const exportId = 'XK' + Date.now().toString().slice(-6) + k;
-          appData.exports.push({
-            ID_Giao_Dich: exportId,
-            ID_Vat_Tu: item.ID,
-            Ten: item.Ten,
-            Hang: item.Hang,
-            Quy_Cach: item.Quy_Cach,
-            So_Luong: target.qty,
-            Don_Vi: item.Don_Vi || 'cái',
-            Ngay_Xuat: new Date().toISOString(),
-            Nguoi_Nhan: recipient,
-            Muc_Dich: purpose,
-            Nguoi_Xuat: userRoleName,
-            Ghi_Chu: note
-          });
-          successCount++;
+        showToast('Supabase lỗi. Ghi nhận yêu cầu cục bộ.', 'warning');
+        executeBulkRequestLocally(selectedItems, finalRecipient, purpose, note);
+      }
+    } else {
+      let successCount = 0;
+      const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
+      const userRoleName = currentRole === 'admin' ? 'Admin' : 'Người xuất kho';
+      const batchTimestamp = Date.now().toString().slice(-6);
+
+      for (let k = 0; k < selectedItems.length; k++) {
+        const target = selectedItems[k];
+        const clientTxId = "XK" + batchTimestamp + "_" + k;
+        const payload = {
+          action: 'export',
+          itemId: target.itemId,
+          clientTxId: clientTxId,
+          qty: target.qty,
+          recipient: recipient,
+          purpose: purpose,
+          note: note,
+          date: new Date().toISOString(),
+          pin: pinSecret,
+          user: userRoleName
+        };
+
+        try {
+          const json = await sendRequest(payload);
+          if (json.success) {
+            successCount++;
+          } else {
+            throw new Error(json.message);
+          }
+        } catch (err) {
+          console.error(err);
+          const item = appData.inventory.find(i => i.ID === target.itemId);
+          if (item) {
+            item.So_Luong -= target.qty;
+            const exportId = clientTxId;
+            appData.exports.push({
+              ID_Giao_Dich: exportId,
+              ID_Vat_Tu: item.ID,
+              Ten: item.Ten,
+              Hang: item.Hang,
+              Quy_Cach: item.Quy_Cach,
+              So_Luong: target.qty,
+              Don_Vi: item.Don_Vi || 'cái',
+              Ngay_Xuat: new Date().toISOString(),
+              Nguoi_Nhan: recipient,
+              Muc_Dich: purpose,
+              Nguoi_Xuat: userRoleName,
+              Ghi_Chu: note
+            });
+            successCount++;
+          }
         }
       }
-    }
 
-    saveMockData();
+      saveMockData();
 
-    // Nếu người dùng chọn xuất chuyển vào Tủ Hóa Chất Dùng Chung
-    const isToSharedCabinet = document.getElementById('cart-is-shared-cabinet') && document.getElementById('cart-is-shared-cabinet').checked;
-    const sharedLocation = (document.getElementById('cart-shared-location') ? document.getElementById('cart-shared-location').value.trim() : '') || 'Tủ dùng chung A';
-    const sharedRemain = document.getElementById('cart-shared-remain') ? document.getElementById('cart-shared-remain').value.trim() : '';
+      // Nếu người dùng chọn xuất chuyển vào Tủ Hóa Chất Dùng Chung
+      const isToSharedCabinet = document.getElementById('cart-is-shared-cabinet') && document.getElementById('cart-is-shared-cabinet').checked;
+      const sharedLocation = (document.getElementById('cart-shared-location') ? document.getElementById('cart-shared-location').value.trim() : '') || 'Tủ dùng chung A';
+      const sharedRemain = document.getElementById('cart-shared-remain') ? document.getElementById('cart-shared-remain').value.trim() : '';
 
-    if (isToSharedCabinet && typeof addToSharedCabinet === 'function') {
-      selectedItems.forEach(target => {
-        const item = appData.inventory.find(i => i.ID === target.itemId);
-        addToSharedCabinet({
-          id_vat_tu: target.itemId,
-          ten: target.name || (item ? item.Ten : ''),
-          hang: target.brand || (item ? item.Hang : ''),
-          quy_cach: target.spec || (item ? item.Quy_Cach : ''),
-          don_vi: target.unit || (item ? item.Don_Vi : 'Chai'),
-          vi_tri_tu: sharedLocation,
-          so_luong: target.qty || 1,
-          khoi_luong_con_lai: sharedRemain || (item ? `${item.Quy_Cach || ''} (đã mở)` : 'Còn dở'),
-          nguoi_dua_vao: userRoleName,
-          ghi_chu: note ? `Xuất đưa vào tủ dùng chung: ${note}` : 'Đưa vào tủ dùng chung sau khi xuất kho'
+      if (isToSharedCabinet && typeof addToSharedCabinet === 'function') {
+        selectedItems.forEach(target => {
+          const item = appData.inventory.find(i => i.ID === target.itemId);
+          addToSharedCabinet({
+            id_vat_tu: target.itemId,
+            ten: target.name || (item ? item.Ten : ''),
+            hang: target.brand || (item ? item.Hang : ''),
+            quy_cach: target.spec || (item ? item.Quy_Cach : ''),
+            don_vi: target.unit || (item ? item.Don_Vi : 'Chai'),
+            vi_tri_tu: sharedLocation,
+            so_luong: target.qty || 1,
+            khoi_luong_con_lai: sharedRemain || (item ? `${item.Quy_Cach || ''} (đã mở)` : 'Còn dở'),
+            nguoi_dua_vao: userRoleName,
+            ghi_chu: note ? `Xuất đưa vào tủ dùng chung: ${note}` : 'Đưa vào tủ dùng chung sau khi xuất kho'
+          });
         });
-      });
-      showToast('Đã tự động chuyển các mặt hàng xuất vào Tủ Hóa Chất Dùng Chung!', 'success');
+        showToast('Đã tự động chuyển các mặt hàng xuất vào Tủ Hóa Chất Dùng Chung!', 'success');
+      }
+
+      showToast(`Đã xuất kho thành công ${successCount}/${selectedItems.length} mặt hàng!`, 'success');
+      cart = cart.filter(c => !c.selected);
+      saveCart();
+      updateCartBadge();
+      if (formEl) formEl.reset();
+      const scFields = document.getElementById('cart-shared-cabinet-fields');
+      if (scFields) scFields.style.display = 'none';
+      await loadData();
+      switchTab('inventory');
     }
-
-    showToast(`Đã xuất kho thành công ${successCount}/${selectedItems.length} mặt hàng!`, 'success');
-    cart = cart.filter(c => !c.selected);
-    saveCart();
-    updateCartBadge();
-    document.getElementById('cart-action-form').reset();
-    const scFields = document.getElementById('cart-shared-cabinet-fields');
-    if (scFields) scFields.style.display = 'none';
-    await loadData();
-    switchTab('inventory');
-  }
-
-  showLoading(false);
+  });
 }
 
 function executeBulkRequestLocally(selectedItems, recipient, purpose, note) {
@@ -6479,8 +7237,8 @@ function renderAdminRequests() {
       </td>
       <td style="text-align: right; vertical-align: middle;">
         <div style="display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-end;">
-          <button class="btn btn-success" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; width: 120px;" onclick="approveGroup('${itemIds}')">✅ Duyệt</button>
-          <button class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; width: 120px;" onclick="rejectGroup('${itemIds}')">❌ Từ Chối</button>
+          <button class="btn btn-success" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; width: 120px;" onclick="approveGroup('${itemIds}', this)">✅ Duyệt</button>
+          <button class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; width: 120px;" onclick="rejectGroup('${itemIds}', this)">❌ Từ Chối</button>
         </div>
       </td>
     `;
@@ -6559,7 +7317,7 @@ function renderHistory() {
 
         let undoBtnHtml = '';
         if (canUndo) {
-          undoBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--danger); font-weight: 600;" onclick="undoExport('${txIdsStr}')">↩️ Hoàn tác</button>`;
+          undoBtnHtml = `<button class="btn btn-secondary btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; color: var(--danger); font-weight: 600;" onclick="undoExport('${txIdsStr}', this)">↩️ Hoàn tác</button>`;
         } else {
           undoBtnHtml = `<span style="font-size:0.75rem; color:var(--text-muted);">-</span>`;
         }
@@ -6797,55 +7555,63 @@ function exportHistoryToExcel() {
 }
 
 // --- ADMIN: DUYỆT / TỪ CHỐI YÊU CẦU XUẤT ---
-window.approveRequest = async function(reqId) {
-  const qtyInput = document.getElementById(`approve-qty-${reqId}`);
-  if (!qtyInput) return;
-  const qty = parseFloat(qtyInput.value);
+window.approveRequest = async function(reqId, btnEl) {
+  const lockKey = 'approve_req_' + reqId;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const qtyInput = document.getElementById(`approve-qty-${reqId}`);
+    if (!qtyInput) return;
+    const qty = parseFloat(qtyInput.value);
 
-  if (isNaN(qty) || qty <= 0) {
-    showToast('Số lượng duyệt không hợp lệ!', 'danger');
-    return;
-  }
-
-  const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
-  if (!req) return;
-
-  const item = appData.inventory.find(i => i.ID === req.ID_Vat_Tu);
-  if (!item || item.So_Luong < qty) {
-    showToast('Tồn kho thực tế không đủ duyệt!', 'danger');
-    return;
-  }
-
-  const note = prompt("Nhập ghi chú duyệt (nếu có):") || "";
-  showLoading(true);
-
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
-  const payload = {
-    action: 'approve_export',
-    requestId: reqId,
-    qty: qty,
-    note: req.replacementItemId ? `Duyệt thay thế hóa chất. ${note}` : note,
-    pin: pinSecret
-  };
-  if (req.replacementItemId) {
-    payload.replacementItemId = req.replacementItemId;
-  }
-
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast('Đã duyệt cấp phát thành công!', 'success');
-      await loadData();
-    } else {
-      throw new Error(json.message);
+    if (isNaN(qty) || qty <= 0) {
+      showToast('Số lượng duyệt không hợp lệ!', 'danger');
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    showToast('Supabase lỗi. Phê duyệt cục bộ.', 'warning');
-    executeApproveLocally(reqId, qty, note, item);
-  }
 
-  showLoading(false);
+    const req = appData.requests.find(r => r.ID_Yeu_Cau === reqId);
+    if (!req) return;
+    if (req.Trang_Thai !== 'Cho_Duyet') {
+      showToast('Yêu cầu này đã được phê duyệt hoặc đã xử lý rồi!', 'warning');
+      await loadData();
+      return;
+    }
+
+    const item = appData.inventory.find(i => i.ID === req.ID_Vat_Tu);
+    if (!item || item.So_Luong < qty) {
+      showToast('Tồn kho thực tế không đủ duyệt!', 'danger');
+      return;
+    }
+
+    const note = prompt("Nhập ghi chú duyệt (nếu có):") || "";
+
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
+    const payload = {
+      action: 'approve_export',
+      requestId: reqId,
+      qty: qty,
+      note: req.replacementItemId ? `Duyệt thay thế hóa chất. ${note}` : note,
+      pin: pinSecret
+    };
+    if (req.replacementItemId) {
+      payload.replacementItemId = req.replacementItemId;
+    }
+
+    try {
+      const json = await sendRequest(payload);
+      if (json.success) {
+        showToast('Đã duyệt cấp phát thành công!', 'success');
+        req.Trang_Thai = 'Da_Duyet';
+        await loadData();
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (error) {
+      console.error(error);
+      if (req.Trang_Thai === 'Cho_Duyet') {
+        showToast('Supabase lỗi. Phê duyệt cục bộ.', 'warning');
+        executeApproveLocally(reqId, qty, note, item);
+      }
+    }
+  });
 };
 
 function executeApproveLocally(reqId, qty, note, item, customPurpose) {
@@ -6885,33 +7651,33 @@ function executeApproveLocally(reqId, qty, note, item, customPurpose) {
   renderHistory();
 }
 
-window.rejectRequest = async function(reqId) {
-  const note = prompt("Nhập lý do từ chối:") || "";
-  showLoading(true);
+window.rejectRequest = async function(reqId, btnEl) {
+  const lockKey = 'reject_req_' + reqId;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const note = prompt("Nhập lý do từ chối:") || "";
 
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
-  const payload = {
-    action: 'reject_export',
-    requestId: reqId,
-    note: note,
-    pin: pinSecret
-  };
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
+    const payload = {
+      action: 'reject_export',
+      requestId: reqId,
+      note: note,
+      pin: pinSecret
+    };
 
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast('Từ chối thành công!', 'success');
-      await loadData();
-    } else {
-      throw new Error(json.message);
+    try {
+      const json = await sendRequest(payload);
+      if (json.success) {
+        showToast('Từ chối thành công!', 'success');
+        await loadData();
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (error) {
+      console.error(error);
+      showToast('Lỗi Supabase. Xử lý cục bộ.', 'warning');
+      executeRejectLocally(reqId, note);
     }
-  } catch (error) {
-    console.error(error);
-    showToast('Lỗi Supabase. Xử lý cục bộ.', 'warning');
-    executeRejectLocally(reqId, note);
-  }
-
-  showLoading(false);
+  });
 };
 
 function executeRejectLocally(reqId, note) {
@@ -6982,28 +7748,41 @@ async function handleImportSubmit(e) {
     customFields: customFieldsData
   };
 
+  const isToSharedCabinet = document.getElementById('import-is-shared-cabinet') && document.getElementById('import-is-shared-cabinet').checked;
+  const sharedLocation = (document.getElementById('import-shared-location') ? document.getElementById('import-shared-location').value.trim() : '') || 'Tủ dùng chung A';
+  const sharedRemain = document.getElementById('import-shared-remain') ? document.getElementById('import-shared-remain').value.trim() : '';
+
   const newItem = {
     id: 'IMP' + Date.now().toString().slice(-6),
     code: code,
     name: name,
     brand: brand || '',
     spec: spec || '',
-    location: location,
+    location: isToSharedCabinet ? sharedLocation : location,
     qty: qty,
     unit: unit || 'Cái',
     expiry: expiry,
     importYear: year,
     note: note,
+    isSharedCabinet: isToSharedCabinet,
+    sharedLocation: isToSharedCabinet ? sharedLocation : '',
+    sharedRemain: isToSharedCabinet ? sharedRemain : '',
     techSpecs: JSON.stringify(techSpecsObj)
   };
 
   importCart.push(newItem);
   localStorage.setItem('LAB_IMPORT_CART_V5', JSON.stringify(importCart));
   
-  showToast('Đã thêm hóa chất vào rổ hàng chờ nhập!', 'success');
+  if (isToSharedCabinet) {
+    showToast('Đã thêm hóa chất vào rổ hàng (chờ nhập vào Tủ Dùng Chung)!', 'success');
+  } else {
+    showToast('Đã thêm hóa chất vào rổ hàng chờ nhập kho!', 'success');
+  }
   
   // Reset toàn bộ form nhập kho để tiếp tục nhập mới
   document.getElementById('import-form').reset();
+  const scFields = document.getElementById('import-shared-cabinet-fields');
+  if (scFields) scFields.style.display = 'none';
   renderDynamicCustomFieldInputs(); // Reset các trường nhập tùy chọn
   
   renderImportCart();
@@ -7067,7 +7846,7 @@ function saveImportLocally(payload) {
   renderHistory();
 }
 
-// --- ADMIN: XUẤT KHO TRỰC TIẾP FORM ---
+// --- ADMIN: XUẤT KHO TRỰC TIẾP FORM (BẢO VỆ CHỐNG DOUBLE-CLICK) ---
 async function handleExportSubmit(e) {
   e.preventDefault();
 
@@ -7095,60 +7874,59 @@ async function handleExportSubmit(e) {
     return;
   }
 
-  showLoading(true);
+  return runGuardedOperation('single_export_submit', e.target, async () => {
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
+    const payload = {
+      action: 'export',
+      itemId: itemId,
+      qty: qty,
+      recipient: recipient,
+      purpose: purpose,
+      note: note,
+      date: new Date().toISOString(),
+      pin: pinSecret,
+      user: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
+    };
 
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
-  const payload = {
-    action: 'export',
-    itemId: itemId,
-    qty: qty,
-    recipient: recipient,
-    purpose: purpose,
-    note: note,
-    date: new Date().toISOString(),
-    pin: pinSecret,
-    user: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
-  };
-
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast('Xuất kho thành công!', 'success');
-      await loadData();
-    } else {
-      throw new Error(json.message);
+    try {
+      const json = await sendRequest(payload);
+      if (json.success) {
+        showToast('Xuất kho thành công!', 'success');
+        await loadData();
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (error) {
+      console.error(error);
+      showToast('Gặp lỗi kết nối Supabase. Xử lý cục bộ.', 'warning');
+      saveExportLocally(payload, item);
     }
-  } catch (error) {
-    console.error(error);
-    showToast('Gặp lỗi kết nối Supabase. Xử lý cục bộ.', 'warning');
-    saveExportLocally(payload, item);
-  }
 
-  const isToSharedCabinet = document.getElementById('export-is-shared-cabinet') && document.getElementById('export-is-shared-cabinet').checked;
-  const sharedLocation = (document.getElementById('export-shared-location') ? document.getElementById('export-shared-location').value.trim() : '') || 'Tủ dùng chung A';
-  const sharedRemain = document.getElementById('export-shared-remain') ? document.getElementById('export-shared-remain').value.trim() : '';
+    const isToSharedCabinet = document.getElementById('export-is-shared-cabinet') && document.getElementById('export-is-shared-cabinet').checked;
+    const sharedLocation = (document.getElementById('export-shared-location') ? document.getElementById('export-shared-location').value.trim() : '') || 'Tủ dùng chung A';
+    const sharedRemain = document.getElementById('export-shared-remain') ? document.getElementById('export-shared-remain').value.trim() : '';
 
-  if (isToSharedCabinet && typeof addToSharedCabinet === 'function') {
-    addToSharedCabinet({
-      id_vat_tu: item.ID,
-      ten: item.Ten,
-      hang: item.Hang,
-      quy_cach: item.Quy_Cach,
-      don_vi: item.Don_Vi || 'Chai',
-      vi_tri_tu: sharedLocation,
-      so_luong: qty,
-      khoi_luong_con_lai: sharedRemain || `${item.Quy_Cach || ''} (đã mở)`,
-      nguoi_dua_vao: currentRole === 'admin' ? 'Admin' : 'Người xuất kho',
-      ghi_chu: note ? `Xuất đưa vào tủ dùng chung: ${note}` : 'Đưa vào tủ dùng chung sau khi xuất kho'
-    });
-    showToast('Đã chuyển hóa chất vừa xuất vào Tủ Hóa Chất Dùng Chung!', 'success');
-  }
+    if (isToSharedCabinet && typeof addToSharedCabinet === 'function') {
+      addToSharedCabinet({
+        id_vat_tu: item.ID,
+        ten: item.Ten,
+        hang: item.Hang,
+        quy_cach: item.Quy_Cach,
+        don_vi: item.Don_Vi || 'Chai',
+        vi_tri_tu: sharedLocation,
+        so_luong: qty,
+        khoi_luong_con_lai: sharedRemain || `${item.Quy_Cach || ''} (đã mở)`,
+        nguoi_dua_vao: currentRole === 'admin' ? 'Admin' : 'Người xuất kho',
+        ghi_chu: note ? `Xuất đưa vào tủ dùng chung: ${note}` : 'Đưa vào tủ dùng chung sau khi xuất kho'
+      });
+      showToast('Đã chuyển hóa chất vừa xuất vào Tủ Hóa Chất Dùng Chung!', 'success');
+    }
 
-  const scFields = document.getElementById('export-shared-cabinet-fields');
-  if (scFields) scFields.style.display = 'none';
+    const scFields = document.getElementById('export-shared-cabinet-fields');
+    if (scFields) scFields.style.display = 'none';
 
-  document.getElementById('export-form').reset();
-  showLoading(false);
+    document.getElementById('export-form').reset();
+  });
 }
 
 function saveExportLocally(payload, item) {
@@ -7604,7 +8382,8 @@ window.clearAllInventoryWithBackup = async function() {
   
   // Hỏi mã pin
   const pinInput = prompt("Để xác nhận xóa trắng TOÀN BỘ KHO, vui lòng nhập mã PIN Admin:");
-  if (pinInput !== appConfig.adminPin) {
+  const isPinValid = await verifyPin(pinInput, appConfig ? (appConfig.adminPin || DEFAULT_CONFIGS.adminPin) : DEFAULT_CONFIGS.adminPin);
+  if (!isPinValid) {
     showToast("Mã PIN Admin không chính xác. Hủy bỏ hành động xóa kho!", "danger");
     return;
   }
@@ -7677,7 +8456,86 @@ function executeClearAllLocally() {
   switchTab('inventory');
 }
 
-// === SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN BỘ KHO QUA EXCEL (CHỈ ADMIN) ===
+// === SAO LƯU & PHỤC HỒI DỮ LIỆU TOÀN BỘ KHO (CHỈ ADMIN) ===
+// 1. Tải bản sao lưu dự phòng 1-Click dạng JSON (Toàn diện, chính xác 100% cấu trúc dữ liệu)
+window.downloadFullBackupJSON = async function() {
+  if (currentRole !== 'admin') {
+    showToast('Chỉ Quản trị viên mới có quyền tải dữ liệu sao lưu!', 'warning');
+    return;
+  }
+  showLoading(true);
+  try {
+    showToast('Đang thu thập toàn bộ dữ liệu hệ thống để sao lưu...', 'info');
+    initSupabase();
+
+    const backupData = {
+      backupType: 'FULL_LAB_INVENTORY_BACKUP',
+      appVersion: SYSTEM_APP_VERSION || 'v1.2',
+      exportDate: new Date().toISOString(),
+      exportTimestamp: Date.now(),
+      appName: appConfig ? appConfig.APP_TITLE : 'Kho VTHC Lab',
+      tables: {
+        kho_vat_tu: [],
+        lich_su_nhap: [],
+        lich_su_xuat: [],
+        yeu_cau_xuat: [],
+        yeu_cau_dac_tinh: [],
+        tu_dung_chung: [],
+        nhat_ky_sua: [],
+        cau_hinh: []
+      }
+    };
+
+    if (supabaseClient) {
+      const [inv, imp, exp, req, spec, cab, logs, cfg] = await Promise.all([
+        supabaseClient.from('kho_vat_tu').select('*'),
+        supabaseClient.from('lich_su_nhap').select('*'),
+        supabaseClient.from('lich_su_xuat').select('*'),
+        supabaseClient.from('yeu_cau_xuat').select('*'),
+        supabaseClient.from('yeu_cau_dac_tinh').select('*').then(res => res.error ? { data: [] } : res),
+        supabaseClient.from('tu_dung_chung').select('*').then(res => res.error ? { data: [] } : res),
+        supabaseClient.from('nhat_ky_sua').select('*').then(res => res.error ? { data: [] } : res),
+        supabaseClient.from('cau_hinh').select('*').then(res => res.error ? { data: [] } : res)
+      ]);
+      backupData.tables.kho_vat_tu = inv.data || [];
+      backupData.tables.lich_su_nhap = imp.data || [];
+      backupData.tables.lich_su_xuat = exp.data || [];
+      backupData.tables.yeu_cau_xuat = req.data || [];
+      backupData.tables.yeu_cau_dac_tinh = spec.data || [];
+      backupData.tables.tu_dung_chung = cab.data || [];
+      backupData.tables.nhat_ky_sua = logs.data || [];
+      backupData.tables.cau_hinh = cfg.data || [];
+    } else {
+      backupData.tables.kho_vat_tu = appData?.inventory || [];
+      backupData.tables.lich_su_nhap = appData?.imports || [];
+      backupData.tables.lich_su_xuat = appData?.exports || [];
+      backupData.tables.yeu_cau_xuat = appData?.requests || [];
+      backupData.tables.tu_dung_chung = appData?.sharedCabinet || [];
+      backupData.tables.nhat_ky_sua = appData?.editLogs || [];
+      backupData.tables.cau_hinh = [{ key: 'config', value: JSON.stringify(appConfig) }];
+    }
+
+    const jsonBlob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json;charset=utf-8;' });
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}_${String(now.getMonth() + 1).padStart(2, '0')}_${String(now.getDate()).padStart(2, '0')}_${String(now.getHours()).padStart(2, '0')}h${String(now.getMinutes()).padStart(2, '0')}`;
+    const downloadUrl = URL.createObjectURL(jsonBlob);
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `SAO_LUU_TOAN_BO_KHO_LAB_${dateStr}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(downloadUrl);
+
+    showToast('✅ Đã tải file sao lưu dự phòng JSON 1-Click thành công!', 'success');
+  } catch (err) {
+    console.error(err);
+    alert('Lỗi sao lưu JSON: ' + err.message);
+  }
+  showLoading(false);
+};
+
+// 2. Tải bản sao lưu dữ liệu toàn bộ kho qua file Excel (.xlsx)
 window.downloadFullBackupExcel = async function() {
   if (currentRole !== 'admin') {
     alert('Chỉ quản trị viên mới có quyền tải dữ liệu sao lưu!');
@@ -7692,12 +8550,13 @@ window.downloadFullBackupExcel = async function() {
   }
   
   try {
-    const [inv, imp, exp, req, spec, logs, cfg] = await Promise.all([
+    const [inv, imp, exp, req, spec, cab, logs, cfg] = await Promise.all([
       supabaseClient.from('kho_vat_tu').select('*'),
       supabaseClient.from('lich_su_nhap').select('*'),
       supabaseClient.from('lich_su_xuat').select('*'),
       supabaseClient.from('yeu_cau_xuat').select('*'),
       supabaseClient.from('yeu_cau_dac_tinh').select('*').then(res => res.error ? { data: [] } : res),
+      supabaseClient.from('tu_dung_chung').select('*').then(res => res.error ? { data: [] } : res),
       supabaseClient.from('nhat_ky_sua').select('*'),
       supabaseClient.from('cau_hinh').select('*')
     ]);
@@ -7711,12 +8570,14 @@ window.downloadFullBackupExcel = async function() {
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(exp.data || []), "lich_su_xuat");
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(req.data || []), "yeu_cau_xuat");
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(spec.data || []), "yeu_cau_dac_tinh");
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cab.data || []), "tu_dung_chung");
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(logs.data || []), "nhat_ky_sua");
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cfg.data || []), "cau_hinh");
     
     // Xuất file
     const dateStr = new Date().toISOString().slice(0, 10);
     XLSX.writeFile(wb, `lab_inventory_backup_${dateStr}.xlsx`);
+    showToast('✅ Đã tải file sao lưu Excel thành công!', 'success');
   } catch (err) {
     console.error(err);
     alert('Lỗi sao lưu dữ liệu: ' + err.message);
@@ -8049,12 +8910,30 @@ function renderSettings() {
   const keyEl = document.getElementById('supabase-key-input');
   if (urlEl) urlEl.value = appConfig.supabaseUrl || '';
   if (keyEl) keyEl.value = appConfig.supabaseKey || '';
-  document.getElementById('admin-pin-input').value = appConfig.adminPin || '1234';
-  document.getElementById('importer-pin-input').value = appConfig.importerPin || '2222';
-  document.getElementById('exporter-pin-input').value = appConfig.exporterPin || '3333';
-  document.getElementById('staff-pin-input').value = appConfig.staffPin || '';
-  if (document.getElementById('student-pin-input')) {
-    document.getElementById('student-pin-input').value = appConfig.studentPin || '0';
+  const adminInput = document.getElementById('admin-pin-input');
+  if (adminInput) {
+    adminInput.value = '';
+    adminInput.placeholder = '•••••••• (Đã thiết lập - nhập để đổi mới)';
+  }
+  const impInput = document.getElementById('importer-pin-input');
+  if (impInput) {
+    impInput.value = '';
+    impInput.placeholder = '•••••••• (Đã thiết lập - nhập để đổi mới)';
+  }
+  const expInput = document.getElementById('exporter-pin-input');
+  if (expInput) {
+    expInput.value = '';
+    expInput.placeholder = '•••••••• (Đã thiết lập - nhập để đổi mới)';
+  }
+  const staffInput = document.getElementById('staff-pin-input');
+  if (staffInput) {
+    staffInput.value = '';
+    staffInput.placeholder = '•••••••• (Đã thiết lập - nhập để đổi mới)';
+  }
+  const stuInput = document.getElementById('student-pin-input');
+  if (stuInput) {
+    stuInput.value = '';
+    stuInput.placeholder = '•••••••• (Đã thiết lập - nhập để đổi mới)';
   }
   
   document.getElementById('config-show-export').checked = !!appConfig.showAdminExportTab;
@@ -8336,6 +9215,627 @@ window.updateNotificationDots = function() {
   if (mobNotiDot) mobNotiDot.style.display = showNotiDot ? 'inline-block' : 'none';
 };
 
+// === CHỨC NĂNG NHẬP KHO NHANH TRỰC TIẾP TỪ EXCEL / LIST (SMART QUICK PASTE) ===
+let quickPasteItems = [];
+
+// Chuyển đổi giữa 2 chế độ: Nhập lẻ (Single Form) và Dán nhanh (Quick Paste)
+window.switchImportMode = function(mode) {
+  const btnSingle = document.getElementById('btn-mode-single');
+  const btnQuick = document.getElementById('btn-mode-quick-paste');
+  const wrapperSingle = document.getElementById('import-single-mode-wrapper');
+  const wrapperQuick = document.getElementById('import-quick-paste-mode-wrapper');
+
+  if (mode === 'single') {
+    if (btnSingle) btnSingle.classList.add('active');
+    if (btnQuick) btnQuick.classList.remove('active');
+    if (wrapperSingle) wrapperSingle.style.display = 'block';
+    if (wrapperQuick) wrapperQuick.style.display = 'none';
+  } else {
+    if (btnSingle) btnSingle.classList.remove('active');
+    if (btnQuick) btnQuick.classList.add('active');
+    if (wrapperSingle) wrapperSingle.style.display = 'none';
+    if (wrapperQuick) wrapperQuick.style.display = 'block';
+  }
+  try {
+    localStorage.setItem('LAB_IMPORT_MODE', mode);
+  } catch (e) {}
+};
+
+// Sao chép tiêu đề mẫu vào clipboard để người dùng có thể dán vào file Excel
+window.copySampleExcelHeaders = function() {
+  const headers = "Mã số\tDanh mục vật tư\tHãng / Xuất xứ\tQuy cách\tĐơn vị tính\tNơi bảo quản\tSố lượng\tHạn sử dụng\tNăm nhập\tGhi chú";
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(headers).then(() => {
+      showToast("Đã sao chép 10 cột tiêu đề chuẩn! Bạn có thể dán (Ctrl+V) vào hàng 1 trên file Excel.", "success");
+    }).catch(err => {
+      prompt("Sao chép dòng tiêu đề dưới đây:", headers);
+    });
+  } else {
+    prompt("Sao chép dòng tiêu đề dưới đây:", headers);
+  }
+};
+
+// Dán dữ liệu mẫu demo để người dùng trải nghiệm tức thì
+window.loadQuickPasteDemoData = function() {
+  const demoText = [
+    "Mã số\tDanh mục vật tư\tHãng / Xuất xứ\tQuy cách\tĐơn vị tính\tNơi bảo quản\tSố lượng\tHạn sử dụng\tNăm nhập\tGhi chú",
+    "TPVT-A01\tCồn 96 độ tinh khiết Ethanol (Dùng pha chế mẫu sinh học)\tViệt Nam\tChai 500ml\tChai\tTủ Cồn & Dung môi A1\t10\t2027-12-31\t2026\tHóa chất dung môi tinh khiết",
+    "TPVT-B05\tGiấy lọc Whatman No.1 tròn đường kính 110mm\tWhatman\tHộp 100 tờ\tHộp\tTủ D1 - Giấy lọc\t5\t\t2026\tVật tư tiêu hao PTN",
+    "TPVT-C12\tAgarose Molecular Biology Grade (Dùng điện di gel)\tSigma-Aldrich\tLọ 100g\tLọ\tNgăn mát tủ lạnh B\t2\t2028-06-30\t2026\tBảo quản mát 4 độ C"
+  ].join("\n");
+
+  const textarea = document.getElementById('quick-paste-textarea');
+  if (textarea) textarea.value = demoText;
+  parseAndLoadQuickPaste(demoText);
+  showToast("Đã nạp 3 dòng mẫu thành công! Bảng đã mở rộng hiển thị đầy đủ, không còn bị che thông tin.", "info");
+};
+
+// Đọc trực tiếp từ Clipboard trình duyệt
+window.pasteFromClipboard = async function() {
+  if (!navigator.clipboard || !navigator.clipboard.readText) {
+    showToast("Trình duyệt không cho phép tự đọc Clipboard. Hãy bấm vào khung và nhấn Ctrl + V!", "warning");
+    const ta = document.getElementById('quick-paste-textarea');
+    if (ta) ta.focus();
+    return;
+  }
+  try {
+    const text = await navigator.clipboard.readText();
+    if (!text || !text.trim()) {
+      showToast("Bộ nhớ tạm (Clipboard) đang trống! Hãy bôi đen các ô trên Excel và nhấn Ctrl + C trước.", "warning");
+      return;
+    }
+    const textarea = document.getElementById('quick-paste-textarea');
+    if (textarea) textarea.value = text;
+    parseAndLoadQuickPaste(text);
+  } catch (err) {
+    console.error("Lỗi đọc clipboard:", err);
+    showToast("Vui lòng bấm vào khung dán và nhấn phím Ctrl + V trên bàn phím!", "info");
+    const ta = document.getElementById('quick-paste-textarea');
+    if (ta) ta.focus();
+  }
+};
+
+// Xử lý sự kiện Paste
+window.handleQuickPasteEvent = function(e) {
+  let clipboardText = '';
+  if (e.clipboardData && e.clipboardData.getData) {
+    clipboardText = e.clipboardData.getData('text');
+  } else if (window.clipboardData && window.clipboardData.getData) {
+    clipboardText = window.clipboardData.getData('Text');
+  }
+  if (clipboardText) {
+    setTimeout(() => {
+      parseAndLoadQuickPaste(clipboardText);
+    }, 50);
+  }
+};
+
+// Xử lý khi có input trong textarea dán
+window.handleQuickPasteInput = function(val) {
+  if (!val || !val.trim()) {
+    clearQuickPasteTable();
+    return;
+  }
+  parseAndLoadQuickPaste(val);
+};
+
+// Phân tách 1 dòng thành các ô (hỗ trợ Tab \t, chấm phẩy ;, phẩy ,)
+function splitQuickPasteRow(line) {
+  if (line.includes('\t')) {
+    return line.split('\t').map(c => c.trim().replace(/^["']|["']$/g, ''));
+  }
+  if (line.includes(';') && !line.includes('\t')) {
+    return line.split(';').map(c => c.trim().replace(/^["']|["']$/g, ''));
+  }
+  if (line.includes(',') && !line.includes('\t')) {
+    return line.split(',').map(c => c.trim().replace(/^["']|["']$/g, ''));
+  }
+  return [line.trim()];
+}
+
+// Tự suy luận Đơn vị tính thông minh từ Quy cách hoặc Tên
+function autoGuessUnit(spec, name) {
+  const combined = (((spec || '') + ' ' + (name || '')).toLowerCase()).trim();
+  if (!combined) return 'Cái';
+  if (combined.includes('chai')) return 'Chai';
+  if (combined.includes('lọ') || combined.includes('lo')) return 'Lọ';
+  if (combined.includes('hộp') || combined.includes('hop') || combined.includes('/hộp') || combined.includes('/hop')) return 'Hộp';
+  if (combined.includes('gói') || combined.includes('goi') || combined.includes('túi') || combined.includes('tui') || combined.includes('pack')) return 'Gói';
+  if (combined.includes('kg') || combined.includes('kilo')) return 'Kg';
+  if (combined.includes('gam') || combined.includes('gram') || combined.includes(' g ') || combined.endsWith('g') || combined.includes('g/')) return 'Hộp';
+  if (combined.includes('lít') || combined.includes('lit') || combined.includes(' l ') || combined.endsWith('l') || combined.includes('ml')) return 'Chai';
+  if (combined.includes('ống') || combined.includes('ong') || combined.includes('tube') || combined.includes('tub')) return 'Ống';
+  if (combined.includes('cuộn') || combined.includes('cuon') || combined.includes('roll')) return 'Cuộn';
+  if (combined.includes('đôi') || combined.includes('doi') || combined.includes('pair')) return 'Đôi';
+  if (combined.includes('bộ') || combined.includes('bo') || combined.includes('kit')) return 'Bộ';
+  if (combined.includes('tấm') || combined.includes('tam') || combined.includes('bản') || combined.includes('sheet')) return 'Tấm';
+  if (combined.includes('bình') || combined.includes('binh')) return 'Bình';
+  if (combined.includes('can')) return 'Can';
+  if (combined.includes('cái') || combined.includes('cai') || combined.includes('chiếc')) return 'Cái';
+  return 'Hộp';
+}
+
+// Chuẩn hóa định dạng ngày tháng để hiển thị lên input date (YYYY-MM-DD)
+function normalizeQuickPasteDate(dateStr) {
+  if (!dateStr) return '';
+  const str = dateStr.toString().trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+  const partsDmy = str.match(/^(\d{1,2})[\/\.-](\d{1,2})[\/\.-](\d{4})$/);
+  if (partsDmy) {
+    const d = partsDmy[1].padStart(2, '0');
+    const m = partsDmy[2].padStart(2, '0');
+    const y = partsDmy[3];
+    return `${y}-${m}-${d}`;
+  }
+  const partsMy = str.match(/^(\d{1,2})[\/\.-](\d{4})$/);
+  if (partsMy) {
+    const m = partsMy[1].padStart(2, '0');
+    const y = partsMy[2];
+    return `${y}-${m}-28`;
+  }
+  const serial = parseFloat(str);
+  if (!isNaN(serial) && serial > 30000 && serial < 60000) {
+    const d = new Date(Math.round((serial - 25569) * 86400 * 1000));
+    if (!isNaN(d.getTime())) {
+      return d.toISOString().split('T')[0];
+    }
+  }
+  return '';
+}
+
+// Phân tích văn bản dán từ Excel và nạp vào bảng xem trước
+function parseAndLoadQuickPaste(rawText) {
+  if (!rawText || !rawText.trim()) return;
+
+  const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  if (lines.length === 0) return;
+
+  // Kiểm tra dòng đầu tiên có phải tiêu đề (Header row) hay không
+  const firstRowCells = splitQuickPasteRow(lines[0]);
+  const firstRowJoined = removeVietnameseTones(firstRowCells.join(' ').toLowerCase());
+  
+  const isHeader = firstRowJoined.includes('ten') || 
+                   firstRowJoined.includes('vat tu') || 
+                   firstRowJoined.includes('hoa chat') || 
+                   firstRowJoined.includes('danh muc') || 
+                   firstRowJoined.includes('quy cach') || 
+                   firstRowJoined.includes('ma so') || 
+                   firstRowJoined.includes('so luong') || 
+                   firstRowJoined.includes('con lai') ||
+                   firstRowJoined.includes('dvt') ||
+                   firstRowJoined.includes('don vi');
+
+  let colCode = -1, colName = -1, colBrand = -1, colSpec = -1, colUnit = -1;
+  let colLocation = -1, colQty = -1, colExpiry = -1, colYear = -1, colNote = -1;
+
+  let startRowIndex = 0;
+
+  if (isHeader) {
+    startRowIndex = 1;
+    firstRowCells.forEach((c, idx) => {
+      const txt = removeVietnameseTones(c.toLowerCase());
+      if (txt.includes('ma so') || txt.includes('ma vt') || txt.includes('code') || txt === 'ma') colCode = idx;
+      else if (txt.includes('ten') || txt.includes('vat tu') || txt.includes('danh muc') || txt.includes('hoa chat')) colName = idx;
+      else if (txt.includes('xuat xu') || txt.includes('hang') || txt.includes('brand') || txt.includes('nsx')) colBrand = idx;
+      else if (txt.includes('quy cach') || txt.includes('spec') || txt.includes('dong goi')) colSpec = idx;
+      else if (txt.includes('don vi') || txt.includes('dvt') || txt.includes('unit') || txt === 'dv') colUnit = idx;
+      else if (txt.includes('noi bao quan') || txt.includes('vi tri') || txt.includes('kho') || txt.includes('tu') || txt.includes('location')) colLocation = idx;
+      else if (txt.includes('so luong') || txt.includes('con lai') || txt.includes('thuc te') || txt.includes('sl') || txt.includes('qty')) colQty = idx;
+      else if (txt.includes('han dung') || txt.includes('han su dung') || txt.includes('hsd') || txt.includes('exp')) colExpiry = idx;
+      else if (txt.includes('nam nhap') || txt.includes('nam') || txt.includes('year')) colYear = idx;
+      else if (txt.includes('ghi chu') || txt.includes('note')) colNote = idx;
+    });
+  }
+
+  const currentYear = new Date().getFullYear().toString();
+  const parsedItems = [];
+
+  for (let i = startRowIndex; i < lines.length; i++) {
+    const cells = splitQuickPasteRow(lines[i]);
+    if (cells.length === 0 || (cells.length === 1 && !cells[0])) continue;
+
+    let code = '', name = '', brand = '', spec = '', unit = '', location = '';
+    let qty = 1, expiry = '', importYear = currentYear, note = '';
+
+    if (isHeader && colName !== -1) {
+      code = (colCode !== -1 && cells[colCode]) ? cells[colCode] : '';
+      name = (colName !== -1 && cells[colName]) ? cells[colName] : '';
+      brand = (colBrand !== -1 && cells[colBrand]) ? cells[colBrand] : '';
+      spec = (colSpec !== -1 && cells[colSpec]) ? cells[colSpec] : '';
+      unit = (colUnit !== -1 && cells[colUnit]) ? cells[colUnit].trim() : '';
+      location = (colLocation !== -1 && cells[colLocation]) ? cells[colLocation] : '';
+      if (colQty !== -1 && cells[colQty]) qty = parseFloat(cells[colQty].replace(',', '.')) || 1;
+      expiry = (colExpiry !== -1 && cells[colExpiry]) ? normalizeQuickPasteDate(cells[colExpiry]) : '';
+      importYear = (colYear !== -1 && cells[colYear]) ? cells[colYear].trim() : currentYear;
+      note = (colNote !== -1 && cells[colNote]) ? cells[colNote] : '';
+    } else {
+      // Thứ tự cột ngầm định:
+      // [0] Mã, [1] Tên, [2] Hãng, [3] Quy cách, [4] ĐVT, [5] Vị trí, [6] SL, [7] HSD, [8] Năm, [9] Ghi chú
+      if (cells.length === 1) {
+        name = cells[0];
+      } else if (cells.length === 2) {
+        const maybeQty = parseFloat(cells[1].replace(',', '.'));
+        if (!isNaN(maybeQty)) {
+          name = cells[0];
+          qty = maybeQty;
+        } else {
+          code = cells[0];
+          name = cells[1];
+        }
+      } else {
+        code = cells[0] || '';
+        name = cells[1] || '';
+        brand = cells[2] || '';
+        spec = cells[3] || '';
+        unit = cells[4] ? cells[4].trim() : '';
+        location = cells[5] || '';
+        if (cells[6]) qty = parseFloat(cells[6].replace(',', '.')) || 1;
+        if (cells[7]) expiry = normalizeQuickPasteDate(cells[7]);
+        if (cells[8]) importYear = cells[8].trim();
+        if (cells[9]) note = cells[9];
+      }
+    }
+
+    // Tự động nhận diện / suy luận ĐVT nếu trống
+    if (!unit) {
+      unit = autoGuessUnit(spec, name);
+    }
+
+    parsedItems.push({
+      code: code.trim(),
+      name: name.trim(),
+      brand: brand.trim(),
+      spec: spec.trim(),
+      unit: unit.trim(),
+      location: location.trim(),
+      qty: isNaN(qty) ? 1 : qty,
+      expiry: expiry,
+      importYear: importYear ? importYear.toString().trim() : currentYear,
+      note: note.trim()
+    });
+  }
+
+  if (parsedItems.length === 0) {
+    showToast("Không trích xuất được dòng dữ liệu nào từ nội dung dán!", "warning");
+    return;
+  }
+
+  quickPasteItems = parsedItems;
+  renderQuickPasteGrid();
+  showToast(`Đã nhận diện thành công ${quickPasteItems.length} dòng vật tư từ Excel!`, "success");
+}
+
+// Hỗ trợ gõ phím trong ô Tên vật tư (Ctrl + Enter xuống dòng, Enter nhảy sang ô dòng tiếp theo)
+window.handleQuickPasteNameKeydown = function(e, idx) {
+  if (e.key === 'Enter') {
+    if (e.ctrlKey || e.metaKey) {
+      // Cho phép xuống dòng bên trong textarea
+      e.stopPropagation();
+      setTimeout(() => {
+        autoResizeTextarea(e.target);
+      }, 10);
+    } else {
+      // Enter đơn lẻ: Nhảy xuống ô tên dòng tiếp theo giống Excel
+      e.preventDefault();
+      const allNameTextareas = document.querySelectorAll('#quick-paste-tbody textarea.grid-cell-name');
+      if (allNameTextareas[idx + 1]) {
+        allNameTextareas[idx + 1].focus();
+      } else {
+        addQuickPasteRow();
+      }
+    }
+  }
+};
+
+// Tự động co giãn chiều cao của Textarea để không bị che chữ
+window.autoResizeTextarea = function(el) {
+  if (!el) return;
+  el.style.height = 'auto';
+  el.style.height = Math.max(el.scrollHeight, 42) + 'px';
+};
+
+// Xóa nhanh toàn bộ dữ liệu của 1 cột trên toàn bảng
+window.clearQuickPasteColumn = function(colField) {
+  if (!quickPasteItems || quickPasteItems.length === 0) return;
+  const colNames = {
+    code: 'Mã số',
+    brand: 'Hãng/Xuất xứ',
+    spec: 'Quy cách',
+    unit: 'Đơn vị tính',
+    location: 'Nơi bảo quản',
+    qty: 'Số lượng nhập',
+    expiry: 'Hạn sử dụng',
+    importYear: 'Năm nhập',
+    note: 'Ghi chú'
+  };
+  const colTitle = colNames[colField] || colField;
+  if (!confirm(`Bạn có chắc chắn muốn xóa sạch toàn bộ dữ liệu của cột "${colTitle}" trên tất cả ${quickPasteItems.length} dòng không?`)) {
+    return;
+  }
+  quickPasteItems.forEach(item => {
+    if (colField === 'qty') item.qty = 1;
+    else if (colField === 'unit') item.unit = '';
+    else item[colField] = '';
+  });
+  renderQuickPasteGrid();
+  showToast(`Đã xóa sạch dữ liệu cột "${colTitle}"!`, 'info');
+};
+
+// Render bảng tính mini Spreadsheet Quick-Paste Grid
+window.renderQuickPasteGrid = function() {
+  const previewSection = document.getElementById('quick-paste-preview-section');
+  const tbody = document.getElementById('quick-paste-tbody');
+  const validCountEl = document.getElementById('quick-paste-valid-count');
+  const invalidBadge = document.getElementById('quick-paste-invalid-badge');
+  const transferCountEl = document.getElementById('btn-transfer-count');
+
+  if (!previewSection || !tbody) return;
+
+  if (quickPasteItems.length === 0) {
+    previewSection.style.display = 'none';
+    return;
+  }
+
+  previewSection.style.display = 'block';
+
+  let validCount = 0;
+  let invalidCount = 0;
+
+  tbody.innerHTML = '';
+
+  quickPasteItems.forEach((item, idx) => {
+    const hasName = Boolean(item.name && item.name.trim().length > 0);
+    const hasUnit = Boolean(item.unit && item.unit.trim().length > 0);
+    const qtyNum = parseFloat(item.qty);
+    const hasQty = !isNaN(qtyNum) && qtyNum > 0;
+    const isRowValid = hasName && hasUnit && hasQty;
+
+    if (isRowValid) validCount++;
+    else invalidCount++;
+
+    const tr = document.createElement('tr');
+    if (!isRowValid) tr.classList.add('row-invalid');
+
+    tr.innerHTML = `
+      <td style="text-align: center; color: var(--text-muted); font-size: 0.78rem; vertical-align: middle;">
+        ${idx + 1}
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" style="font-family: monospace; font-size: 0.84rem;" value="${escapeHtml(item.code || '')}" placeholder="Mã..." onchange="updateQuickPasteField(${idx}, 'code', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <textarea class="grid-cell-name ${!hasName ? 'cell-invalid' : ''}" 
+          placeholder="Tên vật tư (Bắt buộc)..." 
+          rows="1"
+          onkeydown="handleQuickPasteNameKeydown(event, ${idx})"
+          oninput="updateQuickPasteField(${idx}, 'name', this.value); autoResizeTextarea(this);"
+          title="Nhấn Ctrl + Enter để xuống dòng trong tên">${escapeHtml(item.name || '')}</textarea>
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" value="${escapeHtml(item.brand || '')}" placeholder="Hãng..." list="list-brands" onchange="updateQuickPasteField(${idx}, 'brand', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" value="${escapeHtml(item.spec || '')}" placeholder="Quy cách..." list="list-specs" onchange="updateQuickPasteField(${idx}, 'spec', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input grid-cell-unit ${!hasUnit ? 'cell-invalid' : ''}" value="${escapeHtml(item.unit || '')}" placeholder="ĐVT *" list="list-units" onchange="updateQuickPasteField(${idx}, 'unit', this.value)" style="font-weight: 600;">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" value="${escapeHtml(item.location || '')}" placeholder="Vị trí..." list="list-locations" onchange="updateQuickPasteField(${idx}, 'location', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="number" class="grid-cell-input grid-cell-qty ${!hasQty ? 'cell-invalid' : ''}" style="font-weight: 700; text-align: center;" value="${item.qty || 1}" min="0.1" step="0.1" onchange="updateQuickPasteField(${idx}, 'qty', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="date" class="grid-cell-input" value="${item.expiry || ''}" onchange="updateQuickPasteField(${idx}, 'expiry', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" style="text-align: center; font-weight: 600;" value="${escapeHtml(item.importYear || '')}" placeholder="Năm..." onchange="updateQuickPasteField(${idx}, 'importYear', this.value)">
+      </td>
+      <td style="vertical-align: middle;">
+        <input type="text" class="grid-cell-input" value="${escapeHtml(item.note || '')}" placeholder="Ghi chú..." onchange="updateQuickPasteField(${idx}, 'note', this.value)">
+      </td>
+      <td style="text-align: center; vertical-align: middle;">
+        <button type="button" class="quick-paste-row-del" onclick="removeQuickPasteRow(${idx})" title="Xóa dòng này">✕</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Tự động điều chỉnh chiều cao các textarea tên
+  setTimeout(() => {
+    document.querySelectorAll('#quick-paste-tbody textarea.grid-cell-name').forEach(ta => {
+      autoResizeTextarea(ta);
+    });
+  }, 10);
+
+  if (validCountEl) validCountEl.textContent = quickPasteItems.length;
+  if (transferCountEl) transferCountEl.textContent = validCount;
+
+  if (invalidBadge) {
+    if (invalidCount > 0) {
+      invalidBadge.style.display = 'inline-block';
+      invalidBadge.textContent = `⚠️ Có ${invalidCount} dòng chưa đủ thông tin (Cần Tên, ĐVT, Số lượng)`;
+    } else {
+      invalidBadge.style.display = 'none';
+    }
+  }
+};
+
+// Cập nhật giá trị ô khi người dùng sửa trực tiếp
+window.updateQuickPasteField = function(index, field, value) {
+  if (!quickPasteItems[index]) return;
+  if (field === 'qty') {
+    let q = parseFloat(value);
+    quickPasteItems[index].qty = isNaN(q) ? '' : Math.max(q, 0);
+  } else {
+    quickPasteItems[index][field] = value.trim();
+  }
+  // Nếu sửa spec hoặc tên mà chưa có ĐVT thì tự đoán
+  if ((field === 'spec' || field === 'name') && !quickPasteItems[index].unit) {
+    quickPasteItems[index].unit = autoGuessUnit(quickPasteItems[index].spec, quickPasteItems[index].name);
+  }
+  renderQuickPasteGrid();
+};
+
+// Thêm dòng mới vào bảng
+window.addQuickPasteRow = function() {
+  quickPasteItems.push({
+    code: '',
+    name: '',
+    brand: '',
+    spec: '',
+    unit: 'Hộp',
+    location: '',
+    qty: 1,
+    expiry: '',
+    importYear: new Date().getFullYear().toString(),
+    note: ''
+  });
+  renderQuickPasteGrid();
+  setTimeout(() => {
+    const textareas = document.querySelectorAll('#quick-paste-tbody textarea.grid-cell-name');
+    if (textareas.length > 0) textareas[textareas.length - 1].focus();
+  }, 50);
+};
+
+// Xóa 1 dòng khỏi bảng
+window.removeQuickPasteRow = function(index) {
+  if (index >= 0 && index < quickPasteItems.length) {
+    quickPasteItems.splice(index, 1);
+    renderQuickPasteGrid();
+  }
+};
+
+// Xóa toàn bộ bảng
+window.clearQuickPasteTable = function() {
+  quickPasteItems = [];
+  const ta = document.getElementById('quick-paste-textarea');
+  if (ta) ta.value = '';
+  renderQuickPasteGrid();
+};
+
+// Bật tắt ô chọn vị trí tủ dùng chung cho chế độ Dán Nhanh
+window.toggleSharedCabinetQuickPaste = function() {
+  const chk = document.getElementById('quick-paste-is-shared-cabinet');
+  const wrap = document.getElementById('quick-paste-shared-location-wrap');
+  if (!wrap) return;
+  wrap.style.display = (chk && chk.checked) ? 'flex' : 'none';
+};
+
+// Chuyển danh sách vào Rổ Hàng Nhập Kho (Kiểm tra nghiêm ngặt 3 trường: Tên, ĐVT, Số lượng)
+window.transferQuickPasteToCart = function() {
+  if (quickPasteItems.length === 0) {
+    showToast("Bảng danh sách đang trống!", "warning");
+    return;
+  }
+
+  // 1. Kiểm tra nghiêm ngặt 3 thông tin bắt buộc: Tên, Đơn vị tính, Số lượng
+  for (let i = 0; i < quickPasteItems.length; i++) {
+    const it = quickPasteItems[i];
+    const hasN = Boolean(it.name && it.name.trim().length > 0);
+    const hasU = Boolean(it.unit && it.unit.trim().length > 0);
+    const qN = parseFloat(it.qty);
+    const hasQ = !isNaN(qN) && qN > 0;
+
+    if (!hasN || !hasU || !hasQ) {
+      let missingList = [];
+      if (!hasN) missingList.push('Tên hóa chất / vật tư');
+      if (!hasU) missingList.push('Đơn vị tính');
+      if (!hasQ) missingList.push('Số lượng nhập (phải > 0)');
+
+      alert(`❌ LỖI DÒNG SỐ ${i + 1}:\nThiếu thông tin bắt buộc: ${missingList.join(', ')}.\n\n* Quy định bắt buộc: Khi nhập kho phải có đầy đủ [Tên vật tư, Đơn vị tính, Số lượng] mới được phép lưu kho.`);
+
+      // Focus ngay vào ô thiếu
+      const rows = document.querySelectorAll('#quick-paste-tbody tr');
+      if (rows[i]) {
+        const targetInput = !hasN ? rows[i].querySelector('.grid-cell-name') :
+                            (!hasU ? rows[i].querySelector('.grid-cell-unit') :
+                            rows[i].querySelector('.grid-cell-qty'));
+        if (targetInput) targetInput.focus();
+      }
+      return;
+    }
+  }
+
+  // 2. Xử lý đồng bộ ngày giờ & Kiểm tra Tủ Dùng Chung
+  const isQuickPasteShared = document.getElementById('quick-paste-is-shared-cabinet') && document.getElementById('quick-paste-is-shared-cabinet').checked;
+  const quickPasteSharedLoc = (document.getElementById('quick-paste-shared-location') ? document.getElementById('quick-paste-shared-location').value.trim() : '') || 'Tủ dùng chung A';
+
+  const now = new Date();
+  const currentYearNum = now.getFullYear(); // 2026
+  const nowFormatted = now.toISOString().replace('T', ' ').substring(0, 19);
+
+  quickPasteItems.forEach(item => {
+    const rawYear = (item.importYear || '').toString().trim();
+    const parsedYear = parseInt(rawYear);
+
+    let finalYear = rawYear || currentYearNum.toString();
+    let exactImportDate = '';
+
+    if (!isNaN(parsedYear) && parsedYear < 2026) {
+      // Hàng tồn năm trước (không có ngày giờ cụ thể)
+      finalYear = parsedYear.toString();
+      exactImportDate = `${parsedYear}-01-01 00:00:00`;
+    } else {
+      // Từ năm 2026 trở về sau: Đồng bộ chính xác ngày giờ tháng năm thực tế!
+      finalYear = (!isNaN(parsedYear) && parsedYear >= 2026) ? parsedYear.toString() : currentYearNum.toString();
+      exactImportDate = nowFormatted;
+    }
+
+    importCart.push({
+      id: 'IMP' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100),
+      code: item.code || '',
+      name: item.name.trim(),
+      brand: item.brand || '',
+      spec: item.spec || '',
+      location: isQuickPasteShared ? quickPasteSharedLoc : (item.location || ''),
+      qty: parseFloat(item.qty) || 1,
+      unit: item.unit.trim(),
+      expiry: item.expiry || '',
+      importYear: finalYear,
+      importDate: exactImportDate,
+      created_at: exactImportDate,
+      note: item.note || '',
+      isSharedCabinet: isQuickPasteShared,
+      sharedLocation: isQuickPasteShared ? quickPasteSharedLoc : '',
+      sharedRemain: isQuickPasteShared ? `${item.spec || ''} (mới)` : ''
+    });
+  });
+
+  try {
+    localStorage.setItem('LAB_IMPORT_CART_V5', JSON.stringify(importCart));
+  } catch (e) {}
+
+  renderImportCart();
+  clearQuickPasteTable();
+  if (isQuickPasteShared) {
+    showToast(`Đã chuyển thành công ${quickPasteItems.length} vật tư vào Rổ hàng (Mục tiêu: Tủ Dùng Chung)!`, "success");
+  } else {
+    showToast(`Đã chuyển thành công ${quickPasteItems.length} vật tư vào Rổ hàng nhập kho!`, "success");
+  }
+
+  // Cuộn màn hình xuống rổ hàng
+  const cartCard = document.getElementById('import-cart-card');
+  if (cartCard) {
+    cartCard.style.display = 'block';
+    cartCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+window.toggleImportCartSharedCabinet = function(index, isChecked) {
+  if (!importCart[index]) return;
+  importCart[index].isSharedCabinet = isChecked;
+  if (isChecked) {
+    if (!importCart[index].sharedLocation || !importCart[index].sharedLocation.includes('Tủ dùng chung')) {
+      importCart[index].sharedLocation = 'Tủ dùng chung A';
+      importCart[index].location = 'Tủ dùng chung A';
+    }
+  }
+  localStorage.setItem('LAB_IMPORT_CART_V5', JSON.stringify(importCart));
+  renderImportCart();
+};
+
 // === RỔ HÀNG NHẬP KHO (IMPORT CART) LOGIC ===
 window.renderImportCart = function() {
   const container = document.getElementById('import-cart-card');
@@ -8356,44 +9856,51 @@ window.renderImportCart = function() {
   tbody.innerHTML = '';
   
   importCart.forEach((item, index) => {
+    const isShared = Boolean(item.isSharedCabinet);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="text-align: center; vertical-align: middle;">
         <input type="checkbox" class="import-item-checkbox" data-index="${index}" style="width: 16px; height: 16px; cursor: pointer;" onchange="updateImportBatchActionsVisibility()">
       </td>
-      <td>
-        <input type="text" class="table-input" style="font-family: monospace; font-size: 0.8rem; width: 80px;" value="${item.code || ''}" onchange="updateImportCartField(${index}, 'code', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="font-family: monospace; font-size: 0.84rem; min-width: 90px; width: 100%;" value="${escapeHtml(item.code || '')}" onchange="updateImportCartField(${index}, 'code', this.value)">
       </td>
-      <td>
-        <input type="text" class="table-input" style="font-weight: 600; min-width: 140px;" value="${item.name || ''}" onchange="updateImportCartField(${index}, 'name', this.value)">
+      <td style="vertical-align: middle;">
+        <textarea class="table-input" style="font-weight: 600; min-width: 400px; width: 100%; min-height: 44px; resize: vertical; line-height: 1.45; padding: 6px 10px; font-family: inherit; font-size: 0.88rem;" rows="1" onkeydown="handleQuickPasteNameKeydown(event, ${index})" oninput="updateImportCartField(${index}, 'name', this.value); autoResizeTextarea(this);" title="Nhấn Ctrl + Enter để xuống dòng trong tên">${escapeHtml(item.name || '')}</textarea>
       </td>
-      <td>
-        <input type="text" class="table-input" style="min-width: 100px;" value="${(item.brand === 'K/P') ? '' : (item.brand || '')}" list="list-brands" onchange="updateImportCartField(${index}, 'brand', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="min-width: 105px; width: 100%;" value="${escapeHtml((item.brand === 'K/P') ? '' : (item.brand || ''))}" list="list-brands" onchange="updateImportCartField(${index}, 'brand', this.value)">
       </td>
-      <td>
-        <input type="text" class="table-input" style="min-width: 100px;" value="${(item.spec === 'K/P') ? '' : (item.spec || '')}" list="list-specs" onchange="updateImportCartField(${index}, 'spec', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="min-width: 105px; width: 100%;" value="${escapeHtml((item.spec === 'K/P') ? '' : (item.spec || ''))}" list="list-specs" onchange="updateImportCartField(${index}, 'spec', this.value)">
       </td>
-      <td>
+      <td style="text-align: center; vertical-align: middle;">
+        <label style="display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; margin: 0; font-size: 0.8rem; font-weight: 600; color: ${isShared ? '#7c3aed' : '#047857'}; background: ${isShared ? 'rgba(139, 92, 246, 0.12)' : 'rgba(16, 185, 129, 0.1)'}; padding: 0.3rem 0.55rem; border-radius: 6px; border: 1.5px solid ${isShared ? '#8b5cf6' : 'rgba(16, 185, 129, 0.3)'}; white-space: nowrap;">
+          <input type="checkbox" ${isShared ? 'checked' : ''} onchange="toggleImportCartSharedCabinet(${index}, this.checked)" style="accent-color: #8b5cf6; width: 15px; height: 15px; cursor: pointer;">
+          <span>${isShared ? '🧪 Tủ Dùng Chung' : '📦 Kho tồn chính'}</span>
+        </label>
+      </td>
+      <td style="vertical-align: middle;">
         <div class="qty-control-sm">
           <button type="button" class="qty-btn-sm" onclick="adjustImportQty(${index}, -1)">-</button>
           <input type="number" class="qty-input-sm" id="import-qty-${index}" value="${item.qty}" min="0.1" step="0.1" onchange="changeImportQty(${index}, this.value)">
           <button type="button" class="qty-btn-sm" onclick="adjustImportQty(${index}, 1)">+</button>
         </div>
       </td>
-      <td>
-        <input type="text" class="table-input" style="width: 60px;" value="${item.unit || ''}" list="list-units" onchange="updateImportCartField(${index}, 'unit', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="min-width: 75px; width: 100%; text-align: center; font-weight: 600;" value="${escapeHtml(item.unit || '')}" list="list-units" onchange="updateImportCartField(${index}, 'unit', this.value)">
       </td>
-      <td>
-        <input type="text" class="table-input" style="width: 100px;" value="${item.location || ''}" list="list-locations" onchange="updateImportCartField(${index}, 'location', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="min-width: 115px; width: 100%;" value="${escapeHtml(item.location || '')}" list="${isShared ? 'list-shared-locations' : 'list-locations'}" onchange="updateImportCartField(${index}, 'location', this.value); if (${isShared}) updateImportCartField(${index}, 'sharedLocation', this.value);">
       </td>
-      <td>
-        <input type="date" class="table-input" style="width: 125px; padding: 2px;" value="${item.expiry || ''}" onchange="updateImportCartField(${index}, 'expiry', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="date" class="table-input" style="min-width: 125px; width: 100%; padding: 4px;" value="${item.expiry || ''}" onchange="updateImportCartField(${index}, 'expiry', this.value)">
       </td>
-      <td>
-        <input type="number" class="table-input" style="width: 70px;" value="${item.importYear || ''}" onchange="updateImportCartField(${index}, 'importYear', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="width: 80px; text-align: center; font-weight: 600;" value="${escapeHtml(item.importYear || '')}" onchange="updateImportCartField(${index}, 'importYear', this.value)">
       </td>
-      <td>
-        <input type="text" class="table-input" style="min-width: 120px;" value="${item.note || ''}" onchange="updateImportCartField(${index}, 'note', this.value)">
+      <td style="vertical-align: middle;">
+        <input type="text" class="table-input" style="min-width: 120px; width: 100%;" value="${escapeHtml(item.note || '')}" onchange="updateImportCartField(${index}, 'note', this.value)">
       </td>
       <td style="text-align: right; vertical-align: middle;">
         <button class="btn btn-danger btn-sm" style="padding: 0.35rem 0.65rem;" onclick="removeFromImportCart(${index})">Xóa 🗑️</button>
@@ -8401,6 +9908,12 @@ window.renderImportCart = function() {
     `;
     tbody.appendChild(tr);
   });
+
+  setTimeout(() => {
+    document.querySelectorAll('#import-cart-tbody textarea.table-input').forEach(ta => {
+      autoResizeTextarea(ta);
+    });
+  }, 10);
 
   if (selectAllCb) {
     selectAllCb.checked = false;
@@ -8479,190 +9992,335 @@ window.deleteSelectedImportItems = function() {
   }
 };
 
-window.submitSelectedImportItems = async function() {
+window.submitSelectedImportItems = async function(btnEl) {
   const checkboxes = document.querySelectorAll('.import-item-checkbox:checked');
   if (checkboxes.length === 0) return;
   
   const indices = Array.from(checkboxes).map(cb => parseInt(cb.getAttribute('data-index')));
   const selectedItems = indices.map(idx => importCart[idx]);
   
-  if (!confirm(`Bạn có chắc chắn muốn duyệt nhập kho ${selectedItems.length} dòng đã chọn?`)) {
+  const sharedCount = selectedItems.filter(i => i.isSharedCabinet).length;
+  const regularCount = selectedItems.length - sharedCount;
+
+  let confirmMsg = `Bạn có chắc chắn muốn duyệt nhập ${selectedItems.length} dòng đã chọn?`;
+  if (sharedCount > 0 && regularCount > 0) {
+    confirmMsg += `\n- ${regularCount} mục sẽ đưa vào Tồn Kho chính\n- ${sharedCount} mục sẽ đưa vào Tủ Dùng Chung (không tính vào tồn kho)`;
+  } else if (sharedCount > 0) {
+    confirmMsg += `\nToàn bộ ${sharedCount} mục sẽ được đưa trực tiếp vào Tủ Dùng Chung (không tính vào tồn kho chính).`;
+  }
+  
+  if (!confirm(confirmMsg)) {
     return;
   }
   
-  showLoading(true);
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.importerPin;
-  const payload = {
-    action: 'bulk_import',
-    items: selectedItems,
-    pin: pinSecret
-  };
-  
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast(`Đã duyệt nhập kho thành công ${selectedItems.length} vật tư!`, 'success');
-      indices.sort((a, b) => b - a).forEach(idx => {
-        importCart.splice(idx, 1);
-      });
-      localStorage.setItem('LAB_IMPORT_CART_V5', JSON.stringify(importCart));
-      renderImportCart();
-      updateImportBatchActionsVisibility();
-      await loadData();
-    } else {
-      throw new Error(json.message);
-    }
-  } catch (err) {
-    console.error(err);
-    showToast('Lỗi kết nối. Duyệt lưu cục bộ các mục đã chọn.', 'warning');
-    selectedItems.forEach(excelItem => {
-      let item = appData.inventory.find(i => 
-        i.Ten.toLowerCase() === excelItem.name.toLowerCase() &&
-        i.Hang.toLowerCase() === excelItem.brand.toLowerCase() &&
-        i.Quy_Cach.toLowerCase() === excelItem.spec.toLowerCase()
-      );
-      
-      let targetId = '';
-      if (item) {
-        item.So_Luong += excelItem.qty;
-        item.Ma_So = excelItem.code;
-        item.Noi_Bao_Quan = excelItem.location;
-        item.Don_Vi = excelItem.unit;
-        targetId = item.ID;
-      } else {
-        const newId = 'VT' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
-        appData.inventory.push({
-          ID: newId,
-          Ma_So: excelItem.code,
-          Ten: excelItem.name,
-          Hang: excelItem.brand,
-          Quy_Cach: excelItem.spec,
-          Noi_Bao_Quan: excelItem.location,
-          So_Luong: excelItem.qty,
-          Don_Vi: excelItem.unit,
-          Han_Su_Dung: excelItem.expiry,
-          Nam_Nhap: excelItem.importYear,
-          Ghi_Chu: excelItem.note
-        });
-        targetId = newId;
+  return runGuardedOperation('bulk_import_cart', btnEl || event?.target, async () => {
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.importerPin;
+    const regularItems = selectedItems.filter(it => !it.isSharedCabinet);
+    const sharedItems = selectedItems.filter(it => it.isSharedCabinet);
+
+    // 1. Xử lý các mục nhập vào Tủ Dùng Chung
+    if (sharedItems.length > 0) {
+      for (const item of sharedItems) {
+        if (typeof addToSharedCabinet === 'function') {
+          addToSharedCabinet({
+            id_vat_tu: item.id || ('VT' + Date.now().toString().slice(-6)),
+            ten: item.name,
+            hang: item.brand || '',
+            quy_cach: item.spec || '',
+            don_vi: item.unit || 'Chai',
+            vi_tri_tu: item.sharedLocation || item.location || 'Tủ dùng chung A',
+            so_luong: item.qty || 1,
+            khoi_luong_con_lai: item.sharedRemain || (item.spec ? `${item.spec} (mới)` : 'Đang sử dụng'),
+            nguoi_dua_vao: currentRole === 'admin' ? 'Admin' : 'Người nhập kho',
+            ghi_chu: item.note ? `Nhập trực tiếp vào Tủ dùng chung: ${item.note}` : 'Nhập mới vào Tủ dùng chung'
+          });
+        }
+
+        // Ghi nhật ký nhập kho
+        const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+        const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('lich_su_nhap').insert({
+              id_giao_dich: importId,
+              id_vat_tu: item.id || '',
+              ten: item.name,
+              hang: item.brand || '',
+              quy_cach: item.spec || '',
+              so_luong: item.qty,
+              don_vi: item.unit || 'Chai',
+              ngay_nhap: new Date().toISOString(),
+              nguoi_nhap: userRoleStr,
+              ghi_chu: `[TỦ DÙNG CHUNG - ${item.sharedLocation || item.location || 'Tủ dùng chung A'}] ${item.note || ''}`
+            });
+          } catch(e) {}
+        } else if (appData && appData.imports) {
+          appData.imports.push({
+            ID_Giao_Dich: importId,
+            ID_Vat_Tu: item.id || '',
+            Ten: item.name,
+            Hang: item.brand || '',
+            Quy_Cach: item.spec || '',
+            So_Luong: item.qty,
+            Don_Vi: item.unit || 'Chai',
+            Ngay_Nhap: new Date().toISOString(),
+            Nguoi_Nhap: userRoleStr,
+            Ghi_Chu: `[TỦ DÙNG CHUNG - ${item.sharedLocation || item.location || 'Tủ dùng chung A'}] ${item.note || ''}`
+          });
+        }
       }
+      if (typeof saveSharedCabinet === 'function') {
+        await saveSharedCabinet();
+      }
+    }
+
+    // 2. Xử lý các mục nhập vào Kho Tồn Chính
+    if (regularItems.length > 0) {
+      const payload = {
+        action: 'bulk_import',
+        items: regularItems,
+        pin: pinSecret
+      };
       
-      const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
-      const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
-      appData.imports.push({
-        ID_Giao_Dich: importId,
-        ID_Vat_Tu: targetId,
-        Ten: excelItem.name,
-        Hang: excelItem.brand,
-        Quy_Cach: excelItem.spec,
-        So_Luong: excelItem.qty,
-        Don_Vi: excelItem.unit,
-        Ngay_Nhap: new Date().toISOString(),
-        Nguoi_Nhap: userRoleStr,
-        Ghi_Chu: excelItem.note
-      });
-    });
-    saveMockData();
+      try {
+        const json = await sendRequest(payload);
+        if (!json.success) {
+          throw new Error(json.message);
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Lỗi kết nối Supabase. Lưu kho cục bộ cho các mục thông thường.', 'warning');
+        regularItems.forEach(excelItem => {
+          let item = appData.inventory.find(i => 
+            i.Ten.toLowerCase() === excelItem.name.toLowerCase() &&
+            i.Hang.toLowerCase() === excelItem.brand.toLowerCase() &&
+            i.Quy_Cach.toLowerCase() === excelItem.spec.toLowerCase()
+          );
+          
+          let targetId = '';
+          if (item) {
+            item.So_Luong += excelItem.qty;
+            item.Ma_So = excelItem.code;
+            item.Noi_Bao_Quan = excelItem.location;
+            item.Don_Vi = excelItem.unit;
+            targetId = item.ID;
+          } else {
+            const newId = 'VT' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
+            appData.inventory.push({
+              ID: newId,
+              Ma_So: excelItem.code,
+              Ten: excelItem.name,
+              Hang: excelItem.brand,
+              Quy_Cach: excelItem.spec,
+              Noi_Bao_Quan: excelItem.location,
+              So_Luong: excelItem.qty,
+              Don_Vi: excelItem.unit,
+              Han_Su_Dung: excelItem.expiry,
+              Nam_Nhap: excelItem.importYear,
+              Ghi_Chu: excelItem.note
+            });
+            targetId = newId;
+          }
+          
+          const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+          const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
+          appData.imports.push({
+            ID_Giao_Dich: importId,
+            ID_Vat_Tu: targetId,
+            Ten: excelItem.name,
+            Hang: excelItem.brand,
+            Quy_Cach: excelItem.spec,
+            So_Luong: excelItem.qty,
+            Don_Vi: excelItem.unit,
+            Ngay_Nhap: new Date().toISOString(),
+            Nguoi_Nhap: userRoleStr,
+            Ghi_Chu: excelItem.note
+          });
+        });
+        saveMockData();
+      }
+    }
+
+    // Xóa các mục đã duyệt khỏi rổ hàng
     indices.sort((a, b) => b - a).forEach(idx => {
       importCart.splice(idx, 1);
     });
     localStorage.setItem('LAB_IMPORT_CART_V5', JSON.stringify(importCart));
     renderImportCart();
     updateImportBatchActionsVisibility();
-    renderInventory();
-    populateDropdowns();
-  }
-  showLoading(false);
+    await loadData();
+    if (typeof renderSharedCabinet === 'function') renderSharedCabinet();
+
+    if (sharedCount > 0 && regularCount > 0) {
+      showToast(`Đã duyệt: ${regularCount} mục vào tồn kho, ${sharedCount} mục vào Tủ Dùng Chung!`, 'success');
+    } else if (sharedCount > 0) {
+      showToast(`Đã chuyển thành công ${sharedCount} mục vào Tủ Hóa Chất Dùng Chung!`, 'success');
+    } else {
+      showToast(`Đã duyệt nhập kho thành công ${regularCount} vật tư!`, 'success');
+    }
+  });
 };
 
-window.submitImportCart = async function() {
+window.submitImportCart = async function(btnEl) {
   if (importCart.length === 0) return;
   
-  if (!confirm(`Bạn có chắc chắn muốn duyệt và lưu thực tế ${importCart.length} dòng hàng này vào tồn kho?`)) {
+  const sharedCount = importCart.filter(i => i.isSharedCabinet).length;
+  const regularCount = importCart.length - sharedCount;
+
+  let confirmMsg = `Bạn có chắc chắn muốn duyệt và lưu thực tế toàn bộ ${importCart.length} dòng hàng này?`;
+  if (sharedCount > 0 && regularCount > 0) {
+    confirmMsg += `\n- ${regularCount} mục sẽ đưa vào Tồn Kho chính\n- ${sharedCount} mục sẽ đưa vào Tủ Dùng Chung (không tính vào tồn kho)`;
+  } else if (sharedCount > 0) {
+    confirmMsg += `\nToàn bộ ${sharedCount} mục sẽ được đưa trực tiếp vào Tủ Dùng Chung (không tính vào tồn kho chính).`;
+  }
+  
+  if (!confirm(confirmMsg)) {
     return;
   }
   
-  showLoading(true);
-  
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.importerPin;
-  const payload = {
-    action: 'bulk_import',
-    items: importCart,
-    pin: pinSecret
-  };
-  
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast(`Đã duyệt nhập kho thành công ${importCart.length} vật tư lên Supabase!`, 'success');
-      importCart = [];
-      localStorage.removeItem('LAB_IMPORT_CART_V5');
-      renderImportCart();
-      updateImportBatchActionsVisibility();
-      await loadData();
-    } else {
-      throw new Error(json.message);
-    }
-  } catch(err) {
-    console.error(err);
-    showToast('Có lỗi kết nối. Thực hiện duyệt lưu cục bộ.', 'warning');
-    importCart.forEach(excelItem => {
-      let item = appData.inventory.find(i => 
-        i.Ten.toLowerCase() === excelItem.name.toLowerCase() &&
-        i.Hang.toLowerCase() === excelItem.brand.toLowerCase() &&
-        i.Quy_Cach.toLowerCase() === excelItem.spec.toLowerCase()
-      );
+  return runGuardedOperation('submit_all_import_cart', btnEl || event?.target, async () => {
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.importerPin;
+    const regularItems = importCart.filter(it => !it.isSharedCabinet);
+    const sharedItems = importCart.filter(it => it.isSharedCabinet);
 
-      let targetId = '';
-      if (item) {
-        item.So_Luong += excelItem.qty;
-        item.Ma_So = excelItem.code;
-        item.Noi_Bao_Quan = excelItem.location;
-        item.Don_Vi = excelItem.unit;
-        targetId = item.ID;
-      } else {
-        const newId = 'VT' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
-        appData.inventory.push({
-          ID: newId,
-          Ma_So: excelItem.code,
-          Ten: excelItem.name,
-          Hang: excelItem.brand,
-          Quy_Cach: excelItem.spec,
-          Noi_Bao_Quan: excelItem.location,
-          So_Luong: excelItem.qty,
-          Don_Vi: excelItem.unit,
-          Han_Su_Dung: excelItem.expiry,
-          Nam_Nhap: excelItem.importYear,
-          Ghi_Chu: excelItem.note
-        });
-        targetId = newId;
+    // 1. Xử lý các mục nhập vào Tủ Dùng Chung
+    if (sharedItems.length > 0) {
+      for (const item of sharedItems) {
+        if (typeof addToSharedCabinet === 'function') {
+          addToSharedCabinet({
+            id_vat_tu: item.id || ('VT' + Date.now().toString().slice(-6)),
+            ten: item.name,
+            hang: item.brand || '',
+            quy_cach: item.spec || '',
+            don_vi: item.unit || 'Chai',
+            vi_tri_tu: item.sharedLocation || item.location || 'Tủ dùng chung A',
+            so_luong: item.qty || 1,
+            khoi_luong_con_lai: item.sharedRemain || (item.spec ? `${item.spec} (mới)` : 'Đang sử dụng'),
+            nguoi_dua_vao: currentRole === 'admin' ? 'Admin' : 'Người nhập kho',
+            ghi_chu: item.note ? `Nhập trực tiếp vào Tủ dùng chung: ${item.note}` : 'Nhập mới vào Tủ dùng chung'
+          });
+        }
+
+        // Ghi nhật ký nhập kho
+        const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+        const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('lich_su_nhap').insert({
+              id_giao_dich: importId,
+              id_vat_tu: item.id || '',
+              ten: item.name,
+              hang: item.brand || '',
+              quy_cach: item.spec || '',
+              so_luong: item.qty,
+              don_vi: item.unit || 'Chai',
+              ngay_nhap: new Date().toISOString(),
+              nguoi_nhap: userRoleStr,
+              ghi_chu: `[TỦ DÙNG CHUNG - ${item.sharedLocation || item.location || 'Tủ dùng chung A'}] ${item.note || ''}`
+            });
+          } catch(e) {}
+        } else if (appData && appData.imports) {
+          appData.imports.push({
+            ID_Giao_Dich: importId,
+            ID_Vat_Tu: item.id || '',
+            Ten: item.name,
+            Hang: item.brand || '',
+            Quy_Cach: item.spec || '',
+            So_Luong: item.qty,
+            Don_Vi: item.unit || 'Chai',
+            Ngay_Nhap: new Date().toISOString(),
+            Nguoi_Nhap: userRoleStr,
+            Ghi_Chu: `[TỦ DÙNG CHUNG - ${item.sharedLocation || item.location || 'Tủ dùng chung A'}] ${item.note || ''}`
+          });
+        }
       }
+      if (typeof saveSharedCabinet === 'function') {
+        await saveSharedCabinet();
+      }
+    }
+
+    // 2. Xử lý các mục nhập vào Kho Tồn Chính
+    if (regularItems.length > 0) {
+      const payload = {
+        action: 'bulk_import',
+        items: regularItems,
+        pin: pinSecret
+      };
       
-      const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
-      const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
-      appData.imports.push({
-        ID_Giao_Dich: importId,
-        ID_Vat_Tu: targetId,
-        Ten: excelItem.name,
-        Hang: excelItem.brand,
-        Quy_Cach: excelItem.spec,
-        So_Luong: excelItem.qty,
-        Don_Vi: excelItem.unit,
-        Ngay_Nhap: new Date().toISOString(),
-        Nguoi_Nhap: userRoleStr,
-        Ghi_Chu: excelItem.note
-      });
-    });
-    saveMockData();
+      try {
+        const json = await sendRequest(payload);
+        if (!json.success) {
+          throw new Error(json.message);
+        }
+      } catch(err) {
+        console.error(err);
+        showToast('Có lỗi kết nối. Thực hiện duyệt lưu kho cục bộ cho các mục thông thường.', 'warning');
+        regularItems.forEach(excelItem => {
+          let item = appData.inventory.find(i => 
+            i.Ten.toLowerCase() === excelItem.name.toLowerCase() &&
+            i.Hang.toLowerCase() === excelItem.brand.toLowerCase() &&
+            i.Quy_Cach.toLowerCase() === excelItem.spec.toLowerCase()
+          );
+
+          let targetId = '';
+          if (item) {
+            item.So_Luong += excelItem.qty;
+            item.Ma_So = excelItem.code;
+            item.Noi_Bao_Quan = excelItem.location;
+            item.Don_Vi = excelItem.unit;
+            targetId = item.ID;
+          } else {
+            const newId = 'VT' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
+            appData.inventory.push({
+              ID: newId,
+              Ma_So: excelItem.code,
+              Ten: excelItem.name,
+              Hang: excelItem.brand,
+              Quy_Cach: excelItem.spec,
+              Noi_Bao_Quan: excelItem.location,
+              So_Luong: excelItem.qty,
+              Don_Vi: excelItem.unit,
+              Han_Su_Dung: excelItem.expiry,
+              Nam_Nhap: excelItem.importYear,
+              Ghi_Chu: excelItem.note
+            });
+            targetId = newId;
+          }
+          
+          const importId = 'NK' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 10);
+          const userRoleStr = currentRole === 'admin' ? 'Admin' : 'Người nhập kho';
+          appData.imports.push({
+            ID_Giao_Dich: importId,
+            ID_Vat_Tu: targetId,
+            Ten: excelItem.name,
+            Hang: excelItem.brand,
+            Quy_Cach: excelItem.spec,
+            So_Luong: excelItem.qty,
+            Don_Vi: excelItem.unit,
+            Ngay_Nhap: new Date().toISOString(),
+            Nguoi_Nhap: userRoleStr,
+            Ghi_Chu: excelItem.note
+          });
+        });
+        saveMockData();
+      }
+    }
+
     importCart = [];
     localStorage.removeItem('LAB_IMPORT_CART_V5');
     renderImportCart();
     updateImportBatchActionsVisibility();
-    renderInventory();
-    populateDropdowns();
-  }
-  
-  showLoading(false);
+    await loadData();
+    if (typeof renderSharedCabinet === 'function') renderSharedCabinet();
+
+    if (sharedCount > 0 && regularCount > 0) {
+      showToast(`Đã duyệt: ${regularCount} mục vào tồn kho, ${sharedCount} mục vào Tủ Dùng Chung!`, 'success');
+    } else if (sharedCount > 0) {
+      showToast(`Đã chuyển thành công ${sharedCount} mục vào Tủ Hóa Chất Dùng Chung!`, 'success');
+    } else {
+      showToast(`Đã duyệt nhập kho thành công ${regularCount} vật tư lên hệ thống!`, 'success');
+    }
+  });
 };
 
 // === DUYỆT HÀNG LOẠT VÀ GOM NHÓM PHIẾU YÊU CẦU XUẤT KHO ===
@@ -8675,74 +10333,122 @@ window.updateBatchActionsVisibility = function() {
   }
 };
 
-window.approveGroup = async function(itemIdsStr) {
-  const ids = itemIdsStr.split(',');
-  showLoading(true);
-  
-  // Đọc mục đích xuất kho đã thay đổi từ dòng đầu tiên trong nhóm
-  const firstId = ids[0];
-  const purposeInput = document.getElementById(`group-purpose-${firstId}`);
-  const updatedPurpose = purposeInput ? purposeInput.value.trim() : '';
-  
-  let successCount = 0;
-  for (const id of ids) {
-    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
-    const qtyInput = document.getElementById(`approve-qty-${id}`);
-    let qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
-    if (isNaN(qty) || qty <= 0) {
-      qty = req ? parseFloat(req.So_Luong_Yeu_Cau) || 1 : 1;
-    }
+window.approveGroup = async function(itemIdsStr, btnEl) {
+  const lockKey = 'approve_group_' + itemIdsStr;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const ids = itemIdsStr.split(',');
     
-    // Kiểm tra số lượng tồn kho thực tế trước khi duyệt
-    const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
-    const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
-    if (qty > currentStock) {
-      showToast(`Không đủ tồn kho để duyệt cho "${req ? req.Ten : 'vật tư'}"! (Yêu cầu duyệt: ${qty}, Hiện có: ${currentStock})`, 'danger');
-      showLoading(false);
+    // Kiểm tra và chỉ lấy các yêu cầu THỰC SỰ đang ở trạng thái 'Cho_Duyet'
+    const pendingIds = ids.filter(id => {
+      const r = appData.requests ? appData.requests.find(req => req.ID_Yeu_Cau === id) : null;
+      return r && r.Trang_Thai === 'Cho_Duyet';
+    });
+    
+    if (pendingIds.length === 0) {
+      showToast('Yêu cầu xuất kho này đã được phê duyệt hoặc đã xử lý rồi!', 'warning');
+      await loadData();
       return;
     }
     
-    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
-    const payload = {
-      action: 'approve_export',
-      requestId: id,
-      qty: qty,
-      purpose: updatedPurpose,
-      note: req && req.replacementItemId ? 'Duyệt thay thế hóa chất' : 'Duyệt theo nhóm đề xuất',
-      pin: pinSecret
-    };
-    if (req && req.replacementItemId) {
-      payload.replacementItemId = req.replacementItemId;
+    // Đọc mục đích xuất kho đã thay đổi từ dòng đầu tiên trong nhóm
+    const firstId = pendingIds[0];
+    const purposeInput = document.getElementById(`group-purpose-${firstId}`);
+    const updatedPurpose = purposeInput ? purposeInput.value.trim() : '';
+    
+    let successCount = 0;
+    for (const id of pendingIds) {
+      const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+      const qtyInput = document.getElementById(`approve-qty-${id}`);
+      let qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
+      if (isNaN(qty) || qty <= 0) {
+        qty = req ? parseFloat(req.So_Luong_Yeu_Cau) || 1 : 1;
+      }
+      
+      // Kiểm tra số lượng tồn kho thực tế trước khi duyệt
+      const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
+      const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
+      if (qty > currentStock) {
+        showToast(`Không đủ tồn kho để duyệt cho "${req ? req.Ten : 'vật tư'}"! (Yêu cầu duyệt: ${qty}, Hiện có: ${currentStock})`, 'danger');
+        return;
+      }
+      
+      const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
+      const payload = {
+        action: 'approve_export',
+        requestId: id,
+        qty: qty,
+        purpose: updatedPurpose,
+        note: req && req.replacementItemId ? 'Duyệt thay thế hóa chất' : 'Duyệt theo nhóm đề xuất',
+        pin: pinSecret
+      };
+      if (req && req.replacementItemId) {
+        payload.replacementItemId = req.replacementItemId;
+      }
+      
+      try {
+        const json = await sendRequest(payload);
+        if (json.success) {
+          successCount++;
+          if (req) req.Trang_Thai = 'Da_Duyet';
+        }
+      } catch(e) {
+        console.error(e);
+        const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+        const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
+        if (req && item && req.Trang_Thai === 'Cho_Duyet') {
+          executeApproveLocally(id, qty, 'Duyệt theo nhóm đề xuất', item, updatedPurpose);
+          successCount++;
+        }
+      }
     }
     
-    try {
-      const json = await sendRequest(payload);
-      if (json.success) {
-        successCount++;
-      }
-    } catch(e) {
-      console.error(e);
-      const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
-      const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
-      if (req && item) {
-        executeApproveLocally(id, qty, 'Duyệt theo nhóm đề xuất', item, updatedPurpose);
-        successCount++;
-      }
-    }
-  }
-  
-  showLoading(false);
-  await loadData();
-  showToast(`Đã duyệt thành công ${successCount}/${ids.length} yêu cầu!`, 'success');
+    await loadData();
+    showToast(`Đã duyệt thành công ${successCount}/${pendingIds.length} yêu cầu!`, 'success');
+  });
 };
 
-window.rejectGroup = async function(itemIdsStr) {
-  const ids = itemIdsStr.split(',');
-  const reason = prompt('Nhập lý do từ chối chung cho đợt yêu cầu này:') || 'Không được phê duyệt';
-  
-  showLoading(true);
-  let successCount = 0;
-  for (const id of ids) {
+window.rejectGroup = async function(itemIdsStr, btnEl) {
+  const lockKey = 'reject_group_' + itemIdsStr;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const ids = itemIdsStr.split(',');
+    const reason = prompt('Nhập lý do từ chối chung cho đợt yêu cầu này:') || 'Không được phê duyệt';
+    
+    let successCount = 0;
+    for (const id of ids) {
+      const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
+      const payload = {
+        action: 'reject_export',
+        requestId: id,
+        note: reason,
+        pin: pinSecret
+      };
+      try {
+        const json = await sendRequest(payload);
+        if (json.success) {
+          successCount++;
+        }
+      } catch(e) {
+        console.error(e);
+        const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
+        if (req) {
+          req.Trang_Thai = 'Tu_Choi';
+          req.Ghi_Chu = reason;
+          successCount++;
+        }
+      }
+    }
+    
+    if (currentRole !== 'admin') saveMockData();
+    showToast(`Đã từ chối thành công ${successCount}/${ids.length} yêu cầu!`, 'primary');
+    await loadData();
+  });
+};
+
+window.rejectSingleRequest = async function(id, btnEl) {
+  const lockKey = 'reject_single_' + id;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const reason = prompt('Nhập lý do từ chối yêu cầu này:') || 'Không được phê duyệt';
+    
     const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
     const payload = {
       action: 'reject_export',
@@ -8750,10 +10456,11 @@ window.rejectGroup = async function(itemIdsStr) {
       note: reason,
       pin: pinSecret
     };
+    
     try {
       const json = await sendRequest(payload);
       if (json.success) {
-        successCount++;
+        showToast('Đã từ chối yêu cầu thành công!', 'success');
       }
     } catch(e) {
       console.error(e);
@@ -8761,50 +10468,16 @@ window.rejectGroup = async function(itemIdsStr) {
       if (req) {
         req.Trang_Thai = 'Tu_Choi';
         req.Ghi_Chu = reason;
-        successCount++;
+        saveMockData();
+        showToast('Từ chối thành công cục bộ!', 'success');
       }
     }
-  }
-  
-  if (currentRole !== 'admin') saveMockData();
-  showLoading(false);
-  showToast(`Đã từ chối thành công ${successCount}/${ids.length} yêu cầu!`, 'primary');
-  await loadData();
+    
+    await loadData();
+  });
 };
 
-window.rejectSingleRequest = async function(id) {
-  const reason = prompt('Nhập lý do từ chối yêu cầu này:') || 'Không được phê duyệt';
-  showLoading(true);
-  
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : (currentRole === 'importer' ? appConfig.importerPin : appConfig.exporterPin);
-  const payload = {
-    action: 'reject_export',
-    requestId: id,
-    note: reason,
-    pin: pinSecret
-  };
-  
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast('Đã từ chối yêu cầu thành công!', 'success');
-    }
-  } catch(e) {
-    console.error(e);
-    const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
-    if (req) {
-      req.Trang_Thai = 'Tu_Choi';
-      req.Ghi_Chu = reason;
-      saveMockData();
-      showToast('Từ chối thành công cục bộ!', 'success');
-    }
-  }
-  
-  showLoading(false);
-  await loadData();
-};
-
-window.batchApproveRequests = async function() {
+window.batchApproveRequests = async function(btnEl) {
   const checkboxes = document.querySelectorAll('.group-select-checkbox:checked');
   if (checkboxes.length === 0) return;
   
@@ -8814,10 +10487,26 @@ window.batchApproveRequests = async function() {
     allIds = allIds.concat(ids);
   });
   
-  if (confirm(`Bạn có chắc chắn muốn duyệt đồng loạt ${allIds.length} yêu cầu đã chọn?`)) {
-    showLoading(true);
+  if (!confirm(`Bạn có chắc chắn muốn duyệt đồng loạt ${allIds.length} yêu cầu đã chọn?`)) {
+    return;
+  }
+  
+  const lockKey = 'batch_approve_' + allIds.sort().join('_');
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    // Chỉ lấy các yêu cầu còn 'Cho_Duyet'
+    const pendingIds = allIds.filter(id => {
+      const r = appData.requests ? appData.requests.find(req => req.ID_Yeu_Cau === id) : null;
+      return r && r.Trang_Thai === 'Cho_Duyet';
+    });
+
+    if (pendingIds.length === 0) {
+      showToast('Tất cả yêu cầu đã được phê duyệt trước đó rồi!', 'warning');
+      await loadData();
+      return;
+    }
+
     let successCount = 0;
-    for (const id of allIds) {
+    for (const id of pendingIds) {
       const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
       const qtyInput = document.getElementById(`approve-qty-${id}`);
       let qty = qtyInput ? parseFloat(qtyInput.value) : NaN;
@@ -8825,12 +10514,10 @@ window.batchApproveRequests = async function() {
         qty = req ? parseFloat(req.So_Luong_Yeu_Cau) || 1 : 1;
       }
       
-      // Kiểm tra số lượng tồn kho thực tế trước khi duyệt hàng loạt
       const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
       const currentStock = item ? (parseFloat(item.So_Luong) || 0) : 0;
       if (qty > currentStock) {
         showToast(`Không đủ tồn kho để duyệt hàng loạt cho "${req ? req.Ten : 'vật tư'}"! (Yêu cầu duyệt: ${qty}, Hiện có: ${currentStock})`, 'danger');
-        showLoading(false);
         return;
       }
 
@@ -8848,20 +10535,22 @@ window.batchApproveRequests = async function() {
       
       try {
         const json = await sendRequest(payload);
-        if (json.success) successCount++;
+        if (json.success) {
+          successCount++;
+          if (req) req.Trang_Thai = 'Da_Duyet';
+        }
       } catch(e) {
         const req = appData.requests.find(r => r.ID_Yeu_Cau === id);
         const item = appData.inventory.find(i => i.ID === (req ? req.ID_Vat_Tu : ''));
-        if (req && item) {
+        if (req && item && req.Trang_Thai === 'Cho_Duyet') {
           executeApproveLocally(id, qty, 'Duyệt hàng loạt', item);
           successCount++;
         }
       }
     }
-    showLoading(false);
-    showToast(`Đã duyệt đồng loạt thành công ${successCount}/${allIds.length} yêu cầu!`, 'success');
+    showToast(`Đã duyệt đồng loạt thành công ${successCount}/${pendingIds.length} yêu cầu!`, 'success');
     await loadData();
-  }
+  });
 };
 
 window.batchRejectRequests = async function() {
@@ -9201,8 +10890,8 @@ window.clearNotification = async function(reqId) {
   showLoading(false);
 };
 
-// === HOÀN TÁC GIAO DỊCH XUẤT KHO DƯỚI 1 GIỜ ===
-window.undoExport = async function(transactionId) {
+// === HOÀN TÁC GIAO DỊCH XUẤT KHO DƯỚI 1 GIỜ (BẢO VỆ CHỐNG DOUBLE-CLICK) ===
+window.undoExport = async function(transactionId, btnEl) {
   const txIds = transactionId.split(',');
   const confirmMsg = txIds.length > 1
     ? `Bạn có chắc chắn muốn hoàn tác (Undo) nhóm giao dịch xuất kho này (${txIds.length} mặt hàng)? \nSố lượng sẽ được cộng hoàn trả lại tồn kho.`
@@ -9212,67 +10901,68 @@ window.undoExport = async function(transactionId) {
     return;
   }
   
-  showLoading(true);
-  const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
-  const payload = {
-    action: 'undo_export',
-    transactionIds: transactionId,
-    pin: pinSecret
-  };
-  
-  try {
-    const json = await sendRequest(payload);
-    if (json.success) {
-      showToast('Đã hoàn tác giao dịch xuất kho thành công!', 'success');
-      await loadData();
-    } else {
-      throw new Error(json.message);
-    }
-  } catch(err) {
-    console.error(err);
-    txIds.forEach(txId => {
-      const transaction = appData.exports.find(x => x.ID_Giao_Dich === txId);
-      if (transaction) {
-        const item = appData.inventory.find(i => i.ID === transaction.ID_Vat_Tu);
-        if (item) {
-          item.So_Luong += transaction.So_Luong;
-        }
-
-        // Hoàn lại yêu cầu của người nhận về 'Cho_Duyet' nếu có
-        if (appData.requests) {
-          const matchedReq = [...appData.requests].reverse().find(r => 
-            r.ID_Vat_Tu === transaction.ID_Vat_Tu && 
-            r.Nguoi_Yeu_Cau === transaction.Nguoi_Nhan && 
-            r.Trang_Thai === 'Da_Duyet'
-          );
-          if (matchedReq) {
-            matchedReq.Trang_Thai = 'Cho_Duyet';
-            matchedReq.Ghi_Chu = 'Đã hoàn tác xuất kho (quay lại danh sách chờ duyệt)';
-          }
-        }
-
-        appData.exports = appData.exports.filter(x => x.ID_Giao_Dich !== txId);
-        const logId = "UNDO" + Date.now();
-        appData.editLogs.push({
-          ID_Log: logId,
-          ID_Vat_Tu: transaction.ID_Vat_Tu,
-          Ten_Vat_Tu: transaction.Ten,
-          Noi_Dung_Thay_Doi: `Hoàn tác giao dịch xuất ${txId}. Hoàn lại +${transaction.So_Luong} ${transaction.Don_Vi}`,
-          Ngay_Chinh_Sua: new Date().toISOString(),
-          Nguoi_Chinh_Sua: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
-        });
-      }
-    });
+  const lockKey = 'undo_export_' + transactionId;
+  return runGuardedOperation(lockKey, btnEl || event?.target, async () => {
+    const pinSecret = currentRole === 'admin' ? appConfig.adminPin : appConfig.exporterPin;
+    const payload = {
+      action: 'undo_export',
+      transactionIds: transactionId,
+      pin: pinSecret
+    };
     
-    saveMockData();
-    showToast('Đã hoàn tác xuất kho và hoàn trả yêu cầu về danh sách chờ duyệt!', 'success');
-    renderHistory();
-    renderInventory();
-    renderEditLogs();
-    renderAdminRequests();
-    renderCart();
-  }
-  showLoading(false);
+    try {
+      const json = await sendRequest(payload);
+      if (json.success) {
+        showToast('Đã hoàn tác giao dịch xuất kho thành công!', 'success');
+        await loadData();
+      } else {
+        throw new Error(json.message);
+      }
+    } catch(err) {
+      console.error(err);
+      txIds.forEach(txId => {
+        const transaction = appData.exports.find(x => x.ID_Giao_Dich === txId);
+        if (transaction) {
+          const item = appData.inventory.find(i => i.ID === transaction.ID_Vat_Tu);
+          if (item) {
+            item.So_Luong += transaction.So_Luong;
+          }
+
+          // Hoàn lại yêu cầu của người nhận về 'Cho_Duyet' nếu có
+          if (appData.requests) {
+            const matchedReq = [...appData.requests].reverse().find(r => 
+              r.ID_Vat_Tu === transaction.ID_Vat_Tu && 
+              r.Nguoi_Yeu_Cau === transaction.Nguoi_Nhan && 
+              r.Trang_Thai === 'Da_Duyet'
+            );
+            if (matchedReq) {
+              matchedReq.Trang_Thai = 'Cho_Duyet';
+              matchedReq.Ghi_Chu = 'Đã hoàn tác xuất kho (quay lại danh sách chờ duyệt)';
+            }
+          }
+
+          appData.exports = appData.exports.filter(x => x.ID_Giao_Dich !== txId);
+          const logId = "UNDO" + Date.now();
+          appData.editLogs.push({
+            ID_Log: logId,
+            ID_Vat_Tu: transaction.ID_Vat_Tu,
+            Ten_Vat_Tu: transaction.Ten,
+            Noi_Dung_Thay_Doi: `Hoàn tác giao dịch xuất ${txId}. Hoàn lại +${transaction.So_Luong} ${transaction.Don_Vi}`,
+            Ngay_Chinh_Sua: new Date().toISOString(),
+            Nguoi_Chinh_Sua: currentRole === 'admin' ? 'Admin' : 'Người xuất kho'
+          });
+        }
+      });
+      
+      saveMockData();
+      showToast('Đã hoàn tác xuất kho và hoàn trả yêu cầu về danh sách chờ duyệt!', 'success');
+      renderHistory();
+      renderInventory();
+      renderEditLogs();
+      renderAdminRequests();
+      renderCart();
+    }
+  });
 };
 
 window.cleanUpOldHistory = async function() {
@@ -11185,7 +12875,7 @@ window.renderSharedCabinet = function() {
   if (filtered.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="10" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+        <td colspan="11" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
           <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🗄️</div>
           <div style="font-weight: 600; font-size: 1rem; margin-bottom: 0.25rem;">Không tìm thấy hóa chất / vật tư nào trong Tủ Dùng Chung!</div>
           <div style="font-size: 0.85rem; margin-bottom: 1rem;">Bạn có thể bấm nút bên dưới để nhập nhanh các chai hóa chất có sẵn trong phòng lab.</div>
@@ -11262,11 +12952,11 @@ window.renderSharedCabinet = function() {
       } else {
         actionButtonsHtml = `
           <div style="display: flex; gap: 0.35rem; justify-content: flex-end;">
-            <button class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;" onclick="openSharedCabinetUpdateModal('${item.id}')" title="Cập nhật khối lượng còn lại / số chai">
+            <button class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;" onclick="openSharedCabinetUpdateModal('${item.id}')" title="Cập nhật khối lượng còn lại / số lượng">
               ✏️ Cập nhật
             </button>
             ${isItemActive ? `
-              <button class="btn btn-warning" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;" onclick="quickSetSharedCabinetEmpty('${item.id}')" title="Báo chai đã hết">
+              <button class="btn btn-warning" style="padding: 0.35rem 0.65rem; font-size: 0.8rem;" onclick="quickSetSharedCabinetEmpty('${item.id}')" title="Báo đã hết">
                 ⚪ Báo hết
               </button>
             ` : ''}
@@ -11289,23 +12979,27 @@ window.renderSharedCabinet = function() {
       : renderMissingData('', 'brand');
 
     const specHtml = item.quy_cach ? escapeHtml(item.quy_cach) : renderMissingData('', 'spec');
+    const unitVal = item.don_vi || item.Don_Vi || autoGuessUnit(item.quy_cach, item.ten);
 
     tr.innerHTML = `
       <td style="text-align: center;">${codeHtml}</td>
-      <td style="font-weight: 600;">
+      <td style="font-weight: 600; min-width: 320px; line-height: 1.45;">
         <span class="clickable-item-name" style="cursor: pointer; color: var(--primary); font-size: 0.95rem;" onclick="openSharedCabinetItemDetail('${item.id}')" title="Bấm để xem chi tiết hóa chất">
           <strong>${escapeHtml(formattedName)}</strong>
         </span>
       </td>
       <td>${brandHtml}</td>
-      <td style="font-size: 0.85rem; color: var(--text-secondary);">${specHtml}</td>
+      <td style="font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap;">${specHtml}</td>
+      <td style="text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--text-main); white-space: nowrap;">
+        ${escapeHtml(unitVal)}
+      </td>
       <td>
         <span class="badge" style="background: rgba(37, 99, 235, 0.12); color: #1d4ed8; font-weight: 600; font-size: 0.85rem; border: 1px solid rgba(37, 99, 235, 0.25);">
           🗄️ ${escapeHtml(item.vi_tri_tu || 'Chưa xếp')}
         </span>
       </td>
       <td style="text-align: center; font-weight: 700;">
-        ${parseFloat(item.so_luong) > 0 ? `${item.so_luong} ${escapeHtml(item.don_vi || 'Chai')}` : '<span style="color: var(--danger); font-size: 0.8rem;">0 (Hết chai)</span>'}
+        ${parseFloat(item.so_luong) > 0 ? `<span class="badge badge-success" style="font-size: 0.85rem; font-variant-numeric: tabular-nums;">${item.so_luong}</span>` : '<span style="color: var(--danger); font-size: 0.8rem;">0 (Hết)</span>'}
       </td>
       <td>
         <span class="badge" style="font-size: 0.9rem; font-weight: 700; ${isItemActive ? 'background: rgba(22, 163, 74, 0.12); color: #15803d; border: 1px solid rgba(22, 163, 74, 0.3);' : 'background: rgba(220, 38, 38, 0.1); color: #dc2626;'}">
